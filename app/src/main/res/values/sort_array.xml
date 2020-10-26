@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_mode">
+        <item>정렬조건</item>
+        <item>최신등록순</item>
+        <item>제목순</item>
+        <item>기관이름순</item>
+        <item>접수마감순</item>
+    </string-array>
+</resources>

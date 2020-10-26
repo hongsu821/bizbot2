@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F2F2">
+
+    <LinearLayout
+        android:id="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="#ffffff">
+        <ImageButton
+            android:layout_width="30sp"
+            android:layout_height="32sp"
+            android:background="@drawable/menu"
+            android:layout_marginLeft="10sp"
+            android:visibility="invisible"/>
+        <LinearLayout
+            android:id="@+id/search_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="32sp"
+            android:layout_weight="1"
+            android:background="@drawable/search_bar"
+            android:layout_margin="10sp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="8sp"
+                android:layout_marginTop="6sp"
+                android:layout_marginBottom="5sp"
+                android:background="@null"/>
+            <ImageButton
+                android:layout_width="22sp"
+                android:layout_height="22sp"
+                android:background="@drawable/search"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"/>
+        </LinearLayout>
+        <Button
+            android:id="@+id/setting_btn"
+            android:layout_width="30sp"
+            android:layout_height="32sp"
+            android:background="@drawable/user"
+            android:layout_marginRight="10sp"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#FFE04A"
+        app:layout_constraintTop_toBottomOf="@+id/layout1"
+        app:layout_constraintBottom_toTopOf="@+id/layout2"
+        android:layout_marginBottom="2dp"/>
+
+    <!--todo: 메인 화면에 나오는 광고에 지역과 분야가 있으면 생성 없으면 삭제 -->
+    <LinearLayout
+        android:id="@+id/layout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/line"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:layout_marginTop="6dp">
+        <LinearLayout
+            android:id="@+id/area_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="33dp"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:paddingLeft="22dp"
+            android:background="@drawable/item_list_style">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="sans-serif-black"
+                android:text="지역"
+                android:textColor="#000000"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/field_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="33dp"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:paddingLeft="22dp"
+            android:background="@drawable/item_list_style">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="분야"
+                android:textColor="#000000"
+                android:fontFamily="sans-serif-black"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/area_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/layout2"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_marginTop="1dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/area_category_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_list_style"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/layout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/area_category"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="광고"
+            android:layout_marginTop="10sp"
+            android:layout_marginLeft="6sp"
+            android:layout_marginBottom="3sp"
+            android:textColor="#000000"
+            android:fontFamily="sans-serif"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ad_list_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6sp"
+            android:layout_marginRight="6sp"/>
+    </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="#ffffff"
+        app:menu="@menu/bottom_menu"
+        app:itemIconTint="#000000"
+        app:labelVisibilityMode="unlabeled"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

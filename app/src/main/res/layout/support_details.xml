@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#FFE04A"
+        android:gravity="right">
+        <ImageView
+            android:id="@+id/detail_close_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/close"
+            android:layout_margin="5dp"
+            android:padding="10dp"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/detail_keyword_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/detail_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:textSize="26dp"
+        android:padding="8dp" />
+
+    <ScrollView
+        android:id="@+id/detail_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="지원사업 내용"
+                android:textColor="#000000"
+                android:textSize="18dp"
+                android:padding="8dp"/>
+            <TextView
+                android:id="@+id/detail_contents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="18dp"
+                android:padding="8dp"
+                android:layout_margin="3dp"
+                android:background="@drawable/item_category_style"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="지원사업 지역"
+                    android:textColor="#000000"
+                    android:textSize="12dp"
+                    android:padding="8dp"/>
+                <TextView
+                    android:id="@+id/detail_area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="울산"
+                    android:textColor="#000000"
+                    android:textSize="12dp"
+                    android:padding="8dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="지원사업 지원분야"
+                    android:textColor="#000000"
+                    android:textSize="12dp"
+                    android:padding="8dp"/>
+
+                <TextView
+                    android:id="@+id/detail_field"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="기술, 수출, 기술사업화"
+                    android:textColor="#000000"
+                    android:textSize="12dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="접수기간"
+                    android:textColor="#000000"
+                    android:textSize="12dp"/>
+
+                <TextView
+                    android:id="@+id/detail_term"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2020.06.05 ~ 2020.06.19"
+                    android:textColor="#000000"
+                    android:textSize="12dp"
+                    android:padding="8dp"/>
+            </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#B6B6B6"
+                android:layout_margin="5dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="지원사업 담당부서 및 담당자"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="18dp"
+                android:padding="8dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="접수기관"
+                    android:textColor="#000000"
+                    android:textSize="12dp"
+                    android:padding="8dp"/>
+                <TextView
+                    android:id="@+id/detail_agency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="울산정보산업진흥원"
+                    android:textColor="#000000"
+                    android:textSize="12dp"
+                    android:padding="8dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="담당부서"
+                    android:textColor="#000000"
+                    android:textSize="12dp"
+                    android:padding="8dp"/>
+                <TextView
+                    android:id="@+id/detail_department"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="클러스터팀"
+                    android:textColor="#000000"
+                    android:textSize="12dp"
+                    android:padding="8dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전화번호"
+                    android:textColor="#000000"
+                    android:textSize="12dp"
+                    android:padding="8dp"/>
+                <TextView
+                    android:id="@+id/detail_tel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="052-210-0276"
+                    android:textColor="#000000"
+                    android:textSize="12dp"
+                    android:padding="8dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="담당자명"
+                    android:textColor="#000000"
+                    android:textSize="12dp"
+                    android:padding="8dp"/>
+
+                <TextView
+                    android:id="@+id/detail_manager"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="최다혜"
+                    android:textColor="#000000"
+                    android:textSize="12dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/detail_homepage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#0071D2"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="홈페이지 바로가기"
+                    android:textColor="#ffffff"
+                    android:padding="8dp"/>
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:padding="9dp"
+                    android:src="@drawable/export" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+</LinearLayout>
