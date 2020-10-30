@@ -13,7 +13,7 @@
     android:layout_height="wrap_content"
     android:background="#ffffff">
         <ImageView
-            android:id="@+id/close_btn"
+            android:id="@+id/search_close_btn"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/backward_arrow"

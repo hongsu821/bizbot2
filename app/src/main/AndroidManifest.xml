@@ -16,6 +16,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".home.MainActivity"/>
+        <activity android:name=".search.SearchActivity"/>
+        <activity android:name=".setting.SettingActivity"/>
+        <activity android:name=".support.CategoryActivity"/>
+        <activity android:name=".support.FavouriteActivity"/>
+        <activity android:name=".support.SupportActivity"/>
+        <activity android:name=".partner.PartnerActivity"/>
     </application>
 
 </manifest>

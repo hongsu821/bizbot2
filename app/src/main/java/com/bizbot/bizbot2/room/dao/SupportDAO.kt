@@ -18,11 +18,11 @@ interface SupportDAO {
 
     //신규 지원사업 체크
     @Query("UPDATE support SET checkNew = :check WHERE pblancId=:id")
-    fun updateNew(check: Boolean,id: Int)
+    fun setNew(check: Boolean,id: String)
 
     //관심 사업 체크
     @Query("UPDATE support SET checkLike = :check WHERE pblancId=:id")
-    fun updateLike(check: Boolean,id: Int)
+    fun setLike(check: Boolean,id: String)
 
     //관심 사업 출력
     @Query("SELECT * FROM support WHERE checkLike = 1")
