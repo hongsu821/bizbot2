@@ -27,11 +27,11 @@ class SupportActivity: AppCompatActivity() {
 
         //선택한 분야 가져오기
         var fieldWord = intent.getStringExtra("field")
-        if(fieldWord == null)
+        if(fieldWord == null || fieldWord == "")
             fieldWord = "전체"
         //선택한 지역 출력
         var areaWord = intent.getStringExtra("area")
-        if(areaWord == null)
+        if(areaWord == null || areaWord == "")
             areaWord = "전체"
         area_state.text = areaWord
 
@@ -56,6 +56,7 @@ class SupportActivity: AppCompatActivity() {
         //카테고리 버튼
         category_menu_btn.setOnClickListener {
             startActivity(Intent(baseContext,CategoryActivity::class.java))
+            finish()
         }
         //종료버튼
         support_close_btn.setOnClickListener {

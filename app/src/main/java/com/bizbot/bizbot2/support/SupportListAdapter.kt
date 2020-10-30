@@ -17,7 +17,7 @@ class SupportListAdapter(var context: Context, supportList: ArrayList<SupportMod
     var sList : ArrayList<SupportModel> = supportList
 
     init{
-        //CategoryFilter(area,field)
+        CategoryFilter(area,field)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -76,10 +76,27 @@ class SupportListAdapter(var context: Context, supportList: ArrayList<SupportMod
     fun CategoryFilter(area:String,field: String){
         var filtering = ArrayList<SupportModel>()
 
-        for(item in sList){
-            if(item.areaNm?.contains(area)!! && item.areaNm?.contains(field)!!)
-                filtering.add(item)
+        if(area == "전체" && field == "전체")
+            filtering = sList
+        else if(area != "전체" && field == "전체"){
+            for(item in sList){
+                if(item.areaNm?.contains(area)!!)
+                    filtering.add(item)
+            }
         }
+        else if (area == "전체" && field != "전체"){
+            for(item in sList){
+                if(item.pldirSportRealmLclasCodeNm?.contains(field)!!)
+                    filtering.add(item)
+            }
+        }
+        else if(area != "전체" && field != "전체"){
+            for(item in sList){
+                if(item.areaNm?.contains(area)!!&&item.pldirSportRealmLclasCodeNm?.contains(field)!!)
+                    filtering.add(item)
+            }
+        }
+
 
 
         filteringList = filtering
