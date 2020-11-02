@@ -31,7 +31,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         viewModel = ViewModelProviders.of(this).get(AppViewModel::class.java)
         viewModel.getAllSupport().observe(this, Observer {
-            viewAdapter = AdvertisingAdapter(baseContext,it as ArrayList<SupportModel>)
+            var kotraList = ArrayList<SupportModel>()
+            for(item in it){
+                if(item.pblancNm?.contains("KOTRA")!!)
+                    kotraList.add(item)
+        }
+            viewAdapter = AdvertisingAdapter(baseContext,kotraList)
             ad_list_rv.adapter = viewAdapter
         })
 

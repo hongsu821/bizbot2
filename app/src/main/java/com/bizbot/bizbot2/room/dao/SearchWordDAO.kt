@@ -19,8 +19,8 @@ interface SearchWordDAO {
     fun deleteItem(word: String)
 
     @Query("SELECT * FROM search_word")
-    fun getAllList(): LiveData<List<SearchWordModel>>
+    fun getAllList(): LiveData<List<String>>
 
     @Query("SELECT * FROM search_word WHERE word = :word")
-    fun getItem(word: String): LiveData<List<SearchWordModel>>
+    fun getItem(word: String): LiveData<String>
 }

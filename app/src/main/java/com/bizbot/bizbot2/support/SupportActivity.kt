@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bizbot.bizbot2.R
 import com.bizbot.bizbot2.room.AppViewModel
 import com.bizbot.bizbot2.room.model.SupportModel
+import com.bizbot.bizbot2.search.SearchActivity
 import kotlinx.android.synthetic.main.support_activity.*
 
 class SupportActivity: AppCompatActivity() {
@@ -35,10 +36,11 @@ class SupportActivity: AppCompatActivity() {
             areaWord = "전체"
         area_state.text = areaWord
 
+
         //데이터 가져오기
         viewModel = ViewModelProviders.of(this).get(AppViewModel::class.java)
         viewModel.getAllSupport().observe(this, Observer {
-            viewAdapter = SupportListAdapter(baseContext,it as ArrayList<SupportModel>,areaWord,fieldWord)
+            viewAdapter = SupportListAdapter(baseContext,this,it as ArrayList<SupportModel>,areaWord,fieldWord)
             support_rv.adapter = viewAdapter
 
             //총 리스트 개수 출력
@@ -52,7 +54,10 @@ class SupportActivity: AppCompatActivity() {
         support_rv.setHasFixedSize(true)
 
 
-
+        //검색 버튼
+        search_bar.setOnClickListener {
+            startActivity(Intent(baseContext,SearchActivity::class.java))
+        }
         //카테고리 버튼
         category_menu_btn.setOnClickListener {
             startActivity(Intent(baseContext,CategoryActivity::class.java))

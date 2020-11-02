@@ -1,8 +1,11 @@
 package com.bizbot.bizbot2.room.model
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 @Entity(tableName = "support")
 data class SupportModel(
     @PrimaryKey var pblancId: String,
@@ -27,4 +30,4 @@ data class SupportModel(
     var creatPnttm: String?,
     var checkLike: Boolean?,
     var checkNew: Boolean?
-)
+) : Parcelable

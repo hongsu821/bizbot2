@@ -59,15 +59,16 @@ class CategoryActivity: AppCompatActivity() {
             finish()
         }
         //나가기 버튼
-        category_close_btn.setOnClickListener { finish() }
+        category_close_btn.setOnClickListener {
+            startActivity(Intent(this,SupportActivity::class.java))
+            finish()
+        }
 
     }
 
 
     class CAHandler(looper: Looper):Handler(looper){
         override fun handleMessage(msg: Message) {
-            //Log.d("CategoryActivity", "handleMessage: msg.obj=${msg.obj}")
-            //Log.d("CategoryActivity", "handleMessage: msg.what=${msg.what}")
         }
     }
 

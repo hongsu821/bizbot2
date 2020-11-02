@@ -29,12 +29,12 @@ class SynchronizationData(var context: Context) {
 
         try{
             var start = System.currentTimeMillis()
-            /*
-            val requestURLConnection = RequestURLConnection(supportURL)
-            var line = requestURLConnection.DataLoad()
 
-             */
+            //서버 연결
+            //val requestURLConnection = RequestURLConnection(supportURL)
+            //var line = requestURLConnection.DataLoad()
 
+            /*디버깅용  */
             val assetManager = context.assets
             val inputStream= assetManager.open("data.json")
             val jsonString = inputStream.bufferedReader().use { it.readText() }
@@ -46,7 +46,6 @@ class SynchronizationData(var context: Context) {
            // var permit: PermitModel = db.permitDAO().getItem()
            // var sync: Date = simpleDateFormat.parse(permit.syncTime)
 
-            //until = 1..jsonArray.length()-1
             for(i in 0 until jsonArray.length()){
                 val jsonObject: JSONObject = jsonArray.getJSONObject(i)
                 val supportItem: SupportModel = JsonParsing_support(jsonObject)
@@ -78,7 +77,7 @@ class SynchronizationData(var context: Context) {
     }
 
     fun JsonParsing_support(jsonObject: JSONObject): SupportModel{
-        val s_list: SupportModel = SupportModel(
+        val s_list = SupportModel(
             jsonObject.getString("pblancId"),
             jsonObject.getString("industNm"),
             jsonObject.getString("rceptInsttEmailAdres"),

@@ -120,8 +120,8 @@
 
             <ToggleButton
                 android:id="@+id/like_btn"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:background="@drawable/heart_empty"
                 android:textOff=""
                 android:textOn=""
