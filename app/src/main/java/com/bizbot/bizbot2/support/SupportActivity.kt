@@ -36,11 +36,12 @@ class SupportActivity: AppCompatActivity() {
             areaWord = "전체"
         area_state.text = areaWord
 
+        viewAdapter = SupportListAdapter(baseContext,this,areaWord,fieldWord)
 
         //데이터 가져오기
         viewModel = ViewModelProviders.of(this).get(AppViewModel::class.java)
         viewModel.getAllSupport().observe(this, Observer {
-            viewAdapter = SupportListAdapter(baseContext,this,it as ArrayList<SupportModel>,areaWord,fieldWord)
+            viewAdapter.setList(it as ArrayList<SupportModel>)
             support_rv.adapter = viewAdapter
 
             //총 리스트 개수 출력

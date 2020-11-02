@@ -27,7 +27,10 @@ class SearchAdapter(context: Context,val activity: FragmentActivity,var wordList
     }
 
     override fun getItemCount(): Int {
-        return words.size
+        if(words.size > 8)
+            return 8
+        else
+            return words.size
     }
 
     class ViewHolder(v: View):RecyclerView.ViewHolder(v) {

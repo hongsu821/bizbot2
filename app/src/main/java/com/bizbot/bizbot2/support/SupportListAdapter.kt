@@ -18,15 +18,10 @@ import com.bizbot.bizbot2.R
 import com.bizbot.bizbot2.room.AppViewModel
 import com.bizbot.bizbot2.room.model.SupportModel
 
-class SupportListAdapter(var context: Context,var activity:FragmentActivity,supportList:ArrayList<SupportModel>,var area: String?, var field: String?)
+class SupportListAdapter(var context: Context,var activity:FragmentActivity,var area: String?, var field: String?)
     : RecyclerView.Adapter<SupportListAdapter.ViewHolder>() {
-    var filteringList : ArrayList<SupportModel> = supportList
-    var sList : ArrayList<SupportModel> = supportList
-
-    init{
-        if(area != null && field != null)
-            CategoryFilter(area!!, field!!)
-    }
+    lateinit var filterList : ArrayList<SupportModel>// = supportList
+    lateinit var sList : ArrayList<SupportModel>// = supportList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflatedView = LayoutInflater.from(parent.context).inflate(R.layout.item_support_list,parent,false)
@@ -34,11 +29,11 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,supp
     }
 
     override fun getItemCount(): Int {
-        return filteringList.size
+        return filterList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val items = filteringList[position]
+        val items = filterList[position]
         holder.apply {
             bind(items)
         }
@@ -52,7 +47,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,supp
             context.startActivity(intent)
         }
 
-        if(filteringList[position].checkLike!!){
+        if(filterList[position].checkLike!!){
             holder.likeBtn.isChecked = true
             holder.likeBtn.setBackgroundResource(R.drawable.heart)
         }
@@ -67,11 +62,11 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,supp
             if(holder.likeBtn.isChecked){
                 holder.likeBtn.setBackgroundResource(R.drawable.heart)
                 Toast.makeText(context,"관심사업으로 등록되었습니다.",Toast.LENGTH_SHORT).show()
-                viewModel.setLike(true, filteringList[position].pblancId)
+                viewModel.setLike(true, filterList[position].pblancId)
             }else{
                 holder.likeBtn.setBackgroundResource(R.drawable.heart_empty)
                 Toast.makeText(context,"관심사업이 해제되었습니다.",Toast.LENGTH_SHORT).show()
-                viewModel.setLike(false, filteringList[position].pblancId)
+                viewModel.setLike(false, filterList[position].pblancId)
             }
         }
 
@@ -138,18 +133,71 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,supp
             }
         }
 
-        filteringList = filtering
+        filterList = filtering
         notifyDataSetChanged()
 
     }
 
+    fun getFilter(): Filter{
+        return object : Filter() {
+            override fun performFiltering(p0: CharSequence?): FilterResults {
+                var charString = p0.toString()
+                if(!charString.isEmpty()){
+                    var filtering = ArrayList<SupportModel>()
+                    for(item in sList){
+                        if(item.bsnsSumryCn?.toLowerCase()?.contains(charString.toLowerCase())!!)
+                            filtering.add(item)
+                    }
+                    filterList = filtering
+                }
+                val filterResults = FilterResults()
+                filterResults.values = filterList
+                return filterResults
+            }
+
+            override fun publishResults(p0: CharSequence?, p1: FilterResults?){
+                filterList = p1 as ArrayList<SupportModel>
+                notifyDataSetChanged()
+            }
+        }
+    }
+
+    fun getFilter(word: String?):Boolean{
+        var result = true
+        var filtering = ArrayList<SupportModel>()
+        if(word != null){
+            for(item in sList){
+                if(item.bsnsSumryCn?.toLowerCase()?.contains(word.toLowerCase())!!)
+                    filtering.add(item)
+            }
+        }
+        filterList = filtering
+        notifyDataSetChanged()
+
+        if(filterList.size == 0)
+            result = false
+
+        return result
+    }
+
+    /**
+     * 리스트 갱신
+     */
+    fun setList(supportList: ArrayList<SupportModel>){
+        this.filterList = supportList
+        this.sList = supportList
+
+        notifyDataSetChanged()
+
+        if(area != null && field != null)
+            CategoryFilter(area!!, field!!)
+    }
 
     /**
      * 리스트 개수 출력
      */
     fun getCount():Int{
-        return filteringList.size
+        return filterList.size
     }
-
 
 }

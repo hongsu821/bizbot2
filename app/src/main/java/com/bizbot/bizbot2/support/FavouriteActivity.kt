@@ -21,8 +21,10 @@ class FavouriteActivity : AppCompatActivity(){
 
         val viewModel = ViewModelProviders.of(this).get(AppViewModel::class.java)
 
+        val favouriteAdapter = SupportListAdapter(baseContext,this,null,null)
+
         viewModel.getLikeList().observe(this, Observer {
-            val favouriteAdapter = SupportListAdapter(baseContext,this,it as ArrayList<SupportModel>,null,null)
+            favouriteAdapter.setList(it as ArrayList<SupportModel>)
             favourite_rv.adapter = favouriteAdapter
         })
 
