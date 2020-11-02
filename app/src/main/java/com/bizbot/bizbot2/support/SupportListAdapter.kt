@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.ToggleButton
@@ -17,13 +18,14 @@ import com.bizbot.bizbot2.R
 import com.bizbot.bizbot2.room.AppViewModel
 import com.bizbot.bizbot2.room.model.SupportModel
 
-class SupportListAdapter(var context: Context,var activity:FragmentActivity,supportList:ArrayList<SupportModel>,var area: String, var field: String)
+class SupportListAdapter(var context: Context,var activity:FragmentActivity,supportList:ArrayList<SupportModel>,var area: String?, var field: String?)
     : RecyclerView.Adapter<SupportListAdapter.ViewHolder>() {
     var filteringList : ArrayList<SupportModel> = supportList
     var sList : ArrayList<SupportModel> = supportList
 
     init{
-        CategoryFilter(area,field)
+        if(area != null && field != null)
+            CategoryFilter(area!!, field!!)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -96,7 +98,6 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,supp
         }
 
 
-
     }
 
     /**
@@ -142,14 +143,6 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,supp
 
     }
 
-    /**
-     * 리스트 갱신
-     */
-    fun setList(list: ArrayList<SupportModel>){
-        this.sList = list
-        this.filteringList = list
-        notifyDataSetChanged()
-    }
 
     /**
      * 리스트 개수 출력

@@ -10,6 +10,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = AppRepository(application)
     private val supports = repository.getAllSupports()
+    private val likeList = repository.getLikeList()
     private val searchWords = repository.getAllSearch()
 
     fun getAllSupport(): LiveData<List<SupportModel>>{
@@ -28,8 +29,8 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         repository.setLike(check,id)
     }
 
-    fun getLikeList(){
-        repository.getLikeList()
+    fun getLikeList(): LiveData<List<SupportModel>>{
+        return likeList
     }
 
     fun getAllSearch(): LiveData<List<String>>{

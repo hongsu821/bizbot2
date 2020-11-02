@@ -26,7 +26,6 @@ class SearchActivity : AppCompatActivity() {
         search_button.setOnClickListener {
             var inputText = search_edit_bar.text
             val searchWordModel = SearchWordModel(inputText.toString())
-            Log.d("SearchActivity", "setOnClickListener: searchWordModel=${searchWordModel.word}")
             viewModel.insertSearch(searchWordModel)
         }
 
@@ -38,7 +37,6 @@ class SearchActivity : AppCompatActivity() {
             val searchAdapter = SearchAdapter(baseContext,this,it as ArrayList<String>,search_edit_bar)
             last_search_word.adapter = searchAdapter
         })
-
 
         //텍스트 입력창 텍스트 감지
         search_edit_bar.addTextChangedListener(object : TextWatcher {
