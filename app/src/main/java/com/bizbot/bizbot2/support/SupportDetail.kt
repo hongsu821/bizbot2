@@ -102,4 +102,8 @@ class SupportDetail:AppCompatActivity() {
         textView.text = line
     }
 
+    override fun onBackPressed() {
+        finish()
+    }
+
 }

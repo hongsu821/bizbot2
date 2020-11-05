@@ -16,7 +16,7 @@ import com.bizbot.bizbot2.room.AppViewModel
 import com.bizbot.bizbot2.room.model.SearchWordModel
 import com.bizbot.bizbot2.support.SupportListAdapter
 
-class SearchAdapter(context: Context,val activity: FragmentActivity,var wordList:ArrayList<String>, val editText: EditText)
+class SearchAdapter(val activity: FragmentActivity,var wordList:ArrayList<String>, val editText: EditText)
     : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
     var words: ArrayList<String> = wordList

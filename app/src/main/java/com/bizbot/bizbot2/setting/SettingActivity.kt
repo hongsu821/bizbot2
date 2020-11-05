@@ -14,4 +14,8 @@ class SettingActivity : AppCompatActivity() {
             finish()
         }
     }
+
+    override fun onBackPressed() {
+        finish()
+    }
 }

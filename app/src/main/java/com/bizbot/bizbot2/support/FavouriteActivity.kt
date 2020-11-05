@@ -34,4 +34,8 @@ class FavouriteActivity : AppCompatActivity(){
             finish()
         }
     }
+
+    override fun onBackPressed() {
+        finish()
+    }
 }

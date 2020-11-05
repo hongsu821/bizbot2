@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/error_text"
@@ -24,15 +13,12 @@
         android:text="데이터를 불러올 수 없습니다."
         android:textColor="#000000"
         android:gravity="center_horizontal"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/layout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:background="#FFE04A">
@@ -44,13 +30,13 @@
             android:layout_marginLeft="10sp"/>
         <LinearLayout
             android:id="@+id/search_bar"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="32sp"
             android:layout_weight="1"
             android:background="@drawable/search_bar"
             android:layout_margin="10sp">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginLeft="10sp"
@@ -78,8 +64,6 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="#FFE04A"
-        app:layout_constraintTop_toBottomOf="@+id/layout1"
-        app:layout_constraintBottom_toTopOf="@+id/line2"
         android:layout_marginBottom="2dp"
         android:layout_marginTop="5dp"/>
     <ImageView
@@ -87,8 +71,6 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="#FFE04A"
-        app:layout_constraintTop_toBottomOf="@+id/line"
-        app:layout_constraintBottom_toTopOf="@+id/layout2"
         android:layout_marginBottom="2dp"
         android:layout_marginTop="3dp"/>
 
@@ -96,7 +78,6 @@
         android:id="@+id/layout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/line2"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
@@ -138,18 +119,15 @@
             android:layout_marginLeft="6dp"
             android:layout_marginTop="5dp"
             android:entries="@array/sort_mode"
-            android:gravity="right"/>
+            android:gravity="right" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/new_pop_up"
+        android:id="@+id/top_move_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="새 게시물"
+        android:text="Top"
         android:textColor="#000000"
-        app:layout_constraintTop_toBottomOf="@+id/layout2"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:background="@drawable/search_item_style"
         android:paddingRight="15dp"
         android:paddingLeft="15dp"
@@ -157,16 +135,21 @@
         android:paddingBottom="10dp"
         android:layout_marginTop="8dp"
         android:visibility="gone"/>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="63dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/support_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/layout2"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:layout_marginTop="4dp"/>
+        android:layout_marginTop="9dp"
+        android:layout_marginBottom="9dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

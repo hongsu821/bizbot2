@@ -14,4 +14,8 @@ class PartnerActivity : AppCompatActivity() {
             finish()
         }
     }
+
+    override fun onBackPressed() {
+        finish()
+    }
 }

@@ -5,7 +5,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.view.ViewManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -16,6 +15,9 @@ import com.bizbot.bizbot2.room.model.SearchWordModel
 import com.bizbot.bizbot2.room.model.SupportModel
 import com.bizbot.bizbot2.support.SupportListAdapter
 import kotlinx.android.synthetic.main.search_activity.*
+import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL
+import kr.co.shineware.nlp.komoran.core.Komoran
+import java.io.*
 
 class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,17 +36,6 @@ class SearchActivity : AppCompatActivity() {
             search_result_rv.adapter = searchResultAdapter
         })
 
-        //검색 버튼 클릭
-        search_button.setOnClickListener {
-            var inputText = search_edit_bar.text
-            val searchWordModel = SearchWordModel(inputText.toString())
-            viewModel.insertSearch(searchWordModel)
-            if(searchResultAdapter.getFilter(inputText.toString()))
-                search_result_layout.visibility = View.VISIBLE
-            else
-                search_result_layout.visibility = View.GONE
-            search_result_null.visibility = View.GONE
-        }
 
         //검색어 리사이클러뷰
         val viewManager = LinearLayoutManager(this)
@@ -53,7 +44,7 @@ class SearchActivity : AppCompatActivity() {
         last_search_word.layoutManager = viewManager
         last_search_word.setHasFixedSize(true)
         viewModel.getAllSearch().observe(this, Observer {
-            val searchAdapter = SearchAdapter(baseContext,this,it as ArrayList<String>,search_edit_bar)
+            val searchAdapter = SearchAdapter(this,it as ArrayList<String>,search_edit_bar)
             last_search_word.adapter = searchAdapter
         })
 
@@ -69,10 +60,21 @@ class SearchActivity : AppCompatActivity() {
                 else
                     search_clear.visibility = View.VISIBLE
 
+
             }
             override fun afterTextChanged(p0: Editable?) {}
         })
-
+        //검색 버튼 클릭
+        search_button.setOnClickListener {
+            var inputText = search_edit_bar.text
+            val searchWordModel = SearchWordModel(inputText.toString())
+            viewModel.insertSearch(searchWordModel)
+            if(searchResultAdapter.getFilter(inputText.toString()))
+                search_result_layout.visibility = View.VISIBLE
+            else
+                search_result_layout.visibility = View.GONE
+            search_result_null.visibility = View.GONE
+        }
         //입력한 텍스트 지우기
         search_clear.setOnClickListener {
             search_edit_bar.text = null
@@ -87,5 +89,73 @@ class SearchActivity : AppCompatActivity() {
         search_close_btn.setOnClickListener {
             finish()
         }
+
+        test.setOnClickListener {
+            val inStr = search_edit_bar.text.toString()
+
+            val resultWords = PosTagging(inStr)
+            search_result_layout.visibility = View.VISIBLE
+            var line = ""
+            for(word in resultWords)
+                line += "$word, "
+            line.substring(0,line.length-2)
+            search_analysis_word.text = line
+
+
+
+
+        }
+    }
+
+    fun PosTagging(inputStr:String):ArrayList<String>{
+        var result:ArrayList<String> = ArrayList()
+
+        val path = "$filesDir/user.txt"
+        val file = File(path)
+        FileInit(file)
+
+        val start = System.currentTimeMillis()
+        val komoran = Komoran(DEFAULT_MODEL.LIGHT)
+        komoran.setUserDic(path)
+        val tokens = komoran.analyze(inputStr).tokenList
+        for(token in tokens){
+            if(token.pos.equals("NNG")||token.pos.equals("NNP")||token.pos.equals("SL"))
+                result.add(token.morph)
+        }
+        val end = System.currentTimeMillis()
+        println("time = ${(end-start)/1000}")
+
+        return result
+
+    }
+
+    //raw 에서 word set 불러오기
+    fun FileInit(file : File){
+        try{
+            val inputStream = resources.openRawResource(R.raw.user)
+            val reader = InputStreamReader(inputStream,"utf-8")
+            val bufferReader = BufferedReader(reader)
+            val fw = FileWriter(file)
+            var line:String? = ""
+            var str = ""
+            while(line != null){
+                line = bufferReader.readLine()
+                str += "$line\n"
+            }
+            fw.write(str)
+            fw.close()
+            bufferReader.close()
+        }catch (e: IOException){ e.printStackTrace()}
+
+
+    }
+
+    //문자열 가공
+    fun ProcessingWord(){
+
+    }
+
+    override fun onBackPressed() {
+        finish()
     }
 }
