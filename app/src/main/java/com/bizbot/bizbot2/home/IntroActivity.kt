@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.Message
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.bizbot.bizbot2.R
@@ -13,6 +14,7 @@ import kotlin.concurrent.thread
 
 class IntroActivity : AppCompatActivity() {
 
+    lateinit var handler:Handler
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.intro)
@@ -21,11 +23,13 @@ class IntroActivity : AppCompatActivity() {
         val thread = Thread{
             val synchronizedData  = SynchronizationData(baseContext)
             synchronizedData.SyncData()
+            val msg = Message()
+            msg.what = 1
+            handler.sendMessage(msg)
         }
         thread.start()
 
          */
-
 
         intro_loading_layout.visibility = View.GONE
         intro_logo_layout.visibility = View.VISIBLE
@@ -34,6 +38,15 @@ class IntroActivity : AppCompatActivity() {
             startActivity(Intent(baseContext, MainActivity::class.java))
             finish()
         },1000L)
+
+        handler = Handler(Looper.myLooper()!!){
+            if(it.what == 1){
+
+            }
+            true
+        }
+
+
 
 
     }

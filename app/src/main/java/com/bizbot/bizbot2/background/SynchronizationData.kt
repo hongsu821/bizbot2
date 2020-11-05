@@ -31,15 +31,16 @@ class SynchronizationData(var context: Context) {
             var start = System.currentTimeMillis()
 
             //서버 연결
-            //val requestURLConnection = RequestURLConnection(supportURL)
-            //var line = requestURLConnection.DataLoad()
+            val requestURLConnection = RequestURLConnection(supportURL)
+            var line = requestURLConnection.DataLoad()
 
-            /*디버깅용  */
+            /*디버깅용
             val assetManager = context.assets
             val inputStream= assetManager.open("data.json")
             val jsonString = inputStream.bufferedReader().use { it.readText() }
+             */
 
-            val json = JSONObject(jsonString)
+            val json = JSONObject(line)
             val jsonArray: JSONArray = json.getJSONArray("jsonArray")
 
             val db: AppDatabase = Room.databaseBuilder(context,AppDatabase::class.java,"app_db").build()

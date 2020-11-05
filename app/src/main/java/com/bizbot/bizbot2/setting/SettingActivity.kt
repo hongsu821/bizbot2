@@ -1,5 +1,6 @@
 package com.bizbot.bizbot2.setting
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bizbot.bizbot2.R
@@ -10,6 +11,10 @@ class SettingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.setting_activity)
 
+        alert_setting_btn.setOnClickListener {
+            startActivity(Intent(this,AlertSetting::class.java))
+        }
+        
         setting_close_btn.setOnClickListener {
             finish()
         }

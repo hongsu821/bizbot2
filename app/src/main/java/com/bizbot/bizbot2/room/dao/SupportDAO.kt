@@ -6,7 +6,7 @@ import com.bizbot.bizbot2.room.model.SupportModel
 
 @Dao
 interface SupportDAO {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(supportModel: SupportModel)
 
     @Delete

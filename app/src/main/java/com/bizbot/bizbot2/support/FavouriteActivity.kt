@@ -1,6 +1,10 @@
 package com.bizbot.bizbot2.support
 
+import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
+import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -8,28 +12,41 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bizbot.bizbot2.R
 import com.bizbot.bizbot2.room.AppViewModel
 import com.bizbot.bizbot2.room.model.SupportModel
-import kotlinx.android.synthetic.main.favourite_activity.*
+import kotlinx.android.synthetic.main.support_activity.*
+import kotlinx.android.synthetic.main.support_favourite.*
+import kotlinx.android.synthetic.main.support_favourite.top_move_btn
 
 class FavouriteActivity : AppCompatActivity(){
+    @SuppressLint("RestrictedApi")
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.favourite_activity)
+        setContentView(R.layout.support_favourite)
 
         val viewManager = LinearLayoutManager(this)
         favourite_rv.layoutManager = viewManager
         favourite_rv.setHasFixedSize(true)
-
-        val viewModel = ViewModelProviders.of(this).get(AppViewModel::class.java)
-
         val favouriteAdapter = SupportListAdapter(baseContext,this,null,null)
 
+        val viewModel = ViewModelProviders.of(this).get(AppViewModel::class.java)
         viewModel.getLikeList().observe(this, Observer {
             favouriteAdapter.setList(it as ArrayList<SupportModel>)
             favourite_rv.adapter = favouriteAdapter
         })
 
+        //리사이클러뷰 스크롤 위치 감지
+        support_rv.setOnScrollChangeListener{ view, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if(support_rv.computeVerticalScrollOffset() == 0)
+                top_move_btn.visibility = View.GONE
+            else
+                top_move_btn.visibility = View.VISIBLE
+        }
 
-
+        //top 버튼 클릭시 최상단으로 이동
+        top_move_btn.setOnClickListener {
+            support_rv.smoothScrollToPosition(0)
+        }
+        //뒤로가기 버튼
         favourite_close_btn.setOnClickListener {
             finish()
         }

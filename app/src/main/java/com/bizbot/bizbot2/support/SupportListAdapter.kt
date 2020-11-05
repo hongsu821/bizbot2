@@ -77,6 +77,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
         holder.keyWord.layoutManager = viewManager
         holder.keyWord.setHasFixedSize(true)
         holder.keyWord.adapter = KeywordAdapter(context,SlicingWord(items),field)
+
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v){
@@ -139,48 +140,6 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
         filterList = filtering
         notifyDataSetChanged()
 
-    }
-
-    fun getFilter(): Filter{
-        return object : Filter() {
-            override fun performFiltering(p0: CharSequence?): FilterResults {
-                var charString = p0.toString()
-                if(!charString.isEmpty()){
-                    var filtering = ArrayList<SupportModel>()
-                    for(item in sList){
-                        if(item.bsnsSumryCn?.toLowerCase()?.contains(charString.toLowerCase())!!)
-                            filtering.add(item)
-                    }
-                    filterList = filtering
-                }
-                val filterResults = FilterResults()
-                filterResults.values = filterList
-                return filterResults
-            }
-
-            override fun publishResults(p0: CharSequence?, p1: FilterResults?){
-                filterList = p1 as ArrayList<SupportModel>
-                notifyDataSetChanged()
-            }
-        }
-    }
-
-    fun getFilter(word: String?):Boolean{
-        var result = true
-        var filtering = ArrayList<SupportModel>()
-        if(word != null){
-            for(item in sList){
-                if(item.bsnsSumryCn?.toLowerCase()?.contains(word.toLowerCase())!!)
-                    filtering.add(item)
-            }
-        }
-        filterList = filtering
-        notifyDataSetChanged()
-
-        if(filterList.size == 0)
-            result = false
-
-        return result
     }
 
     fun PosTaggingFilter(wordList:ArrayList<String>,search_mode: SEARCH_MODE):Boolean{

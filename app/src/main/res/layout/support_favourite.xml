@@ -9,7 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical">
+        android:layout_gravity="center_vertical"
+        android:background="#FFE04A">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -19,7 +20,7 @@
             android:textColor="#000000"
             android:layout_weight="1"
             android:layout_margin="8dp"
-            android:padding="4dp"/>
+            android:padding="4dp" />
 
         <Button
             android:id="@+id/favourite_close_btn"
@@ -37,13 +38,33 @@
         android:layout_marginBottom="3dp"
         android:layout_marginTop="3dp"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/favourite_rv"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginTop="4dp"/>
+        android:layout_weight="1">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/favourite_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="4dp"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/top_move_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="28dp"
+            android:layout_marginRight="28dp"
+            android:layout_marginBottom="29dp"
+            android:src="@drawable/up_arrow"
+            android:backgroundTint="#FFE04A"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
 
 
 </LinearLayout>

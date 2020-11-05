@@ -1,12 +1,12 @@
 package com.bizbot.bizbot2.support
 
+import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
+import android.os.*
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -16,10 +16,13 @@ import com.bizbot.bizbot2.R
 import com.bizbot.bizbot2.room.AppViewModel
 import com.bizbot.bizbot2.room.model.SupportModel
 import com.bizbot.bizbot2.search.SearchActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.support_activity.*
 
 class SupportActivity: AppCompatActivity() {
 
+    @SuppressLint("RestrictedApi")
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.support_activity)
@@ -51,14 +54,13 @@ class SupportActivity: AppCompatActivity() {
             support_list_count.text = "총 $count 건"
         })
 
-        Log.d("SupportActivity", "onCreate: ${support_rv.computeVerticalScrollOffset()}")
-        /*
-        if(support_rv.scrollState!=0)
-            top_move.visibility = View.VISIBLE
-        else
-            top_move.visibility = View.GONE
-
-         */
+        //리사이클러뷰 스크롤 위치 감지
+        support_rv.setOnScrollChangeListener{ view, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if(support_rv.computeVerticalScrollOffset() == 0)
+                top_move_btn.visibility = View.GONE
+            else
+                top_move_btn.visibility = View.VISIBLE
+        }
 
         //검색 버튼
         search_bar.setOnClickListener {
