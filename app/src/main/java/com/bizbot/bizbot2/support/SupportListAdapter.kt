@@ -15,8 +15,11 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bizbot.bizbot2.R
+import com.bizbot.bizbot2.SEARCH_MODE
 import com.bizbot.bizbot2.room.AppViewModel
 import com.bizbot.bizbot2.room.model.SupportModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SupportListAdapter(var context: Context,var activity:FragmentActivity,var area: String?, var field: String?)
     : RecyclerView.Adapter<SupportListAdapter.ViewHolder>() {
@@ -176,6 +179,36 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
 
         if(filterList.size == 0)
             result = false
+
+        return result
+    }
+
+    fun PosTaggingFilter(wordList:ArrayList<String>,search_mode: SEARCH_MODE):Boolean{
+        var result = false
+        var filtering = ArrayList<SupportModel>()
+        for(item in sList){
+            for(word in wordList){
+                when(search_mode){
+                    SEARCH_MODE.TITLE -> {
+                        if(item.pblancNm?.toLowerCase(Locale.ROOT)?.contains(word.toLowerCase(Locale.ROOT))!!)
+                            filtering.add(item)
+                    }
+                    SEARCH_MODE.CONTENT->{
+                        if(item.bsnsSumryCn?.toLowerCase(Locale.ROOT)?.contains(word.toLowerCase(Locale.ROOT))!!)
+                            filtering.add(item)
+                    }
+                    SEARCH_MODE.AGENCY->{
+                        if(item.jrsdInsttNm?.toLowerCase(Locale.ROOT)?.contains(word.toLowerCase(Locale.ROOT))!!)
+                            filtering.add(item)
+
+                    }
+                }
+            }
+        }
+
+        filterList = filtering
+        notifyDataSetChanged()
+        result = filterList.size != 0
 
         return result
     }

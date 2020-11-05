@@ -5,11 +5,14 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bizbot.bizbot2.R
+import com.bizbot.bizbot2.SEARCH_MODE
 import com.bizbot.bizbot2.room.AppViewModel
 import com.bizbot.bizbot2.room.model.SearchWordModel
 import com.bizbot.bizbot2.room.model.SupportModel
@@ -20,6 +23,7 @@ import kr.co.shineware.nlp.komoran.core.Komoran
 import java.io.*
 
 class SearchActivity : AppCompatActivity() {
+    lateinit var resultWords:ArrayList<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.search_activity)
@@ -64,17 +68,36 @@ class SearchActivity : AppCompatActivity() {
             }
             override fun afterTextChanged(p0: Editable?) {}
         })
+
         //검색 버튼 클릭
         search_button.setOnClickListener {
-            var inputText = search_edit_bar.text
-            val searchWordModel = SearchWordModel(inputText.toString())
-            viewModel.insertSearch(searchWordModel)
-            if(searchResultAdapter.getFilter(inputText.toString()))
-                search_result_layout.visibility = View.VISIBLE
-            else
-                search_result_layout.visibility = View.GONE
-            search_result_null.visibility = View.GONE
+            val inStr = search_edit_bar.text.toString()
+
+            resultWords = PosTagging(inStr)
+            search_result_layout.visibility = View.VISIBLE
+            var line = ""
+            for(word in resultWords)
+                line += "$word, "
+            line.substring(0,line.length-3)
+            search_analysis_word.text = line
+
+            PrintSearchResult(SEARCH_MODE.TITLE,searchResultAdapter,resultWords)
+
         }
+
+        //제목 검색 버튼
+        search_title_btn.setOnClickListener {
+            PrintSearchResult(SEARCH_MODE.TITLE,searchResultAdapter,resultWords)
+        }
+        //내용 검색 버튼
+        search_content_btn.setOnClickListener {
+            PrintSearchResult(SEARCH_MODE.CONTENT,searchResultAdapter,resultWords)
+        }
+        //기관 검색 버튼
+        search_agency_btn.setOnClickListener {
+            PrintSearchResult(SEARCH_MODE.AGENCY,searchResultAdapter,resultWords)
+        }
+
         //입력한 텍스트 지우기
         search_clear.setOnClickListener {
             search_edit_bar.text = null
@@ -82,31 +105,28 @@ class SearchActivity : AppCompatActivity() {
             search_result_layout.visibility = View.GONE
         }
         //모든 검색어 지우기
-        all_clear.setOnClickListener {
-            viewModel.delSearchAll()
-        }
+        all_clear.setOnClickListener { viewModel.delSearchAll() }
         //닫기 버튼 클릭시
-        search_close_btn.setOnClickListener {
-            finish()
-        }
+        search_close_btn.setOnClickListener { finish() }
 
-        test.setOnClickListener {
-            val inStr = search_edit_bar.text.toString()
-
-            val resultWords = PosTagging(inStr)
-            search_result_layout.visibility = View.VISIBLE
-            var line = ""
-            for(word in resultWords)
-                line += "$word, "
-            line.substring(0,line.length-2)
-            search_analysis_word.text = line
-
-
-
-
-        }
     }
 
+    //검색 결과
+    fun PrintSearchResult(searchMode: SEARCH_MODE,adapter:SupportListAdapter,wordList:ArrayList<String>){
+        val resultCheck = adapter.PosTaggingFilter(wordList,searchMode)
+
+        if(resultCheck){
+            search_result_null.visibility = View.GONE
+            search_result_rv.visibility = View.VISIBLE
+        }else{
+            search_result_null.visibility = View.VISIBLE
+            search_result_rv.visibility = View.GONE
+        }
+
+        search_result_rv.smoothScrollToPosition(0)
+    }
+
+    //형태소 분석기
     fun PosTagging(inputStr:String):ArrayList<String>{
         var result:ArrayList<String> = ArrayList()
 
@@ -125,7 +145,7 @@ class SearchActivity : AppCompatActivity() {
         val end = System.currentTimeMillis()
         println("time = ${(end-start)/1000}")
 
-        return result
+        return WordProcessing(result)
 
     }
 
@@ -151,8 +171,32 @@ class SearchActivity : AppCompatActivity() {
     }
 
     //문자열 가공
-    fun ProcessingWord(){
+    fun WordProcessing(wordList: ArrayList<String>):ArrayList<String>{
+        var processedWord = ArrayList<String>()
+        for(word in wordList){
 
+            var pWord = word.replace(" ","")//공백 제거
+
+            if(pWord == "지원사업"|| pWord == "지원" || pWord == "사업")
+                continue
+
+            processedWord.add(pWord)
+
+            if(pWord == "코트라")
+                processedWord.add("kotra")
+
+            if(pWord == "알앤디"){
+                processedWord.add("r&d")
+                processedWord.add("R&amp;D")
+            }
+            if(pWord == "r&d")
+                processedWord.add("R&amp;D")
+            if(pWord == "R&D")
+                processedWord.add("R&amp;D")
+
+        }
+
+        return processedWord
     }
 
     override fun onBackPressed() {
