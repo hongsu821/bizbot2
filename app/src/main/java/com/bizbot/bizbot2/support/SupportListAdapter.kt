@@ -5,7 +5,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.ToggleButton
@@ -23,8 +22,8 @@ import kotlin.collections.ArrayList
 
 class SupportListAdapter(var context: Context,var activity:FragmentActivity,var area: String?, var field: String?)
     : RecyclerView.Adapter<SupportListAdapter.ViewHolder>() {
-    lateinit var filterList : ArrayList<SupportModel>// = supportList
-    lateinit var sList : ArrayList<SupportModel>// = supportList
+    lateinit var filterList : ArrayList<SupportModel>
+    lateinit var sList : ArrayList<SupportModel>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflatedView = LayoutInflater.from(parent.context).inflate(R.layout.item_support_list,parent,false)
@@ -76,7 +75,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
         val viewManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
         holder.keyWord.layoutManager = viewManager
         holder.keyWord.setHasFixedSize(true)
-        holder.keyWord.adapter = KeywordAdapter(context,SlicingWord(items),field)
+        holder.keyWord.adapter = KeywordAdapter(context,slicingWord(items),field)
 
     }
 
@@ -102,7 +101,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
     /**
      * 키워드에 쓰일 단어 자르는 함수
      */
-    fun SlicingWord(str: SupportModel): List<String>? {
+    private fun slicingWord(str: SupportModel): List<String>? {
         val arr1 = str.pldirSportRealmLclasCodeNm?.split("@")
         val arr2 = str.pldirSportRealmMlsfcCodeNm?.split("@")
         val wordList = arr1?.plus(arr2!!)
@@ -111,9 +110,30 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
     }
 
     /**
+     * 리스트 정렬
+     */
+    fun sort(num:Int){
+        when(num){
+            1->{ //최신순 정렬
+                filterList.sortBy { it.creatPnttm }
+            }
+            2->{ //제목순 정렬
+                filterList.sortBy { it.pblancNm }
+            }
+            3->{ //이름순 정렬
+                filterList.sortBy { it.jrsdInsttNm }
+            }
+            4->{ //접수기간 마감순 정렬
+                filterList.sortBy { it.reqstBeginEndDe }
+            }
+        }
+        notifyDataSetChanged()
+    }
+
+    /**
      * 카테고리 필터
      */
-    fun CategoryFilter(area:String,field: String){
+    private fun categoryFilter(area:String, field: String){
         var filtering = ArrayList<SupportModel>()
 
         if(area == "전체" && field == "전체")
@@ -142,7 +162,10 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
 
     }
 
-    fun PosTaggingFilter(wordList:ArrayList<String>,search_mode: SEARCH_MODE):Boolean{
+    /**
+     * 형태소 분석기 사용한 검색
+     */
+    fun posTaggingFilter(wordList:ArrayList<String>, search_mode: SEARCH_MODE):Boolean{
         var result = false
         var filtering = ArrayList<SupportModel>()
         for(item in sList){
@@ -182,7 +205,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
         notifyDataSetChanged()
 
         if(area != null && field != null)
-            CategoryFilter(area!!, field!!)
+            categoryFilter(area!!, field!!)
     }
 
     /**

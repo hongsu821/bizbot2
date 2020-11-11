@@ -7,4 +7,417 @@
         <item>기관이름순</item>
         <item>접수마감순</item>
     </string-array>
+
+    <string-array name="category_of_business">
+        <item>업종을 선택하세요.</item>
+        <item>농업, 임업 및 어업</item>
+        <item>광업</item>
+        <item>제조업</item>
+        <item>전기, 가스, 증기 및 공기 조절 공급업</item>
+        <item>수도, 하수 및 폐기물 처리, 원료 재생업</item>
+        <item>건설업</item>
+        <item>도매 및 소매업</item>
+        <item>운수 및 창고업</item>
+        <item>숙박 및 음식점업</item>
+        <item>정보통신업</item>
+        <item>금융 및 보험업</item>
+        <item>부동산업</item>
+        <item>전문, 과학 및 기술 서비스업</item>
+        <item>사업시설 관리, 사업 지원 및 임대 서비스업</item>
+        <item>공공행정, 국방 및 사회보장 행정</item>
+        <item>교육 서비스업</item>
+        <item>보건업 및 사회복지 서비스업</item>
+        <item>예술, 스포츠 및 여가관련 서비스업</item>
+        <item>협회 및 단체, 수리 및 기타 개인 서비스업</item>
+        <item>가구 내 고용활동 및 달리 분류되지 않은 자가 소비 생산활동</item>
+        <item>국제 및 외국기관</item>
+    </string-array>
+
+    <string-array name="field">
+        <item>대분류</item>
+        <item>경영</item>
+        <item>금융</item>
+        <item>기술</item>
+        <item>내수</item>
+        <item>동반성장</item>
+        <item>수출</item>
+        <item>인력</item>
+        <item>제도</item>
+        <item>창업</item>
+    </string-array>
+    <string-array name="management">
+        <item>중분류</item>
+        <item>디자인/상품화/사업화</item>
+        <item>시설/입지지원</item>
+        <item>컨설팅</item>
+        <item>교육</item>
+        <item>정보화지원</item>
+    </string-array>
+    <string-array name="finance">
+        <item>중분류</item>
+        <item>펀드/투자</item>
+        <item>융자</item>
+        <item>보증</item>
+        <item>보험</item>
+        <item>수출/무역보험</item>
+    </string-array>
+    <string-array name="technique">
+        <item>중분류</item>
+        <item>공동기술개발</item>
+        <item>혼합(단독+공동)</item>
+        <item>기술사업회/이전/지도</item>
+        <item>시험/인증</item>
+        <item>기술정보제공</item>
+        <item>기술인력/장비지원</item>
+        <item>단독기술개발</item>
+    </string-array>
+    <string-array name="domestic_demand">
+        <item>중분류</item>
+        <item>홍보지원</item>
+        <item>공공구매</item>
+        <item>온라인판매</item>
+        <item>오프라인판매</item>
+    </string-array>
+    <string-array name="shared_growth">
+        <item>중분류</item>
+        <item>동반성장</item>
+    </string-array>
+    <string-array name="export">
+        <item>중분류</item>
+        <item>해외수출준비</item>
+        <item>해외진출</item>
+        <item>시장개척</item>
+        <item>FTA활용/대응</item>
+        <item>수출정보제공</item>
+    </string-array>
+    <string-array name="employee">
+        <item>중분류</item>
+        <item>교육/훈련/연수</item>
+        <item>인력정보제공</item>
+        <item>고용유지</item>
+        <item>고용환경개선</item>
+        <item>국내전문인력</item>
+        <item>작업환경개선</item>
+        <item>해외인력</item>
+        <item>국내일반인력</item>
+    </string-array>
+    <string-array name="system">
+        <item>중분류</item>
+        <item>인증</item>
+        <item>조세</item>
+    </string-array>
+    <string-array name="startup">
+        <item>중분류</item>
+        <item>사업화지원</item>
+        <item>창업공간지원</item>
+        <item>예비창업자지원</item>
+        <item>재기지원</item>
+        <item>창업정보제공</item>
+    </string-array>
+    
+    <string-array name="area_array">
+        <item>선택</item>
+        <item>서울특별시</item>
+        <item>부산광역시</item>
+        <item>대구광역시</item>
+        <item>인천광역시</item>
+        <item>광주광역시</item>
+        <item>대전광역시</item>
+        <item>울산광역시</item>
+        <item>세종특별자치시</item>
+        <item>강원도</item>
+        <item>경기도</item>
+        <item>충청북도</item>
+        <item>충청남도</item>
+        <item>전라북도</item>
+        <item>전라남도</item>
+        <item>경상남도</item>
+        <item>경상북도</item>
+        <item>제주특별자치도</item>
+    </string-array>
+    <string-array name="select_default">
+        <item>선택</item>
+    </string-array>
+    <string-array name="Seoul">
+        <item>선택</item>
+        <item>중구</item>
+        <item>강남구</item>
+        <item>강동구</item>
+        <item>강북구</item>
+        <item>강서구</item>
+        <item>관악구</item>
+        <item>광진구</item>
+        <item>구로구</item>
+        <item>금천구</item>
+        <item>노원구</item>
+        <item>도봉구</item>
+        <item>동작구</item>
+        <item>마포구</item>
+        <item>서초구</item>
+        <item>성동구</item>
+        <item>성북구</item>
+        <item>송파구</item>
+        <item>양천구</item>
+        <item>용산구</item>
+        <item>은평구</item>
+        <item>중랑구</item>
+        <item>종로구</item>
+        <item>동대문구</item>
+        <item>서대문구</item>
+        <item>영등포구</item>
+    </string-array>
+    <string-array name="Busan">
+        <item>선택</item>
+        <item>남구</item>
+        <item>동구</item>
+        <item>북구</item>
+        <item>서구</item>
+        <item>중구</item>
+        <item>강서구</item>
+        <item>금정구</item>
+        <item>동래구</item>
+        <item>사상구</item>
+        <item>수영구</item>
+        <item>사하구</item>
+        <item>영도구</item>
+        <item>연제구</item>
+        <item>기장군</item>
+        <item>부산진구</item>
+        <item>해운대구</item>
+    </string-array>
+    <string-array name="Dae_gu">
+        <item>선택</item>
+        <item>남구</item>
+        <item>동구</item>
+        <item>북구</item>
+        <item>중구</item>
+        <item>서구</item>
+        <item>수성구</item>
+        <item>달서구</item>
+        <item>달성군</item>
+    </string-array>
+    <string-array name="Incheon">
+        <item>선택</item>
+        <item>동구</item>
+        <item>서구</item>
+        <item>중구</item>
+        <item>계양구</item>
+        <item>남동구</item>
+        <item>부평구</item>
+        <item>연수구</item>
+        <item>미추홀구</item>
+        <item>강화군</item>
+        <item>옹진군</item>
+    </string-array>
+    <string-array name="Gwangju">
+        <item>선택</item>
+        <item>동구</item>
+        <item>서구</item>
+        <item>중구</item>
+        <item>북구</item>
+        <item>광산구</item>
+    </string-array>
+    <string-array name="Daejeon">
+        <item>선택</item>
+        <item>동구</item>
+        <item>서구</item>
+        <item>중구</item>
+        <item>유성구</item>
+        <item>대덕구</item>
+    </string-array>
+    <string-array name="Ulsan">
+        <item>선택</item>
+        <item>동구</item>
+        <item>서구</item>
+        <item>중구</item>
+        <item>북구</item>
+        <item>울주군</item>
+    </string-array>
+    <string-array name="Sejong">
+        <item>선택</item>
+        <item>세종특별자치시</item>
+    </string-array>
+    <string-array name="Gyeonggi_do">
+        <item>선택</item>
+        <item>수원시</item>
+        <item>성남시</item>
+        <item>의정부시</item>
+        <item>안양시</item>
+        <item>부천시</item>
+        <item>광명시</item>
+        <item>평택시</item>
+        <item>동두천시</item>
+        <item>안산시</item>
+        <item>고양시</item>
+        <item>과천시</item>
+        <item>구리시</item>
+        <item>남양주시</item>
+        <item>오산시</item>
+        <item>시흥시</item>
+        <item>군포시</item>
+        <item>의왕시</item>
+        <item>하남시</item>
+        <item>용인시</item>
+        <item>파주시</item>
+        <item>이천시</item>
+        <item>안성시</item>
+        <item>김포시</item>
+        <item>화성시</item>
+        <item>광주시</item>
+        <item>양주시</item>
+        <item>포천시</item>
+        <item>여주시</item>
+        <item>연천군</item>
+        <item>가평군</item>
+        <item>양평군</item>
+    </string-array>
+    <string-array name="Gangwon_do">
+        <item>선택</item>
+        <item>춘천시</item>
+        <item>원주시</item>
+        <item>강릉시</item>
+        <item>동해시</item>
+        <item>태백시</item>
+        <item>속초시</item>
+        <item>삼척시</item>
+        <item>홍천군</item>
+        <item>횡성군</item>
+        <item>영월군</item>
+        <item>평창군</item>
+        <item>정선군</item>
+        <item>철원군</item>
+        <item>화천군</item>
+        <item>양구군</item>
+        <item>인제군</item>
+        <item>고성군</item>
+        <item>양양군</item>
+    </string-array>
+    <string-array name="Chung_cheong_bukdo">
+        <item>선택</item>
+        <item>청주시</item>
+        <item>충주시</item>
+        <item>제천시</item>
+        <item>보은군</item>
+        <item>옥천군</item>
+        <item>영동군</item>
+        <item>증평군</item>
+        <item>진천군</item>
+        <item>괴산군</item>
+        <item>음성군</item>
+        <item>단양군</item>
+    </string-array>
+    <string-array name="Chungcheongnam_do">
+        <item>선택</item>
+        <item>천안시</item>
+        <item>공주시</item>
+        <item>보령시</item>
+        <item>아산시</item>
+        <item>서산시</item>
+        <item>논산시</item>
+        <item>계룡시</item>
+        <item>당진시</item>
+        <item>금산군</item>
+        <item>부여군</item>
+        <item>서천군</item>
+        <item>청양군</item>
+        <item>홍성군</item>
+        <item>예산군</item>
+        <item>태안군</item>
+    </string-array>
+    <string-array name="Jeollabuk_do">
+        <item>선택</item>
+        <item>전주시</item>
+        <item>군산시</item>
+        <item>익산시</item>
+        <item>정읍시</item>
+        <item>남원시</item>
+        <item>김제시</item>
+        <item>완주군</item>
+        <item>진안군</item>
+        <item>무주군</item>
+        <item>장수군</item>
+        <item>임실군</item>
+        <item>순창군</item>
+        <item>고창군</item>
+        <item>부안군</item>
+    </string-array>
+    <string-array name="Jeollanam_do">
+        <item>선택</item>
+        <item>목포시</item>
+        <item>여수시</item>
+        <item>순천시</item>
+        <item>나주시</item>
+        <item>광양시</item>
+        <item>담양군</item>
+        <item>곡성군</item>
+        <item>구례군</item>
+        <item>고흥군</item>
+        <item>보성군</item>
+        <item>화순군</item>
+        <item>장흥군</item>
+        <item>강진군</item>
+        <item>해남군</item>
+        <item>영암군</item>
+        <item>무안군</item>
+        <item>함평군</item>
+        <item>영광군</item>
+        <item>장성군</item>
+        <item>완도군</item>
+        <item>진도군</item>
+        <item>신안군</item>
+        <item>담양군</item>
+    </string-array>
+    <string-array name="Gyeongsangbuk_do">
+        <item>선택</item>
+        <item>포항시</item>
+        <item>경주시</item>
+        <item>김천시</item>
+        <item>안동시</item>
+        <item>구미시</item>
+        <item>영주시</item>
+        <item>영천시</item>
+        <item>상주시</item>
+        <item>문경시</item>
+        <item>경산시</item>
+        <item>군위군</item>
+        <item>의성군</item>
+        <item>청송군</item>
+        <item>영양군</item>
+        <item>영덕군</item>
+        <item>청도군</item>
+        <item>고령군</item>
+        <item>성주군</item>
+        <item>칠곡군</item>
+        <item>예천군</item>
+        <item>봉화군</item>
+        <item>울진군</item>
+        <item>울릉군</item>
+    </string-array>
+    <string-array name="Gyeongsangnam_do">
+        <item>선택</item>
+        <item>창원시</item>
+        <item>진주시</item>
+        <item>통영시</item>
+        <item>사천시</item>
+        <item>김해시</item>
+        <item>밀양시</item>
+        <item>거제시</item>
+        <item>양산시</item>
+        <item>의령군</item>
+        <item>함안군</item>
+        <item>창녕군</item>
+        <item>고성군</item>
+        <item>남해군</item>
+        <item>하동군</item>
+        <item>산청군</item>
+        <item>함양군</item>
+        <item>거창군</item>
+        <item>합천군</item>
+    </string-array>
+    <string-array name="Jeju">
+        <item>선택</item>
+        <item>제주시</item>
+        <item>서귀포시</item>
+    </string-array>
+
 </resources>

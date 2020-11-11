@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.bizbot.bizbot2">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -11,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m">
     <activity android:name=".home.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +22,9 @@
         </activity>
         <activity android:name=".home.MainActivity"/>
         <activity android:name=".search.SearchActivity"/>
+        <activity android:name=".setting.AlertSetting"/>
         <activity android:name=".setting.SettingActivity"/>
+        <activity android:name=".setting.MyInfoSetting"/>
         <activity android:name=".support.CategoryActivity"/>
         <activity android:name=".support.FavouriteActivity"/>
         <activity android:name=".support.SupportActivity"/>

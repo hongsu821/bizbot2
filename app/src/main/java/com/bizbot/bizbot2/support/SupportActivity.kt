@@ -3,23 +3,23 @@ package com.bizbot.bizbot2.support
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.*
-import android.util.Log
 import android.view.View
-import android.widget.Toast
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bizbot.bizbot2.R
 import com.bizbot.bizbot2.room.AppViewModel
 import com.bizbot.bizbot2.room.model.SupportModel
 import com.bizbot.bizbot2.search.SearchActivity
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.support_activity.*
 
 class SupportActivity: AppCompatActivity() {
+    var supportList:ArrayList<SupportModel>? = null
 
     @SuppressLint("RestrictedApi")
     @RequiresApi(Build.VERSION_CODES.M)
@@ -46,13 +46,30 @@ class SupportActivity: AppCompatActivity() {
         //데이터 가져오기
         val viewModel = ViewModelProviders.of(this).get(AppViewModel::class.java)
         viewModel.getAllSupport().observe(this, Observer {
-            supportAdapter.setList(it as ArrayList<SupportModel>)
-            support_rv.adapter = supportAdapter
-            progressBar.visibility = View.GONE
-            //총 리스트 개수 출력
-            var count = supportAdapter.getCount()
-            support_list_count.text = "총 $count 건"
+            supportList = it as ArrayList<SupportModel>
+            if(supportList != null){
+                supportAdapter.setList(supportList!!)
+                support_rv.adapter = supportAdapter
+                progressBar.visibility = View.GONE
+                //총 리스트 개수 출력
+                var count = supportAdapter.getCount()
+                support_list_count.text = "총 $count 건"
+            }
         })
+
+        //spinner
+        ArrayAdapter.createFromResource(this,R.array.sort_mode,R.layout.spinner_item)
+            .also { arrayAdapter -> arrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+                support_spinner.adapter = arrayAdapter}
+        support_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(p0: AdapterView<*>?) { }
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                if(supportList != null){
+                    supportAdapter.sort(p2)
+                    support_rv.scrollToPosition(0)
+                }
+            }
+        }
 
         //리사이클러뷰 스크롤 위치 감지
         support_rv.setOnScrollChangeListener{ view, scrollX, scrollY, oldScrollX, oldScrollY ->
@@ -61,7 +78,10 @@ class SupportActivity: AppCompatActivity() {
             else
                 top_move_btn.visibility = View.VISIBLE
         }
-
+        //top 버튼 클릭시 최상단으로 이동
+        top_move_btn.setOnClickListener {
+            support_rv.smoothScrollToPosition(0)
+        }
         //검색 버튼
         search_bar.setOnClickListener {
             startActivity(Intent(baseContext,SearchActivity::class.java))
@@ -70,10 +90,6 @@ class SupportActivity: AppCompatActivity() {
         category_menu_btn.setOnClickListener {
             startActivity(Intent(baseContext,CategoryActivity::class.java))
             finish()
-        }
-        //top 버튼 클릭시 최상단으로 이동
-        top_move_btn.setOnClickListener {
-            support_rv.smoothScrollToPosition(0)
         }
         //종료버튼
         support_close_btn.setOnClickListener {

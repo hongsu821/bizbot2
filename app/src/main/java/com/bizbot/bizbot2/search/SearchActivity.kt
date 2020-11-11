@@ -3,18 +3,14 @@ package com.bizbot.bizbot2.search
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bizbot.bizbot2.R
 import com.bizbot.bizbot2.SEARCH_MODE
 import com.bizbot.bizbot2.room.AppViewModel
-import com.bizbot.bizbot2.room.model.SearchWordModel
 import com.bizbot.bizbot2.room.model.SupportModel
 import com.bizbot.bizbot2.support.SupportListAdapter
 import kotlinx.android.synthetic.main.search_activity.*
@@ -57,14 +53,12 @@ class SearchActivity : AppCompatActivity() {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 val input = p0.toString()
-                if(input.length < 1) {
+                if(input.isEmpty()) {
                     search_clear.visibility = View.INVISIBLE
                     search_result_layout.visibility = View.GONE
                 }
                 else
                     search_clear.visibility = View.VISIBLE
-
-
             }
             override fun afterTextChanged(p0: Editable?) {}
         })
@@ -113,7 +107,7 @@ class SearchActivity : AppCompatActivity() {
 
     //검색 결과
     fun PrintSearchResult(searchMode: SEARCH_MODE,adapter:SupportListAdapter,wordList:ArrayList<String>){
-        val resultCheck = adapter.PosTaggingFilter(wordList,searchMode)
+        val resultCheck = adapter.posTaggingFilter(wordList,searchMode)
 
         if(resultCheck){
             search_result_null.visibility = View.GONE

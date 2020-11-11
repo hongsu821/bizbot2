@@ -44,6 +44,7 @@ class SynchronizationData(var context: Context) {
             val jsonArray: JSONArray = json.getJSONArray("jsonArray")
 
             val db: AppDatabase = Room.databaseBuilder(context,AppDatabase::class.java,"app_db").build()
+
            // var permit: PermitModel = db.permitDAO().getItem()
            // var sync: Date = simpleDateFormat.parse(permit.syncTime)
 

@@ -4,8 +4,10 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import com.bizbot.bizbot2.room.dao.SearchWordDAO
 import com.bizbot.bizbot2.room.dao.SupportDAO
+import com.bizbot.bizbot2.room.dao.UserModelDAO
 import com.bizbot.bizbot2.room.model.SearchWordModel
 import com.bizbot.bizbot2.room.model.SupportModel
+import com.bizbot.bizbot2.room.model.UserModel
 import java.lang.Exception
 import java.util.*
 
@@ -19,9 +21,14 @@ class AppRepository(application: Application) {
         val db = AppDatabase.getInstance(application)!!
         db.searchDAO()
     }
+    private val userModelDAO: UserModelDAO by lazy{
+        val db = AppDatabase.getInstance(application)!!
+        db.userDAO()
+    }
 
     private val supports: LiveData<List<SupportModel>> by lazy { supportDAO.getAllList() }
     private val searchWords: LiveData<List<String>> by lazy { searchWordDAO.getAllList() }
+    private val users: LiveData<UserModel> by lazy { userModelDAO.getAllItem()}
 
     //지원사업 전부 출력
     fun getAllSupports(): LiveData<List<SupportModel>>{
@@ -97,4 +104,26 @@ class AppRepository(application: Application) {
         }catch (e: Exception){e.printStackTrace()}
     }
 
+    //유저 정보 전부 출력
+    fun getAllUser(): LiveData<UserModel>{
+        return userModelDAO.getAllItem()
+    }
+    //유저 정보 수정
+    fun setUser(users: UserModel){
+        try{
+            val thread = Thread(Runnable {
+                userModelDAO.update(users)
+            })
+            thread.start()
+        }catch (e: Exception){e.printStackTrace()}
+    }
+    //유저 정보 입력
+    fun insertUser(users: UserModel){
+        try{
+            val thread = Thread(Runnable {
+                userModelDAO.insert(users)
+            })
+            thread.start()
+        }catch (e: Exception){e.printStackTrace()}
+    }
 }

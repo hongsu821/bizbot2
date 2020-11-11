@@ -11,13 +11,12 @@ class SettingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.setting_activity)
 
-        alert_setting_btn.setOnClickListener {
-            startActivity(Intent(this,AlertSetting::class.java))
-        }
-        
-        setting_close_btn.setOnClickListener {
-            finish()
-        }
+        //내정보 설정 버튼 클릭시
+        user_info_setting_btn.setOnClickListener { startActivity(Intent(this,MyInfoSetting::class.java)) }
+        //알람설정 버튼 클릭시
+        alert_setting_btn.setOnClickListener { startActivity(Intent(this,AlertSetting::class.java)) }
+        //나가기 버튼
+        setting_close_btn.setOnClickListener {  finish()  }
     }
 
     override fun onBackPressed() {

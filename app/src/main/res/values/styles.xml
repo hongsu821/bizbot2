@@ -5,6 +5,27 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:datePickerStyle">@style/date_picker_style</item>
     </style>
 
+    <style name = "EditTextTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorAccent">@color/myColor_radioBtn_true</item>
+        <item name="colorControlNormal">@color/myColor_radioBtn_false</item>
+    </style>
+
+    <style name="spinner_date_picker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:datePickerStyle">@style/date_picker_style</item>
+        <item name="colorAccent">#000000</item>
+    </style>
+    <style name="date_picker_style" parent="android:Widget.DatePicker">
+        <item name="android:datePickerMode">spinner</item>
+        <item name="android:calendarViewShown">false</item>
+    </style>
+
+    <style name="RadioButton" parent="AppTheme">
+        <item name="colorControlNormal">#A1A1A1</item>
+        <item name="colorAccent">#FFE04A</item>
+    </style>
+    <color name="myColor_radioBtn_true">#FFE04A</color>
+    <color name="myColor_radioBtn_false">#A1A1A1</color>
 </resources>

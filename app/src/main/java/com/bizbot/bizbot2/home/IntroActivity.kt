@@ -7,8 +7,12 @@ import android.os.Looper
 import android.os.Message
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.room.Room
 import com.bizbot.bizbot2.R
 import com.bizbot.bizbot2.background.SynchronizationData
+import com.bizbot.bizbot2.room.AppDatabase
+import com.bizbot.bizbot2.room.dao.UserModelDAO
+import com.bizbot.bizbot2.room.model.UserModel
 import kotlinx.android.synthetic.main.intro.*
 import kotlin.concurrent.thread
 
@@ -19,7 +23,7 @@ class IntroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.intro)
 
-        /*
+
         val thread = Thread{
             val synchronizedData  = SynchronizationData(baseContext)
             synchronizedData.SyncData()
@@ -27,9 +31,7 @@ class IntroActivity : AppCompatActivity() {
             msg.what = 1
             handler.sendMessage(msg)
         }
-        thread.start()
-
-         */
+        //thread.start()
 
         intro_loading_layout.visibility = View.GONE
         intro_logo_layout.visibility = View.VISIBLE

@@ -35,8 +35,8 @@ class FavouriteActivity : AppCompatActivity(){
         })
 
         //리사이클러뷰 스크롤 위치 감지
-        support_rv.setOnScrollChangeListener{ view, scrollX, scrollY, oldScrollX, oldScrollY ->
-            if(support_rv.computeVerticalScrollOffset() == 0)
+        favourite_rv.setOnScrollChangeListener{ view, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if(favourite_rv.computeVerticalScrollOffset() == 0)
                 top_move_btn.visibility = View.GONE
             else
                 top_move_btn.visibility = View.VISIBLE
@@ -44,7 +44,7 @@ class FavouriteActivity : AppCompatActivity(){
 
         //top 버튼 클릭시 최상단으로 이동
         top_move_btn.setOnClickListener {
-            support_rv.smoothScrollToPosition(0)
+            favourite_rv.smoothScrollToPosition(0)
         }
         //뒤로가기 버튼
         favourite_close_btn.setOnClickListener {
