@@ -33,6 +33,7 @@ class IntroActivity : AppCompatActivity() {
         }
         //thread.start()
 
+
         intro_loading_layout.visibility = View.GONE
         intro_logo_layout.visibility = View.VISIBLE
         //2초후 메인 액티비티로 이동
@@ -43,6 +44,8 @@ class IntroActivity : AppCompatActivity() {
 
         handler = Handler(Looper.myLooper()!!){
             if(it.what == 1){
+
+
 
             }
             true

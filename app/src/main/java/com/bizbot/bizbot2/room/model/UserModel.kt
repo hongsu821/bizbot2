@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull
 class UserModel(
     @PrimaryKey @NotNull var id:Int,
     @ColumnInfo(name = "business_type") var businessType: Int?, //사업자 유형
+    @ColumnInfo(name = "business_name") var businessName: String?, //사업체명
     var establishment: String?, //창립일
     var name: String?, //대표자 이름
     var gender: Int?, //성별
