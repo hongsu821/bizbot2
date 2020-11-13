@@ -22,10 +22,9 @@ import java.util.*
 class SynchronizationData(var context: Context) {
     private val TAG = "SynchronizationData"
 
-    val simpleDateFormat: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
-
     fun SyncData(): Int{
         val supportURL = "http://www.bizinfo.go.kr/uss/rss/bizPersonaRss.do?dataType=json"
+        val simpleDateFormat: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
 
         try{
             var start = System.currentTimeMillis()
@@ -40,8 +39,8 @@ class SynchronizationData(var context: Context) {
             val jsonString = inputStream.bufferedReader().use { it.readText() }
              */
 
-            val json = JSONObject(line)
-            val jsonArray: JSONArray = json.getJSONArray("jsonArray")
+            val json:JSONObject? = JSONObject(line)
+            val jsonArray: JSONArray = json?.getJSONArray("jsonArray")!!
 
             val db: AppDatabase = Room.databaseBuilder(context,AppDatabase::class.java,"app_db").build()
 
@@ -52,7 +51,7 @@ class SynchronizationData(var context: Context) {
                 val jsonObject: JSONObject = jsonArray.getJSONObject(i)
                 val supportItem: SupportModel = JsonParsing_support(jsonObject)
 
-                val create: Date = simpleDateFormat.parse(supportItem.creatPnttm)
+                val create: Date= simpleDateFormat.parse(supportItem.creatPnttm)
                // val differentTime: Long = sync.time - create.time
                // val differentDay: Long = differentTime/(24*60*60*1000)
 

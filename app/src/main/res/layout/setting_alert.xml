@@ -33,42 +33,106 @@
 
     </LinearLayout>
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/layout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
-        <LinearLayout
+        android:orientation="horizontal">
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="알림 받을 분야"
-                android:textColor="#424242"
-                android:textSize="18sp"
-                android:padding="12dp"/>
+            android:layout_weight="1"
+            android:text="알림 받기"
+            android:textColor="#424242"
+            android:textSize="18sp"
+            android:padding="12dp"/>
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/alert_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:textOn=" "
+            android:textOff=" " />
+    </LinearLayout>
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
             <LinearLayout
-                android:id="@+id/field_of_business"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="22dp"
-                android:paddingRight="22dp">
-                <Spinner
-                    android:id="@+id/large_spinner"
-                    android:layout_width="wrap_content"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#474747"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="2dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:spinnerMode="dropdown"/>
-                <Spinner
-                    android:id="@+id/medium_spinner"
-                    android:layout_width="wrap_content"
+                    android:text="알림 받을 분야"
+                    android:textColor="#424242"
+                    android:textSize="18sp"
+                    android:padding="12dp"/>
+                <LinearLayout
+                    android:id="@+id/field_of_business"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:spinnerMode="dropdown"/>
+                    android:paddingLeft="22dp"
+                    android:paddingRight="22dp">
+                    <Spinner
+                        android:id="@+id/large_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:spinnerMode="dropdown"/>
+                    <Spinner
+                        android:id="@+id/medium_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:spinnerMode="dropdown"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="알림 받을 키워드"
+                    android:textColor="#424242"
+                    android:textSize="18sp"
+                    android:padding="12dp"/>
+                <EditText
+                    android:id="@+id/keyword1_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginRight="22dp"
+                    android:theme="@style/EditTextTheme"
+                    android:textColor="#000000"
+                    android:hint="1."/>
+                <EditText
+                    android:id="@+id/keyword2_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginRight="22dp"
+                    android:theme="@style/EditTextTheme"
+                    android:textColor="#000000"
+                    android:hint="2."/>
+                <EditText
+                    android:id="@+id/keyword3_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginRight="22dp"
+                    android:theme="@style/EditTextTheme"
+                    android:textColor="#000000"
+                    android:hint="3."/>
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
 
 
 </LinearLayout>

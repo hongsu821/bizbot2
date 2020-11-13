@@ -12,6 +12,9 @@ interface PermitDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(permitModel: PermitModel)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun update(permitModel: PermitModel)
+
     @Query("UPDATE permit SET alert = :check")
     fun setAlert(check:Boolean)
 

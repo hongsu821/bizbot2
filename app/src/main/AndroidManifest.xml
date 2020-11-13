@@ -4,6 +4,7 @@
     package="com.bizbot.bizbot2">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
         android:allowBackup="true"
@@ -30,6 +31,8 @@
         <activity android:name=".support.SupportActivity"/>
         <activity android:name=".support.SupportDetail"/>
         <activity android:name=".partner.PartnerActivity"/>
+        <service android:name=".background.LoadDataJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
     </application>
 
 </manifest>

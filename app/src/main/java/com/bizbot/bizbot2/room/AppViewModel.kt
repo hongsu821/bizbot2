@@ -3,6 +3,7 @@ package com.bizbot.bizbot2.room
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import com.bizbot.bizbot2.room.model.PermitModel
 import com.bizbot.bizbot2.room.model.SearchWordModel
 import com.bizbot.bizbot2.room.model.SupportModel
 import com.bizbot.bizbot2.room.model.UserModel
@@ -14,6 +15,8 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     private val likeList = repository.getLikeList()
     private val searchWords = repository.getAllSearch()
     private val users = repository.getAllUser()
+    private val permits = repository.getAllPermit()
+
 
     fun getAllSupport(): LiveData<List<SupportModel>>{
         return this.supports
@@ -25,6 +28,18 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     fun setNew(check: Boolean, id: String){
         repository.setNew(check,id)
+    }
+
+    fun insertPermit(permitModel: PermitModel){
+        repository.insertPermit(permitModel)
+    }
+
+    fun updatePermit(permitModel: PermitModel){
+        repository.updatePermit(permitModel)
+    }
+
+    fun getAllPermit(): LiveData<PermitModel>{
+        return this.permits
     }
 
     fun setLike(check: Boolean, id: String){

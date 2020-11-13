@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bizbot.bizbot2.R
 import com.bizbot.bizbot2.SEARCH_MODE
 import com.bizbot.bizbot2.room.AppViewModel
+import com.bizbot.bizbot2.room.model.SearchWordModel
 import com.bizbot.bizbot2.room.model.SupportModel
 import com.bizbot.bizbot2.support.SupportListAdapter
 import kotlinx.android.synthetic.main.search_activity.*
@@ -66,13 +67,15 @@ class SearchActivity : AppCompatActivity() {
         //검색 버튼 클릭
         search_button.setOnClickListener {
             val inStr = search_edit_bar.text.toString()
+            val word = SearchWordModel(inStr)
+            viewModel.insertSearch(word)
 
             resultWords = PosTagging(inStr)
             search_result_layout.visibility = View.VISIBLE
             var line = ""
             for(word in resultWords)
                 line += "$word, "
-            line.substring(0,line.length-3)
+
             search_analysis_word.text = line
 
             PrintSearchResult(SEARCH_MODE.TITLE,searchResultAdapter,resultWords)

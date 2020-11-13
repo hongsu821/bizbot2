@@ -2,7 +2,6 @@ package com.bizbot.bizbot2.setting
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -16,7 +15,11 @@ import com.bizbot.bizbot2.room.model.UserModel
 import kotlinx.android.synthetic.main.setting_myinfo.*
 import java.util.*
 
-class MyInfoSetting():AppCompatActivity() {
+class MyInfoSetting:AppCompatActivity() {
+    companion object{
+        private val TAG = "MyInfoSetting"
+    }
+
     var userInfo: UserModel? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +39,7 @@ class MyInfoSetting():AppCompatActivity() {
         viewModel.getAllUser().observe(this, Observer { userModel ->
             userInfo = userModel
 
-            //Log.d("MyInfoSetting", "observe userInfo = ${userInfo?.id}, ${userInfo?.businessType}, ${userInfo?.businessName}, ${userInfo?.establishment}, " +
+            //Log.d(TAG, "observe userInfo = ${userInfo?.id}, ${userInfo?.businessType}, ${userInfo?.businessName}, ${userInfo?.establishment}, " +
             //        "${userInfo?.name}, ${userInfo?.gender}, ${userInfo?.birth}, ${userInfo?.businessCategory}, ${userInfo?.city}, ${userInfo?.area}")
 
             //사업자 유형 출력
@@ -152,10 +155,11 @@ class MyInfoSetting():AppCompatActivity() {
                     16-> arrayID = R.array.Gyeongsangnam_do
                     17-> arrayID = R.array.Jeju
                 }
+
             }
         }
 
-        if(arrayID != null) {
+        if(arrayID!=null){
             ArrayAdapter.createFromResource(baseContext, arrayID!!, R.layout.setting_spinner_item)
                 .also { arrayAdapter -> arrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
                     city_spinner.adapter = arrayAdapter
@@ -168,12 +172,12 @@ class MyInfoSetting():AppCompatActivity() {
             }
         }
 
+
         //수정완료버튼
         modify_ok_btn.setOnClickListener {
-            //Toast.makeText(this,"btn click",Toast.LENGTH_SHORT).show()
             user.name = ceo_name_et.text.toString()
             user.businessName = business_name_et.text.toString()
-            //Log.d("MyInfoSetting", "onCreate : ${user.id}, ${user.businessType}, ${user.businessName}, ${user.establishment}, ${user.name}, " +
+            //Log.d(TAG, "onCreate : ${user.id}, ${user.businessType}, ${user.businessName}, ${user.establishment}, ${user.name}, " +
             //        "${user.gender}, ${user.birth}, ${user.businessCategory}, ${user.city}, ${user.area}")
             viewModel.insertUser(user)
 

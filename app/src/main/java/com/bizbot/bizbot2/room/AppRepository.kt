@@ -2,13 +2,18 @@ package com.bizbot.bizbot2.room
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import com.bizbot.bizbot2.room.dao.PermitDAO
 import com.bizbot.bizbot2.room.dao.SearchWordDAO
 import com.bizbot.bizbot2.room.dao.SupportDAO
 import com.bizbot.bizbot2.room.dao.UserModelDAO
+import com.bizbot.bizbot2.room.model.PermitModel
 import com.bizbot.bizbot2.room.model.SearchWordModel
 import com.bizbot.bizbot2.room.model.SupportModel
 import com.bizbot.bizbot2.room.model.UserModel
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.Main
 import java.lang.Exception
+import java.lang.Runnable
 import java.util.*
 
 class AppRepository(application: Application) {
@@ -21,14 +26,17 @@ class AppRepository(application: Application) {
         val db = AppDatabase.getInstance(application)!!
         db.searchDAO()
     }
+    private val permitDAO: PermitDAO by lazy {
+        val db = AppDatabase.getInstance(application)!!
+        db.permitDAO()
+    }
     private val userModelDAO: UserModelDAO by lazy{
         val db = AppDatabase.getInstance(application)!!
         db.userDAO()
     }
 
-    private val supports: LiveData<List<SupportModel>> by lazy { supportDAO.getAllList() }
-    private val searchWords: LiveData<List<String>> by lazy { searchWordDAO.getAllList() }
-    private val users: LiveData<UserModel> by lazy { userModelDAO.getAllItem()}
+    private val viewModelJob = Job()
+    private val viewModelScope = CoroutineScope(Main+viewModelJob)
 
     //지원사업 전부 출력
     fun getAllSupports(): LiveData<List<SupportModel>>{
@@ -42,8 +50,31 @@ class AppRepository(application: Application) {
             })
             thread.start()
         }catch (e: Exception){e.printStackTrace()}
+
     }
 
+    //알림 설정 입력
+    fun insertPermit(permitModel: PermitModel){
+        try{
+            val thread = Thread(Runnable {
+                permitDAO.insert(permitModel)
+            })
+            thread.start()
+        }catch (e: Exception){e.printStackTrace()}
+    }
+    //알림 설정 업데이트
+    fun updatePermit(permitModel: PermitModel){
+        try{
+            val thread = Thread(Runnable {
+                permitDAO.update(permitModel)
+            })
+            thread.start()
+        }catch (e: Exception){e.printStackTrace()}
+    }
+    //알림 설정 전체 출력
+    fun getAllPermit():LiveData<PermitModel>{
+        return permitDAO.getAll()
+    }
     //새 게시글 설정
     fun setNew(check: Boolean, id: String){
         try{
@@ -53,6 +84,7 @@ class AppRepository(application: Application) {
             thread.start()
         }catch (e: Exception){e.printStackTrace()}
     }
+
 
     //관심사업 전부 출력
     fun getLikeList(): LiveData<List<SupportModel>>{
@@ -67,6 +99,7 @@ class AppRepository(application: Application) {
             thread.start()
         }catch (e: Exception){e.printStackTrace()}
     }
+
 
     //검색어 전부 출력
     fun getAllSearch(): LiveData<List<String>>{
@@ -84,6 +117,7 @@ class AppRepository(application: Application) {
             })
             thread.start()
         }catch (e: Exception){e.printStackTrace()}
+
     }
     //검색어 전체 삭제
     fun delSearchAll(){
@@ -103,6 +137,7 @@ class AppRepository(application: Application) {
             thread.start()
         }catch (e: Exception){e.printStackTrace()}
     }
+
 
     //유저 정보 전부 출력
     fun getAllUser(): LiveData<UserModel>{
