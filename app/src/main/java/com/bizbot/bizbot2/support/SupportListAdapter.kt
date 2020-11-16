@@ -2,6 +2,7 @@ package com.bizbot.bizbot2.support
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,9 @@ import kotlin.collections.ArrayList
 
 class SupportListAdapter(var context: Context,var activity:FragmentActivity,var area: String?, var field: String?)
     : RecyclerView.Adapter<SupportListAdapter.ViewHolder>() {
+    companion object{
+        private val TAG = "SupportListAdapter"
+    }
     lateinit var filterList : ArrayList<SupportModel>
     lateinit var sList : ArrayList<SupportModel>
 
@@ -75,7 +79,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
         val viewManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
         holder.keyWord.layoutManager = viewManager
         holder.keyWord.setHasFixedSize(true)
-        holder.keyWord.adapter = KeywordAdapter(context,slicingWord(items),field)
+        holder.keyWord.adapter = KeywordAdapter(context,slicingKeyWord(items),field)
 
     }
 
@@ -101,7 +105,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
     /**
      * 키워드에 쓰일 단어 자르는 함수
      */
-    private fun slicingWord(str: SupportModel): List<String>? {
+    private fun slicingKeyWord(str: SupportModel): List<String>? {
         val arr1 = str.pldirSportRealmLclasCodeNm?.split("@")
         val arr2 = str.pldirSportRealmMlsfcCodeNm?.split("@")
         val wordList = arr1?.plus(arr2!!)
@@ -115,7 +119,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
     fun sort(num:Int){
         when(num){
             1->{ //최신순 정렬
-                filterList.sortBy { it.creatPnttm }
+                filterList.sortByDescending { it.creatPnttm }
             }
             2->{ //제목순 정렬
                 filterList.sortBy { it.pblancNm }
@@ -124,10 +128,24 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
                 filterList.sortBy { it.jrsdInsttNm }
             }
             4->{ //접수기간 마감순 정렬
-                filterList.sortBy { it.reqstBeginEndDe }
+                filterList.sortBy { cutTermWords(it.reqstBeginEndDe) }
             }
         }
         notifyDataSetChanged()
+    }
+
+    /**
+     * 접수기간 문자열 가공
+     */
+    fun cutTermWords(term: String?):String{
+        val word = term?.split("~")
+        var termEnd:String?
+        if(word?.size!! > 1) //기간이 있을때
+            termEnd = word[1]
+        else //상시 모집일때
+            termEnd = word[0]
+
+        return termEnd
     }
 
     /**

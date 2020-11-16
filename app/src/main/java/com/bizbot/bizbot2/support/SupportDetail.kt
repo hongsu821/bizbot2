@@ -81,7 +81,7 @@ class SupportDetail:AppCompatActivity() {
         for(word in arr5)
             line5 += "$word "
 
-        val arr6 = line5.split("<div>")
+        val arr6 = line5.split("</div>")
         var line6 = ""
         for(word in arr6)
             line6 += "$word "
