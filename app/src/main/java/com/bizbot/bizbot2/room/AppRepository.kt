@@ -35,8 +35,6 @@ class AppRepository(application: Application) {
         db.userDAO()
     }
 
-    private val viewModelJob = Job()
-    private val viewModelScope = CoroutineScope(Main+viewModelJob)
 
     //지원사업 전부 출력
     fun getAllSupports(): LiveData<List<SupportModel>>{
@@ -52,6 +50,16 @@ class AppRepository(application: Application) {
         }catch (e: Exception){e.printStackTrace()}
 
     }
+    //새 게시글 설정
+    fun setNew(check: Boolean, id: String){
+        try{
+            val thread = Thread(Runnable {
+                supportDAO.setNew(check,id)
+            })
+            thread.start()
+        }catch (e: Exception){e.printStackTrace()}
+    }
+
 
     //알림 설정 입력
     fun insertPermit(permitModel: PermitModel){
@@ -74,15 +82,6 @@ class AppRepository(application: Application) {
     //알림 설정 전체 출력
     fun getAllPermit():LiveData<PermitModel>{
         return permitDAO.getAll()
-    }
-    //새 게시글 설정
-    fun setNew(check: Boolean, id: String){
-        try{
-            val thread = Thread(Runnable {
-                supportDAO.setNew(check,id)
-            })
-            thread.start()
-        }catch (e: Exception){e.printStackTrace()}
     }
 
 

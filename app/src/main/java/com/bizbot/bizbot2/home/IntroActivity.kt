@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
@@ -32,6 +33,9 @@ import java.util.concurrent.TimeUnit
 import kotlin.system.exitProcess
 
 class IntroActivity : AppCompatActivity() {
+    companion object{
+        private val TAG = "IntroActivity"
+    }
 
     lateinit var introHandler:Handler
     val msg = Message()
@@ -40,14 +44,12 @@ class IntroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.intro)
 
-        customDialog(this)
-
         val dbPath = baseContext.getDatabasePath("app_db")
 
         if(!dbPath.exists()){
-            initData()
+            initData(this)
         }else{
-            //nextActivity()
+            nextActivity()
         }
 
         //val co = CoroutineTest()
@@ -62,6 +64,7 @@ class IntroActivity : AppCompatActivity() {
             }
             true
         }
+
         val JOB_ID = 1001
         val js = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
         val serviceComponent = ComponentName(this, LoadDataJobService::class.java)
@@ -73,8 +76,19 @@ class IntroActivity : AppCompatActivity() {
 
     }
 
+    //서버에서 데이터 불러오기
+    private fun initData(context: Context) {
+        customDialog(context)
+        GlobalScope.launch(Dispatchers.IO) {
+            val synchronizedData = SynchronizationData(baseContext)
+            msg.what = synchronizedData.SyncData()
+            introHandler.sendMessage(msg)
+        }
+    }
+
+    //알림 설정 다이얼로그
     private fun customDialog(context: Context){
-        val permitModel = PermitModel(0,false,"","",0,0)
+        val permitModel = PermitModel(0,false,null,null,0,0)
 
         val builder = AlertDialog.Builder(context)
         val mView = LayoutInflater.from(context).inflate(R.layout.intro_dialog_layout,null)
@@ -89,33 +103,28 @@ class IntroActivity : AppCompatActivity() {
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
         permitModel.syncTime = simpleDateFormat.format(syncDate)
 
-        val viewModel = ViewModelProviders.of(this).get(AppViewModel::class.java)
-
         yesBtn.setOnClickListener {
             Toast.makeText(context,"비즈봇의 광고성 정보 수신동의가 처리되었습니다.(${permitModel.syncTime})",Toast.LENGTH_SHORT).show()
             permitModel.alert = true
-            viewModel.insertPermit(permitModel)
+            DB_IO(permitModel)
             dialog.dismiss()
-            msg.what = 1
-            introHandler.sendMessage(msg)
         }
 
         noBtn.setOnClickListener {
             Toast.makeText(context,"비즈봇의 광고성 정보 수신거절이 처리되었습니다.(${permitModel.syncTime})",Toast.LENGTH_SHORT).show()
             permitModel.alert = false
-            viewModel.insertPermit(permitModel)
+            DB_IO(permitModel)
             dialog.dismiss()
-            msg.what = 1
-            introHandler.sendMessage(msg)
         }
 
     }
 
-    //서버에서 데이터 불러오기
-    private fun initData() {
+    //알림설정, 동기화 시간 저장
+    private fun DB_IO(permitModel: PermitModel){
         GlobalScope.launch(Dispatchers.IO) {
-            val synchronizedData = SynchronizationData(baseContext)
-            msg.what = synchronizedData.SyncData()
+            val db = Room.databaseBuilder(baseContext,AppDatabase::class.java,"app_db").build()
+            db.permitDAO().insert(permitModel)
+            msg.what = 1
             introHandler.sendMessage(msg)
         }
     }

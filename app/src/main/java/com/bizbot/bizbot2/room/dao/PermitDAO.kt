@@ -9,7 +9,7 @@ import com.bizbot.bizbot2.room.model.PermitModel
 
 @Dao
 interface PermitDAO {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(permitModel: PermitModel)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -21,12 +21,14 @@ interface PermitDAO {
     @Query("UPDATE permit SET syncTime = :time")
     fun setSyncTime(time: String)
 
-    @Query("SELECT * FROM permit WHERE id = 1")
+    @Query("SELECT * FROM permit")
     fun getAll(): LiveData<PermitModel>
 
-    @Query("SELECT alert FROM permit WHERE id = 1")
+    @Query("SELECT alert FROM permit")
     fun isAlertCheck(): Boolean
 
-    @Query("SELECT * FROM permit")
-    fun getItem(): PermitModel
+
+
+
+
 }

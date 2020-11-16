@@ -2,6 +2,7 @@ package com.bizbot.bizbot2.setting
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -21,6 +22,7 @@ class MyInfoSetting:AppCompatActivity() {
     }
 
     var userInfo: UserModel? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.setting_myinfo)
@@ -82,7 +84,8 @@ class MyInfoSetting:AppCompatActivity() {
             userInfo?.area?.let { area_spinner.setSelection(it) }
             userInfo?.city?.let { city_spinner.setSelection(it) }
         })
-
+        Log.d(TAG, "observe userInfo = ${userInfo?.id}, ${userInfo?.businessType}, ${userInfo?.businessName}, ${userInfo?.establishment}, " +
+                "${userInfo?.name}, ${userInfo?.gender}, ${userInfo?.birth}, ${userInfo?.businessCategory}, ${userInfo?.city}, ${userInfo?.area}")
         val user = UserModel(0,0,"","","",0,"",0,0,0)
 
         //사업자 유형
@@ -127,10 +130,14 @@ class MyInfoSetting:AppCompatActivity() {
         }
 
         //지역 스피너
-        var arrayID:Int? = null
+        var arrayID:Int = R.array.select_default
         ArrayAdapter.createFromResource(this, R.array.area_array, R.layout.setting_spinner_item)
             .also { arrayAdapter -> arrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
                 area_spinner.adapter = arrayAdapter}
+        ArrayAdapter.createFromResource(baseContext, arrayID, R.layout.setting_spinner_item)
+            .also { arrayAdapter -> arrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+                city_spinner.adapter = arrayAdapter
+            }
         area_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) { }
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
@@ -155,20 +162,13 @@ class MyInfoSetting:AppCompatActivity() {
                     16-> arrayID = R.array.Gyeongsangnam_do
                     17-> arrayID = R.array.Jeju
                 }
-
+                setSpinner(arrayID)
             }
         }
-
-        if(arrayID!=null){
-            ArrayAdapter.createFromResource(baseContext, arrayID!!, R.layout.setting_spinner_item)
-                .also { arrayAdapter -> arrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
-                    city_spinner.adapter = arrayAdapter
-                }
-            city_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-                override fun onNothingSelected(p0: AdapterView<*>?) { }
-                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    user.city = p2
-                }
+        city_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(p0: AdapterView<*>?) { }
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                user.city = p2
             }
         }
 
@@ -186,5 +186,11 @@ class MyInfoSetting:AppCompatActivity() {
         myinfo_close_btn.setOnClickListener { finish() }
     }
 
+    fun setSpinner(arrayID:Int){
+        ArrayAdapter.createFromResource(baseContext, arrayID, R.layout.setting_spinner_item)
+            .also { arrayAdapter -> arrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+                city_spinner.adapter = arrayAdapter
+            }
+    }
 
 }

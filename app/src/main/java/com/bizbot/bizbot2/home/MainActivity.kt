@@ -3,6 +3,7 @@ package com.bizbot.bizbot2.home
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -20,6 +21,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.main_activity.*
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+    companion object{
+        private val TAG = "MainActivity"
+    }
     private lateinit var viewAdapter: RecyclerView.Adapter<AdvertisingAdapter.ViewHolder>
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var viewModel: AppViewModel
@@ -44,6 +48,16 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         ad_list_rv.layoutManager = viewManager
         ad_list_rv.setHasFixedSize(true)
 
+        /**
+         * 테스트용
+         */
+
+        viewModel.getAllPermit().observe(this, Observer {
+            Log.d(TAG, "permitModel = ${it.id}, ${it.alert},${it.syncTime}, ${it.field}, ${it.subclass}, ${it.keyword}")
+        })
+
+        /**
+         */
 
         //하단 네비게이션바
         bottom_navigation.setOnNavigationItemSelectedListener(this)
