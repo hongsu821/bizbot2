@@ -1,30 +1,22 @@
 package com.bizbot.bizbot2.background
 
-import android.app.Activity
 import android.content.Context
-import android.content.res.AssetManager
 import android.util.Log
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.bizbot.bizbot2.room.AppDatabase
-import com.bizbot.bizbot2.room.AppViewModel
-import com.bizbot.bizbot2.room.model.PermitModel
 import com.bizbot.bizbot2.room.model.SupportModel
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.io.InputStream
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SynchronizationData(var context: Context) {
+class InitData(var context: Context) {
     private val TAG = "SynchronizationData"
 
-    fun SyncData(): Int{
+    fun init(): Int{
         val supportURL = "http://www.bizinfo.go.kr/uss/rss/bizPersonaRss.do?dataType=json"
-        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
 
         try{
             val start = System.currentTimeMillis()
@@ -33,24 +25,20 @@ class SynchronizationData(var context: Context) {
             val requestURLConnection = RequestURLConnection(supportURL)
             val line = requestURLConnection.DataLoad()
 
+            /*디버깅용
+            val assetManager = context.assets
+            val inputStream= assetManager.open("data.json")
+            val jsonString = inputStream.bufferedReader().use { it.readText() }
+             */
+
             val json:JSONObject? = JSONObject(line)
             val jsonArray: JSONArray = json?.getJSONArray("jsonArray")!!
 
             val db: AppDatabase = Room.databaseBuilder(context,AppDatabase::class.java,"app_db").build()
 
-            val permit: PermitModel = db.permitDAO().getItem()
-            val sync: Date = simpleDateFormat.parse(permit.syncTime)
-
             for(i in 0 until jsonArray.length()){
                 val jsonObject: JSONObject = jsonArray.getJSONObject(i)
                 val supportItem: SupportModel = JsonParsing_support(jsonObject)
-
-                val create: Date= simpleDateFormat.parse(supportItem.creatPnttm)
-                val differentTime: Long = sync.time - create.time
-                val differentDay: Long = differentTime/(24*60*60*1000)
-
-               supportItem.checkNew = differentDay <= 2
-
                 db.supportDAO().insert(supportItem)
             }
 
@@ -61,6 +49,7 @@ class SynchronizationData(var context: Context) {
             db.close()
 
             return 1
+
         }catch (e: JSONException){
             e.printStackTrace()
             return 0

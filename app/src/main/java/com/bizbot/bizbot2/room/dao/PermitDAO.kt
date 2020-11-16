@@ -27,7 +27,8 @@ interface PermitDAO {
     @Query("SELECT alert FROM permit")
     fun isAlertCheck(): Boolean
 
-
+    @Query("SELECT * FROM permit")
+    fun getItem(): PermitModel
 
 
 

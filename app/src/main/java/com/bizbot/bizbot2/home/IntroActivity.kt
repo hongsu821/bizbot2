@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.room.Room
 import com.bizbot.bizbot2.R
+import com.bizbot.bizbot2.background.InitData
 import com.bizbot.bizbot2.background.LoadDataJobService
 import com.bizbot.bizbot2.background.SynchronizationData
 import com.bizbot.bizbot2.room.AppDatabase
@@ -35,6 +36,7 @@ import kotlin.system.exitProcess
 class IntroActivity : AppCompatActivity() {
     companion object{
         private val TAG = "IntroActivity"
+        val JOB_ID = 1001
     }
 
     lateinit var introHandler:Handler
@@ -49,6 +51,7 @@ class IntroActivity : AppCompatActivity() {
         if(!dbPath.exists()){
             initData(this)
         }else{
+            sync()
             nextActivity()
         }
 
@@ -65,23 +68,16 @@ class IntroActivity : AppCompatActivity() {
             true
         }
 
-        val JOB_ID = 1001
-        val js = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-        val serviceComponent = ComponentName(this, LoadDataJobService::class.java)
-        val jobInfo = JobInfo.Builder(JOB_ID,serviceComponent)
-            .setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE) //와이파이일때
-            .setPeriodic(TimeUnit.MINUTES.toMillis(30)) //30분마다
-            .build()
-        js.schedule(jobInfo)
+
 
     }
 
-    //서버에서 데이터 불러오기
+    //초기 데이터 불러오기
     private fun initData(context: Context) {
         customDialog(context)
         GlobalScope.launch(Dispatchers.IO) {
-            val synchronizedData = SynchronizationData(baseContext)
-            msg.what = synchronizedData.SyncData()
+            val initData = InitData(baseContext)
+            msg.what = initData.init()
             introHandler.sendMessage(msg)
         }
     }
@@ -107,6 +103,15 @@ class IntroActivity : AppCompatActivity() {
             Toast.makeText(context,"비즈봇의 광고성 정보 수신동의가 처리되었습니다.(${permitModel.syncTime})",Toast.LENGTH_SHORT).show()
             permitModel.alert = true
             DB_IO(permitModel)
+
+            val js = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
+            val serviceComponent = ComponentName(this, LoadDataJobService::class.java)
+            val jobInfo = JobInfo.Builder(JOB_ID,serviceComponent)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE) //와이파이일때
+                .setPeriodic(TimeUnit.MINUTES.toMillis(30)) //30분마다
+                .build()
+            js.schedule(jobInfo)
+
             dialog.dismiss()
         }
 
@@ -124,8 +129,6 @@ class IntroActivity : AppCompatActivity() {
         GlobalScope.launch(Dispatchers.IO) {
             val db = Room.databaseBuilder(baseContext,AppDatabase::class.java,"app_db").build()
             db.permitDAO().insert(permitModel)
-            msg.what = 1
-            introHandler.sendMessage(msg)
         }
     }
 
@@ -140,6 +143,12 @@ class IntroActivity : AppCompatActivity() {
         },1500L)
     }
 
-
+    //백그라운드로 데이터 받기
+    private fun sync(){
+        GlobalScope.launch(Dispatchers.IO) {
+            val synchronizationData = SynchronizationData(baseContext)
+            synchronizationData.SyncData()
+        }
+    }
 
 }
