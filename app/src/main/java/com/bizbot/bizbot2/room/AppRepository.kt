@@ -42,42 +42,31 @@ class AppRepository(application: Application) {
     }
     //지원사업 입력
     fun insertSupport(supports: SupportModel){
-        try{
-            val thread = Thread(Runnable {
-                supportDAO.insert(supports)
-            })
-            thread.start()
-        }catch (e: Exception){e.printStackTrace()}
+        CoroutineScope(Dispatchers.IO).launch {
+            supportDAO.insert(supports)
+        }
 
     }
     //새 게시글 설정
     fun setNew(check: Boolean, id: String){
-        try{
-            val thread = Thread(Runnable {
-                supportDAO.setNew(check,id)
-            })
-            thread.start()
-        }catch (e: Exception){e.printStackTrace()}
+        CoroutineScope(Dispatchers.IO).launch {
+            supportDAO.setNew(check,id)
+        }
     }
 
 
     //알림 설정 입력
     fun insertPermit(permitModel: PermitModel){
-        try{
-            val thread = Thread(Runnable {
-                permitDAO.insert(permitModel)
-            })
-            thread.start()
-        }catch (e: Exception){e.printStackTrace()}
+        CoroutineScope(Dispatchers.IO).launch {
+            permitDAO.insert(permitModel)
+        }
     }
     //알림 설정 업데이트
     fun updatePermit(permitModel: PermitModel){
-        try{
-            val thread = Thread(Runnable {
-                permitDAO.update(permitModel)
-            })
-            thread.start()
-        }catch (e: Exception){e.printStackTrace()}
+        CoroutineScope(Dispatchers.IO).launch {
+            permitDAO.update(permitModel)
+        }
+
     }
     //알림 설정 전체 출력
     fun getAllPermit():LiveData<PermitModel>{
@@ -91,12 +80,9 @@ class AppRepository(application: Application) {
     }
     //관심사업 설정
     fun setLike(check: Boolean, id: String){
-        try{
-            val thread = Thread(Runnable {
-                supportDAO.setLike(check,id)
-            })
-            thread.start()
-        }catch (e: Exception){e.printStackTrace()}
+        CoroutineScope(Dispatchers.IO).launch {
+            supportDAO.setLike(check,id)
+        }
     }
 
 
@@ -110,31 +96,21 @@ class AppRepository(application: Application) {
     }
     //검색어 입력
     fun insertSearch(word: SearchWordModel){
-        try{
-            val thread = Thread(Runnable {
-                searchWordDAO.insert(word)
-            })
-            thread.start()
-        }catch (e: Exception){e.printStackTrace()}
-
+        CoroutineScope(Dispatchers.IO).launch {
+            searchWordDAO.insert(word)
+        }
     }
     //검색어 전체 삭제
     fun delSearchAll(){
-        try{
-            val thread = Thread(Runnable {
-                searchWordDAO.deleteAll()
-            })
-            thread.start()
-        }catch (e: Exception){e.printStackTrace()}
+        CoroutineScope(Dispatchers.IO).launch {
+            searchWordDAO.deleteAll()
+        }
     }
     //검색어 하나만 삭제
     fun delSearchItem(word: String){
-        try{
-            val thread = Thread(Runnable {
-                searchWordDAO.deleteItem(word)
-            })
-            thread.start()
-        }catch (e: Exception){e.printStackTrace()}
+        CoroutineScope(Dispatchers.IO).launch {
+            searchWordDAO.deleteItem(word)
+        }
     }
 
 
@@ -144,21 +120,15 @@ class AppRepository(application: Application) {
     }
     //유저 정보 수정
     fun setUser(users: UserModel){
-        try{
-            val thread = Thread(Runnable {
-                userModelDAO.update(users)
-            })
-            thread.start()
-        }catch (e: Exception){e.printStackTrace()}
+        CoroutineScope(Dispatchers.IO).launch {
+            userModelDAO.update(users)
+        }
     }
     //유저 정보 입력
     fun insertUser(users: UserModel){
-        try{
-            val thread = Thread(Runnable {
-                userModelDAO.insert(users)
-            })
-            thread.start()
-        }catch (e: Exception){e.printStackTrace()}
+        CoroutineScope(Dispatchers.IO).launch {
+            userModelDAO.insert(users)
+        }
     }
 
 }

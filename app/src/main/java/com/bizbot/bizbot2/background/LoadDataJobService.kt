@@ -4,6 +4,9 @@ import android.app.job.JobParameters
 import android.app.job.JobService
 import android.os.Build
 import android.util.Log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class LoadDataJobService : JobService() {
     companion object{
@@ -11,12 +14,22 @@ class LoadDataJobService : JobService() {
     }
 
     override fun onStopJob(p0: JobParameters?): Boolean {
-        Log.d(TAG, "onStopJob: ${p0?.jobId}")
+        GlobalScope.launch(Dispatchers.IO) {
+            Log.d(TAG, "jon service start")
+            val synchronizationData = SynchronizationData(baseContext)
+            val result = synchronizationData.SyncData()
+            if(result == 0)
+                Log.d(TAG, "onStopJob: 데이터 다운 완료")
+            else
+                Log.d(TAG, "onStopJob: 데이터 다운 실패")
+            jobFinished(p0,false)
+        }
+
         return false
     }
 
     override fun onStartJob(p0: JobParameters?): Boolean {
-        Log.d(TAG, "onStartJob: ${p0?.jobId}")
+        Log.d(TAG, "job service end")
         return false
     }
 

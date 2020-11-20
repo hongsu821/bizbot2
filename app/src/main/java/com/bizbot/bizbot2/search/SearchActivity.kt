@@ -47,6 +47,7 @@ class SearchActivity : AppCompatActivity() {
         viewModel.getAllSearch().observe(this, Observer {
             val searchAdapter = SearchAdapter(this,it as ArrayList<String>,search_edit_bar)
             last_search_word.adapter = searchAdapter
+
         })
 
         //텍스트 입력창 텍스트 감지
@@ -125,7 +126,7 @@ class SearchActivity : AppCompatActivity() {
 
     //형태소 분석기
     fun PosTagging(inputStr:String):ArrayList<String>{
-        var result:ArrayList<String> = ArrayList()
+        val result:ArrayList<String> = ArrayList()
 
         val path = "$filesDir/user.txt"
         val file = File(path)

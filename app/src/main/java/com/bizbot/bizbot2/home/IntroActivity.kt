@@ -47,12 +47,20 @@ class IntroActivity : AppCompatActivity() {
         setContentView(R.layout.intro)
 
         val dbPath = baseContext.getDatabasePath("app_db")
+        val viewModel = ViewModelProviders.of(this).get(AppViewModel::class.java)
 
         if(!dbPath.exists()){
             initData(this)
         }else{
-            sync()
-            nextActivity()
+            init_layout.visibility = View.GONE
+            viewModel.getAllPermit().observe(this, androidx.lifecycle.Observer {
+                if(it.alert!!)
+                    nextActivity()
+                else{
+                    sync()
+                    nextActivity()
+                }
+            })
         }
 
         //val co = CoroutineTest()
@@ -68,8 +76,6 @@ class IntroActivity : AppCompatActivity() {
             true
         }
 
-
-
     }
 
     //초기 데이터 불러오기
@@ -84,7 +90,7 @@ class IntroActivity : AppCompatActivity() {
 
     //알림 설정 다이얼로그
     private fun customDialog(context: Context){
-        val permitModel = PermitModel(0,false,null,null,0,0)
+        val permitModel = PermitModel(0,false,null,"@@@",0,0)
 
         val builder = AlertDialog.Builder(context)
         val mView = LayoutInflater.from(context).inflate(R.layout.intro_dialog_layout,null)
@@ -99,12 +105,13 @@ class IntroActivity : AppCompatActivity() {
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
         permitModel.syncTime = simpleDateFormat.format(syncDate)
 
+        val js = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
+
         yesBtn.setOnClickListener {
             Toast.makeText(context,"비즈봇의 광고성 정보 수신동의가 처리되었습니다.(${permitModel.syncTime})",Toast.LENGTH_SHORT).show()
             permitModel.alert = true
             DB_IO(permitModel)
 
-            val js = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
             val serviceComponent = ComponentName(this, LoadDataJobService::class.java)
             val jobInfo = JobInfo.Builder(JOB_ID,serviceComponent)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE) //와이파이일때
@@ -119,6 +126,9 @@ class IntroActivity : AppCompatActivity() {
             Toast.makeText(context,"비즈봇의 광고성 정보 수신거절이 처리되었습니다.(${permitModel.syncTime})",Toast.LENGTH_SHORT).show()
             permitModel.alert = false
             DB_IO(permitModel)
+
+            js.cancel(JOB_ID)
+
             dialog.dismiss()
         }
 

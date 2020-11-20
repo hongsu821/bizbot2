@@ -48,16 +48,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         ad_list_rv.layoutManager = viewManager
         ad_list_rv.setHasFixedSize(true)
 
-        /**
-         * 테스트용
-         */
-
-        viewModel.getAllPermit().observe(this, Observer {
-            Log.d(TAG, "permitModel = ${it.id}, ${it.alert},${it.syncTime}, ${it.field}, ${it.subclass}, ${it.keyword}")
-        })
-
-        /**
-         */
 
         //하단 네비게이션바
         bottom_navigation.setOnNavigationItemSelectedListener(this)

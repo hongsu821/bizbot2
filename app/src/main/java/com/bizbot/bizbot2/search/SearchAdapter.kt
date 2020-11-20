@@ -40,7 +40,7 @@ class SearchAdapter(val activity: FragmentActivity,var wordList:ArrayList<String
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var item = words[position]
+        val item = words[position]
         val viewModel = ViewModelProviders.of(activity).get(AppViewModel::class.java)
 
         holder.sWord.text = item

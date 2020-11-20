@@ -19,6 +19,9 @@ interface UserModelDAO {
     @Query("SELECT * FROM user")
     fun getAllItem(): LiveData<UserModel>
 
+    @Query("SELECT * FROM user")
+    fun getItem(): UserModel
+
 
 
 }

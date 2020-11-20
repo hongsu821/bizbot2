@@ -43,6 +43,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
         holder.apply {
             bind(items)
         }
+        val viewModel = ViewModelProviders.of(activity).get(AppViewModel::class.java)
 
         holder.newIcon.visibility = View.GONE
 
@@ -62,9 +63,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
             holder.likeBtn.setBackgroundResource(R.drawable.heart_empty)
         }
 
-
         holder.likeBtn.setOnClickListener {
-            val viewModel = ViewModelProviders.of(activity).get(AppViewModel::class.java)
             if(holder.likeBtn.isChecked){
                 holder.likeBtn.setBackgroundResource(R.drawable.heart)
                 Toast.makeText(context,"관심사업으로 등록되었습니다.",Toast.LENGTH_SHORT).show()
@@ -75,6 +74,11 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
                 viewModel.setLike(false, filterList[position].pblancId)
             }
         }
+
+        if(filterList[position].checkNew == true)
+            holder.newIcon.visibility = View.VISIBLE
+        else
+            holder.newIcon.visibility = View.GONE
 
         val viewManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
         holder.keyWord.layoutManager = viewManager
