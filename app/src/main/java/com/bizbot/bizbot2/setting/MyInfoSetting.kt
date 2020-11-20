@@ -2,6 +2,8 @@ package com.bizbot.bizbot2.setting
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -13,7 +15,9 @@ import androidx.lifecycle.ViewModelProviders
 import com.bizbot.bizbot2.R
 import com.bizbot.bizbot2.room.AppViewModel
 import com.bizbot.bizbot2.room.model.UserModel
+import kotlinx.android.synthetic.main.intro.*
 import kotlinx.android.synthetic.main.setting_myinfo.*
+import kotlinx.android.synthetic.main.setting_myinfo.test
 import java.util.*
 
 class MyInfoSetting:AppCompatActivity() {
@@ -159,9 +163,7 @@ class MyInfoSetting:AppCompatActivity() {
             }
         }
         city_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-
-            }
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 userInfo?.city = p2
             }

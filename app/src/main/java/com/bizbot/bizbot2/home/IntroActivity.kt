@@ -1,6 +1,7 @@
 package com.bizbot.bizbot2.home
 
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.ComponentName
@@ -10,6 +11,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -26,7 +29,9 @@ import com.bizbot.bizbot2.background.SynchronizationData
 import com.bizbot.bizbot2.room.AppDatabase
 import com.bizbot.bizbot2.room.AppViewModel
 import com.bizbot.bizbot2.room.model.PermitModel
+import com.bizbot.bizbot2.room.model.UserModel
 import kotlinx.android.synthetic.main.intro.*
+import kotlinx.android.synthetic.main.setting_myinfo.*
 import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -45,26 +50,24 @@ class IntroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.intro)
-
-        val dbPath = baseContext.getDatabasePath("app_db")
         val viewModel = ViewModelProviders.of(this).get(AppViewModel::class.java)
 
-        if(!dbPath.exists()){
+        //db위치
+        val dbPath = baseContext.getDatabasePath("app_db")
+
+        if(!dbPath.exists()){ //db가 없다면
             initData(this)
-        }else{
+        }else{//db가 있다면
             init_layout.visibility = View.GONE
             viewModel.getAllPermit().observe(this, androidx.lifecycle.Observer {
-                if(it.alert!!)
-                    nextActivity()
-                else{
-                    sync()
-                    nextActivity()
+                if(it.alert!!) //알림 설정시
+                    nextActivity() //바로 다음 엑티비티
+                else{//알림 설정 해제시
+                    sync() //데이터 동기화
+                    nextActivity() //다음 엑티비티
                 }
             })
         }
-
-        //val co = CoroutineTest()
-        //co.main()
 
         introHandler = Handler(Looper.myLooper()!!){
             if(it.what == 1){
@@ -78,13 +81,25 @@ class IntroActivity : AppCompatActivity() {
 
     }
 
-    //초기 데이터 불러오기
+    //초기 데이터
     private fun initData(context: Context) {
-        customDialog(context)
-        GlobalScope.launch(Dispatchers.IO) {
-            val initData = InitData(baseContext)
-            msg.what = initData.init()
-            introHandler.sendMessage(msg)
+        //기본 정보 입력하는 레이아웃
+        init_layout.visibility = View.VISIBLE
+        //로딩 레이아웃
+        intro_loading_layout.visibility = View.GONE
+        //유저 정보
+        initUserData()
+        //다음 버튼 클릭시
+        intro_next_btn.setOnClickListener {
+            //알림 설정 팝업
+            customDialog(context)
+            //서버에서 데이터 받아오기
+            GlobalScope.launch(Dispatchers.IO) {
+                intro_loading_layout.visibility = View.VISIBLE
+                val initData = InitData(baseContext)
+                msg.what = initData.init()
+                introHandler.sendMessage(msg)
+            }
         }
     }
 
@@ -111,7 +126,7 @@ class IntroActivity : AppCompatActivity() {
             Toast.makeText(context,"비즈봇의 광고성 정보 수신동의가 처리되었습니다.(${permitModel.syncTime})",Toast.LENGTH_SHORT).show()
             permitModel.alert = true
             DB_IO(permitModel)
-
+            //jobschedule 반복
             val serviceComponent = ComponentName(this, LoadDataJobService::class.java)
             val jobInfo = JobInfo.Builder(JOB_ID,serviceComponent)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE) //와이파이일때
@@ -126,7 +141,7 @@ class IntroActivity : AppCompatActivity() {
             Toast.makeText(context,"비즈봇의 광고성 정보 수신거절이 처리되었습니다.(${permitModel.syncTime})",Toast.LENGTH_SHORT).show()
             permitModel.alert = false
             DB_IO(permitModel)
-
+            //jobschedule 해제
             js.cancel(JOB_ID)
 
             dialog.dismiss()
@@ -134,6 +149,51 @@ class IntroActivity : AppCompatActivity() {
 
     }
 
+    //내정보 초기 설정
+    private fun initUserData(){
+        val viewModel = ViewModelProviders.of(this).get(AppViewModel::class.java)
+        val userModel = UserModel(0,null,null,null,null,null,null,null,null,null)
+
+        //사업자 유형
+        intro_business_type.setOnCheckedChangeListener { radioGroup, i ->
+            userModel.businessType = i
+        }
+        //사업체명
+        userModel.businessName = intro_business_name_et.text.toString()
+
+        //오늘날짜
+        val cal = Calendar.getInstance()
+        val year = cal.get(Calendar.YEAR)
+        val month = cal.get(Calendar.MONTH)
+        val day = cal.get(Calendar.DAY_OF_MONTH)
+
+        //창립일
+        intro_establishment_layout.setOnClickListener {
+            val dpd = DatePickerDialog(this, R.style.spinner_date_picker,
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    userModel.establishment = "$year.${monthOfYear + 1}.$dayOfMonth"
+                    intro_establishment_tv.text = userModel.establishment
+                }, year, month, day
+            )
+            dpd.show()
+        }
+
+        //대표자 이름
+        userModel.name = intro_ceo_name_et.text.toString()
+
+        //생년월일
+        intro_birth_layout.setOnClickListener {
+            intro_birth_tx
+        }
+
+        //업종
+        intro_category_of_business_spinner
+        //지역
+        intro_area_spinner
+        //도시
+        intro_city_spinner
+
+    }
     //알림설정, 동기화 시간 저장
     private fun DB_IO(permitModel: PermitModel){
         GlobalScope.launch(Dispatchers.IO) {

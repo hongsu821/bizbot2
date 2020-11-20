@@ -57,14 +57,14 @@
                     android:padding="12dp"
                     android:layout_marginTop="3dp"/>
                 <RadioGroup
-                    android:id="@+id/business_type"
+                    android:id="@+id/intro_business_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:paddingLeft="22dp"
                     android:paddingRight="22dp">
                     <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/reserve_business"
+                        android:id="@+id/intro_reserve_business"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -73,7 +73,7 @@
                         android:theme="@style/RadioButton"
                         android:padding="12dp"/>
                     <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/private_business"
+                        android:id="@+id/intro_private_business"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -82,7 +82,7 @@
                         android:theme="@style/RadioButton"
                         android:padding="12dp"/>
                     <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/corporation_business"
+                        android:id="@+id/intro_corporation_business"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -101,7 +101,7 @@
                     android:padding="12dp"/>
 
                 <EditText
-                    android:id="@+id/business_name_et"
+                    android:id="@+id/intro_business_name_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="22dp"
@@ -116,13 +116,13 @@
                     android:textSize="18sp"
                     android:padding="12dp"/>
                 <LinearLayout
-                    android:id="@+id/establishment_layout"
+                    android:id="@+id/intro_establishment_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="22dp"
                     android:paddingRight="22dp">
                     <TextView
-                        android:id="@+id/establishment_tv"
+                        android:id="@+id/intro_establishment_tv"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -146,7 +146,7 @@
                     android:padding="12dp"/>
 
                 <EditText
-                    android:id="@+id/ceo_name_et"
+                    android:id="@+id/intro_ceo_name_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="22dp"
@@ -162,7 +162,7 @@
                     android:textSize="18sp"
                     android:padding="12dp"/>
                 <RadioGroup
-                    android:id="@+id/gender_type"
+                    android:id="@+id/intro_gender_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -196,13 +196,13 @@
                     android:textSize="18sp"
                     android:padding="12dp"/>
                 <LinearLayout
-                    android:id="@+id/birth_layout"
+                    android:id="@+id/intro_birth_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="22dp"
                     android:paddingRight="22dp">
                     <TextView
-                        android:id="@+id/birth_tx"
+                        android:id="@+id/intro_birth_tx"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -225,13 +225,13 @@
                     android:textSize="18sp"
                     android:padding="12dp"/>
                 <LinearLayout
-                    android:id="@+id/category_of_business"
+                    android:id="@+id/intro_category_of_business"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="22dp"
                     android:paddingRight="22dp">
                     <Spinner
-                        android:id="@+id/category_of_business_spinner"
+                        android:id="@+id/intro_category_of_business_spinner"
                         android:layout_width="0dp"
                         android:layout_height="43dp"
                         android:layout_weight="1"
@@ -253,13 +253,13 @@
                     android:paddingRight="22dp"
                     android:layout_marginBottom="8dp">
                     <Spinner
-                        android:id="@+id/area_spinner"
+                        android:id="@+id/intro_area_spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:spinnerMode="dropdown"/>
                     <Spinner
-                        android:id="@+id/city_spinner"
+                        android:id="@+id/intro_city_spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

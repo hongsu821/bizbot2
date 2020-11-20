@@ -37,7 +37,7 @@ class SynchronizationData(var context: Context) {
             val jsonArray: JSONArray = json?.getJSONArray("jsonArray")!!
 
             val db: AppDatabase = Room.databaseBuilder(context,AppDatabase::class.java,"app_db").build()
-
+            //동기화 시간
             val permit: PermitModel = db.permitDAO().getItem()
             val sync: Date = simpleDateFormat.parse(permit.syncTime)
 
@@ -49,8 +49,10 @@ class SynchronizationData(var context: Context) {
                 val differentTime: Long = sync.time - create.time
                 val differentDay: Long = differentTime/(24*60*60*1000)
 
-               supportItem.checkNew = differentDay <= 2
+                //시간 차이가 2 이하이면 새로 생긴 게시글
+                supportItem.checkNew = differentDay <= 2
 
+                //db에 insert
                 db.supportDAO().insert(supportItem)
             }
 

@@ -33,18 +33,18 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         setContentView(R.layout.main_activity)
 
         viewModel = ViewModelProviders.of(this).get(AppViewModel::class.java)
+        //지원 사업 리스트 출력
         viewModel.getAllSupport().observe(this, Observer {
             var kotraList = ArrayList<SupportModel>()
-            for(item in it){
+            for(item in it){//코트라만 저장
                 if(item.pblancNm?.contains("KOTRA")!!)
                     kotraList.add(item)
-        }
+            }
             viewAdapter = AdvertisingAdapter(baseContext,kotraList)
             ad_list_rv.adapter = viewAdapter
         })
 
         viewManager = LinearLayoutManager(this)
-
         ad_list_rv.layoutManager = viewManager
         ad_list_rv.setHasFixedSize(true)
 

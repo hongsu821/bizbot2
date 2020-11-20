@@ -29,6 +29,7 @@ class AdvertisingAdapter(val context: Context,private var adList: ArrayList<Supp
         holder.apply {
             bind(items)
         }
+        //키워드 리사이클러뷰
         val viewManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
         holder.keyWord.layoutManager = viewManager
         holder.keyWord.setHasFixedSize(true)

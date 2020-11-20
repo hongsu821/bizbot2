@@ -33,10 +33,12 @@ class AlertSetting():AppCompatActivity() {
         viewModel.getAllPermit().observe(this, Observer { permitModel ->
             this.permit = permitModel
 
+            //알림 설정
             permit?.alert?.let { it->
                 alert_check.isChecked = it
             }
 
+            //알림 받을 분야
             permit?.field?.let { it ->
                 large_spinner.setSelection(it)
                 setArray(it)
@@ -45,6 +47,8 @@ class AlertSetting():AppCompatActivity() {
             permit?.subclass?. let{it ->
                 medium_spinner.setSelection(it)
             }
+
+            //알림 받을 키워드
             permit?.keyword?.let{it ->
                 val keyword = it.split("@")
                 keyword1_et.setText(keyword[0])
@@ -53,6 +57,7 @@ class AlertSetting():AppCompatActivity() {
             }
 
         })
+
 
         alert_test.setOnClickListener {
             Log.d(TAG, "onCreate: permit = ${permit?.id}, ${permit?.alert}, ${permit?.syncTime}, ${permit?.keyword}, ${permit?.field}, ${permit?.subclass}")
@@ -63,9 +68,6 @@ class AlertSetting():AppCompatActivity() {
         alert_check.setOnCheckedChangeListener { compoundButton, isChecked ->
             permit?.alert = isChecked
         }
-
-
-
         //분야
         ArrayAdapter.createFromResource(this,R.array.field,R.layout.setting_spinner_item)
             .also { arrayAdapter -> arrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
@@ -88,14 +90,13 @@ class AlertSetting():AppCompatActivity() {
             }
 
         }
-
         //키워드
         var line = ""
         line += "${keyword1_et.text}@"
         line += "${keyword2_et.text}@"
         line += "${keyword3_et.text}@"
 
-
+        //저장하기 버튼 클릭시
         alert_save.setOnClickListener {
             permit?.alert = alert_check.isChecked
             //알림 체크한 시간(동기화 시간)
@@ -117,6 +118,7 @@ class AlertSetting():AppCompatActivity() {
         alert_close_btn.setOnClickListener { finish() }
     }
 
+    //두번째 스피너 설정
     fun setSpinner(arrayID:Int){
         ArrayAdapter.createFromResource(baseContext, arrayID, R.layout.setting_spinner_item)
             .also { arrayAdapter -> arrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
@@ -124,6 +126,7 @@ class AlertSetting():AppCompatActivity() {
             }
     }
 
+    //두번째 스피너 array id 설정
     fun setArray(position: Int):Int{
         var arrayid = 0
         when(position){

@@ -15,7 +15,6 @@ class RequestURLConnection(var url: String) {
         var line: String? = null
         try{
             val url1 = URL(url)
-
             conn = url1.openConnection() as HttpURLConnection
             val reader = BufferedReader(InputStreamReader(conn.inputStream,"UTF-8"))
 

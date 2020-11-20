@@ -41,6 +41,7 @@ class CategoryAdapter(var context:Context,type:Int): RecyclerView.Adapter<Catego
         holder.apply {
             bind(item)
         }
+        //아이템 선택시
         holder.itemName.setOnClickListener {
             index = position
             val message:Message = mCAHandler.obtainMessage()

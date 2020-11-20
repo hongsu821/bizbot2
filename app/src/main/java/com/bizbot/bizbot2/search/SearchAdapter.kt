@@ -16,7 +16,7 @@ import com.bizbot.bizbot2.room.AppViewModel
 import com.bizbot.bizbot2.room.model.SearchWordModel
 import com.bizbot.bizbot2.support.SupportListAdapter
 
-class SearchAdapter(val activity: FragmentActivity,var wordList:ArrayList<String>, val editText: EditText)
+class SearchAdapter(val activity: FragmentActivity,wordList:ArrayList<String>, val editText: EditText)
     : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
     var words: ArrayList<String> = wordList
@@ -27,6 +27,7 @@ class SearchAdapter(val activity: FragmentActivity,var wordList:ArrayList<String
     }
 
     override fun getItemCount(): Int {
+        //최대 8개까지 출력
         if(words.size > 8)
             return 8
         else
@@ -34,9 +35,8 @@ class SearchAdapter(val activity: FragmentActivity,var wordList:ArrayList<String
     }
 
     class ViewHolder(v: View):RecyclerView.ViewHolder(v) {
-        val sWord = v.findViewById<TextView>(R.id.search_last_word)
-        val del = v.findViewById<ImageView>(R.id.search_last_word_clear)
-
+        val sWord: TextView = v.findViewById(R.id.search_last_word)
+        val del: ImageView = v.findViewById(R.id.search_last_word_clear)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -44,12 +44,15 @@ class SearchAdapter(val activity: FragmentActivity,var wordList:ArrayList<String
         val viewModel = ViewModelProviders.of(activity).get(AppViewModel::class.java)
 
         holder.sWord.text = item
+        //검색어 클릭하면 editText에 해당 검색어 출력
         holder.sWord.setOnClickListener {
             viewModel.getSearchItem(item).observe(activity, Observer {
                 editText.setText(it)
             })
         }
+        //삭제 버튼 클릭시
         holder.del.setOnClickListener {
+            //검색어 삭제
             viewModel.delSearchItem(item)
             notifyDataSetChanged()
         }
