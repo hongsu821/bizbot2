@@ -9,5 +9,6 @@
     android:background="#FFFFFF"
     android:gravity="center_vertical"
     android:layout_gravity="right"
-    android:padding="12dp"/>
+    android:padding="12dp"
+    android:fontFamily="@font/noto_sans_regular"/>
 

@@ -8,4 +8,5 @@
     android:background="@drawable/spinner_underline"
     android:gravity="center_vertical"
     android:layout_gravity="center_horizontal"
-    android:padding="12dp"/>
+    android:padding="12dp"
+    android:fontFamily="@font/noto_sans_regular"/>

@@ -39,7 +39,7 @@
             android:textSize="30dp"
             android:layout_marginLeft="22dp"
             android:layout_marginBottom="3dp"
-            android:fontFamily="sans-serif-black"/>
+            android:fontFamily="@font/noto_sans_bold"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/area_category_rv"
@@ -73,7 +73,7 @@
             android:layout_marginLeft="22dp"
             android:layout_marginBottom="3dp"
             android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif-black"/>
+            android:fontFamily="@font/noto_sans_bold"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/field_category_rv"
@@ -95,7 +95,8 @@
             android:text="적용하기"
             android:textColor="#000000"
             android:padding="12dp"
-            android:layout_margin="23dp"/>
+            android:layout_margin="23dp"
+            android:fontFamily="@font/noto_sans_regular"/>
     </LinearLayout>
 
 

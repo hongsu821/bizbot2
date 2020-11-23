@@ -36,7 +36,8 @@
         android:textColor="#000000"
         android:textStyle="bold"
         android:textSize="26dp"
-        android:padding="8dp" />
+        android:padding="8dp"
+        android:fontFamily="@font/noto_sans_bold"/>
 
     <ScrollView
         android:id="@+id/detail_scroll_view"
@@ -53,7 +54,8 @@
                 android:text="지원사업 내용"
                 android:textColor="#000000"
                 android:textSize="18dp"
-                android:padding="8dp"/>
+                android:padding="8dp"
+                android:fontFamily="@font/noto_sans_bold"/>
             <TextView
                 android:id="@+id/detail_contents"
                 android:layout_width="match_parent"
@@ -63,7 +65,8 @@
                 android:textSize="18dp"
                 android:padding="8dp"
                 android:layout_margin="3dp"
-                android:background="@drawable/item_category_style"/>
+                android:background="@drawable/item_category_style"
+                android:fontFamily="@font/noto_sans_regular"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -74,7 +77,8 @@
                     android:text="지원사업 지역"
                     android:textColor="#000000"
                     android:textSize="12dp"
-                    android:padding="8dp"/>
+                    android:padding="8dp"
+                    android:fontFamily="@font/noto_sans_regular"/>
                 <TextView
                     android:id="@+id/detail_area"
                     android:layout_width="wrap_content"
@@ -82,7 +86,8 @@
                     android:text="울산"
                     android:textColor="#000000"
                     android:textSize="12dp"
-                    android:padding="8dp"/>
+                    android:padding="8dp"
+                    android:fontFamily="@font/noto_sans_regular"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -94,7 +99,8 @@
                     android:text="지원사업 지원분야"
                     android:textColor="#000000"
                     android:textSize="12dp"
-                    android:padding="8dp"/>
+                    android:padding="8dp"
+                    android:fontFamily="@font/noto_sans_regular"/>
 
                 <TextView
                     android:id="@+id/detail_field"
@@ -103,7 +109,8 @@
                     android:padding="8dp"
                     android:text="기술, 수출, 기술사업화"
                     android:textColor="#000000"
-                    android:textSize="12dp" />
+                    android:textSize="12dp"
+                    android:fontFamily="@font/noto_sans_regular"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -115,7 +122,8 @@
                     android:padding="8dp"
                     android:text="접수기간"
                     android:textColor="#000000"
-                    android:textSize="12dp"/>
+                    android:textSize="12dp"
+                    android:fontFamily="@font/noto_sans_regular"/>
 
                 <TextView
                     android:id="@+id/detail_term"
@@ -124,7 +132,8 @@
                     android:text="2020.06.05 ~ 2020.06.19"
                     android:textColor="#000000"
                     android:textSize="12dp"
-                    android:padding="8dp"/>
+                    android:padding="8dp"
+                    android:fontFamily="@font/noto_sans_regular"/>
             </LinearLayout>
             <ImageView
                 android:layout_width="match_parent"
@@ -138,7 +147,8 @@
                 android:textStyle="bold"
                 android:textColor="#000000"
                 android:textSize="18dp"
-                android:padding="8dp"/>
+                android:padding="8dp"
+                android:fontFamily="@font/noto_sans_bold"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -148,7 +158,8 @@
                     android:text="접수기관"
                     android:textColor="#000000"
                     android:textSize="12dp"
-                    android:padding="8dp"/>
+                    android:padding="8dp"
+                    android:fontFamily="@font/noto_sans_regular"/>
                 <TextView
                     android:id="@+id/detail_agency"
                     android:layout_width="wrap_content"
@@ -156,7 +167,8 @@
                     android:text="울산정보산업진흥원"
                     android:textColor="#000000"
                     android:textSize="12dp"
-                    android:padding="8dp"/>
+                    android:padding="8dp"
+                    android:fontFamily="@font/noto_sans_regular"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -167,7 +179,8 @@
                     android:text="담당부서"
                     android:textColor="#000000"
                     android:textSize="12dp"
-                    android:padding="8dp"/>
+                    android:padding="8dp"
+                    android:fontFamily="@font/noto_sans_regular"/>
                 <TextView
                     android:id="@+id/detail_department"
                     android:layout_width="wrap_content"
@@ -175,7 +188,8 @@
                     android:text="클러스터팀"
                     android:textColor="#000000"
                     android:textSize="12dp"
-                    android:padding="8dp"/>
+                    android:padding="8dp"
+                    android:fontFamily="@font/noto_sans_regular"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -186,7 +200,8 @@
                     android:text="전화번호"
                     android:textColor="#000000"
                     android:textSize="12dp"
-                    android:padding="8dp"/>
+                    android:padding="8dp"
+                    android:fontFamily="@font/noto_sans_regular"/>
                 <TextView
                     android:id="@+id/detail_tel"
                     android:layout_width="wrap_content"
@@ -194,7 +209,8 @@
                     android:text="052-210-0276"
                     android:textColor="#000000"
                     android:textSize="12dp"
-                    android:padding="8dp"/>
+                    android:padding="8dp"
+                    android:fontFamily="@font/noto_sans_regular"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -205,8 +221,8 @@
                     android:text="담당자명"
                     android:textColor="#000000"
                     android:textSize="12dp"
-                    android:padding="8dp"/>
-
+                    android:padding="8dp"
+                    android:fontFamily="@font/noto_sans_regular"/>
                 <TextView
                     android:id="@+id/detail_manager"
                     android:layout_width="wrap_content"
@@ -214,7 +230,8 @@
                     android:padding="8dp"
                     android:text="최다혜"
                     android:textColor="#000000"
-                    android:textSize="12dp" />
+                    android:textSize="12dp"
+                    android:fontFamily="@font/noto_sans_regular"/>
             </LinearLayout>
 
             <LinearLayout
@@ -231,7 +248,8 @@
                     android:layout_height="wrap_content"
                     android:text="홈페이지 바로가기"
                     android:textColor="#ffffff"
-                    android:padding="8dp"/>
+                    android:padding="8dp"
+                    android:fontFamily="@font/noto_sans_bold"/>
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"

@@ -2,9 +2,8 @@ package com.bizbot.bizbot2.setting
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -15,7 +14,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.bizbot.bizbot2.R
 import com.bizbot.bizbot2.room.AppViewModel
 import com.bizbot.bizbot2.room.model.UserModel
-import kotlinx.android.synthetic.main.intro.*
 import kotlinx.android.synthetic.main.setting_myinfo.*
 import kotlinx.android.synthetic.main.setting_myinfo.test
 import java.util.*
@@ -35,12 +33,9 @@ class MyInfoSetting:AppCompatActivity() {
         var foundingDay:List<String>
         var birthDay:List<String>
         val cal = Calendar.getInstance()
-        var year1 = cal.get(Calendar.YEAR)
-        var month1 = cal.get(Calendar.MONTH)
-        var day1 = cal.get(Calendar.DAY_OF_MONTH)
-        var year2 = cal.get(Calendar.YEAR)
-        var month2 = cal.get(Calendar.MONTH)
-        var day2 = cal.get(Calendar.DAY_OF_MONTH)
+        var year = cal.get(Calendar.YEAR)
+        var month = cal.get(Calendar.MONTH)
+        var day = cal.get(Calendar.DAY_OF_MONTH)
 
 
         val viewModel = ViewModelProviders.of(this).get(AppViewModel::class.java)
@@ -51,25 +46,9 @@ class MyInfoSetting:AppCompatActivity() {
             //        "${userInfo?.name}, ${userInfo?.gender}, ${userInfo?.birth}, ${userInfo?.businessCategory}, ${userInfo?.city}, ${userInfo?.area}")
 
             //사업자 유형 출력
-            userInfo?.businessType?.let {
-                when(userInfo?.businessType){
-                    R.id.reserve_business-> reserve_business.isChecked = true
-                    R.id.private_business-> private_business.isChecked = true
-                    R.id.corporation_business->corporation_business.isChecked = true
-                }
-            }
+            userInfo?.businessType?.let { business_type.check(it) }
             //사업체명 출력
             userInfo?.businessName?.let{ business_name_et.setText(it) }
-            //창립일 출력
-            userInfo?.establishment?.let{
-                establishment_tv.text = it
-                if(it != "") {
-                    foundingDay = it.split(".")
-                    year1 = foundingDay[0].toInt()
-                    month1 = foundingDay[1].toInt()
-                    day1 = foundingDay[2].toInt()
-                }
-            }
             //대표자 출력
             userInfo?.name?.let { ceo_name_et.setText(it) }
             //성별 출력
@@ -79,9 +58,9 @@ class MyInfoSetting:AppCompatActivity() {
                 birth_tx.text = it
                 if(it != ""){
                     birthDay = it.split(".")
-                    year2 = birthDay[0].toInt()
-                    month2 = birthDay[1].toInt()
-                    day2 = birthDay[2].toInt()
+                    year = birthDay[0].toInt()
+                    month = birthDay[1].toInt()
+                    day = birthDay[2].toInt()
                 }
             }
             //업종 출력
@@ -101,37 +80,23 @@ class MyInfoSetting:AppCompatActivity() {
 
 
         test.setOnClickListener {
-            Log.d(TAG, "onCreate userInfo = ${userInfo?.id}, ${userInfo?.businessType}, ${userInfo?.businessName}, ${userInfo?.establishment}, " +
+            Log.d(TAG, "onCreate userInfo = ${userInfo?.id}, ${userInfo?.businessType}, ${userInfo?.businessName}, " +
                     "${userInfo?.name}, ${userInfo?.gender}, ${userInfo?.birth}, ${userInfo?.businessCategory}, ${userInfo?.area}, ${userInfo?.city}")
         }
 
         //사업자 유형
-        business_type.setOnCheckedChangeListener { radioGroup, i ->
-            userInfo?.businessType = i
-        }
+        business_type.setOnCheckedChangeListener { radioGroup, i -> userInfo?.businessType = i }
 
-        //창립일
-        establishment_layout.setOnClickListener {
-            val dpd = DatePickerDialog(this, R.style.spinner_date_picker,
-                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                    userInfo?.establishment = "$year.${monthOfYear + 1}.$dayOfMonth"
-                    establishment_tv.text = userInfo?.establishment
-                }, year1, month1, day1
-            )
-            dpd.show()
-        }
 
         //성별
-        gender_type.setOnCheckedChangeListener { radioGroup, i ->
-            userInfo?.gender = i
-        }
+        gender_type.setOnCheckedChangeListener { radioGroup, i -> userInfo?.gender = i }
 
         //생년월일
         birth_layout.setOnClickListener {
             val dpd = DatePickerDialog(this,R.style.spinner_date_picker, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                 userInfo?.birth = "$year.${monthOfYear+1}.$dayOfMonth"
                 birth_tx.text = userInfo?.birth
-            }, year2, month2, day2)
+            }, year, month, day)
             dpd.show()
         }
 
@@ -174,7 +139,9 @@ class MyInfoSetting:AppCompatActivity() {
             userInfo?.name = ceo_name_et.text.toString()
             userInfo?.businessName = business_name_et.text.toString()
             viewModel.insertUser(userInfo!!)
-            Toast.makeText(this,"수정이 완료되었습니다.",Toast.LENGTH_SHORT).show()
+            val toast = Toast.makeText(this,"수정이 완료되었습니다.",Toast.LENGTH_SHORT)
+            toast.setGravity(Gravity.CENTER_HORIZONTAL,Gravity.CENTER,0)
+            toast.show()
         }
         //나가기 버튼
         myinfo_close_btn.setOnClickListener { finish() }

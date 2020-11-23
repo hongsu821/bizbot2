@@ -38,7 +38,8 @@
                 android:layout_marginLeft="4dp"
                 android:layout_marginTop="4dp"
                 android:background="@drawable/item_keyword_select_style"
-                android:visibility="visible" />
+                android:visibility="visible"
+                android:fontFamily="@font/noto_sans_regular"/>
             <androidx.recyclerview.widget.RecyclerView
                android:id="@+id/keyword_rv"
                android:layout_width="wrap_content"
@@ -63,7 +64,8 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="4dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:fontFamily="@font/noto_sans_bold"/>
         </LinearLayout>
 
 
@@ -87,13 +89,15 @@
                     android:layout_height="wrap_content"
                     android:text="접수 기관명"
                     android:textColor="#000000"
-                    android:layout_marginBottom="3dp"/>
+                    android:layout_marginBottom="3dp"
+                    android:fontFamily="@font/noto_sans_regular"/>
                 <TextView
                     android:id="@+id/term_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="접수기간"
-                    android:textColor="#000000"/>
+                    android:textColor="#000000"
+                    android:fontFamily="@font/noto_sans_regular"/>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/layout2"
@@ -111,12 +115,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
-                    android:layout_marginBottom="3dp"/>
+                    android:layout_marginBottom="3dp"
+                    android:fontFamily="@font/noto_sans_regular"/>
                 <TextView
                     android:id="@+id/term"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#000000"/>
+                    android:textColor="#000000"
+                    android:fontFamily="@font/noto_sans_regular"/>
             </LinearLayout>
 
             <ToggleButton

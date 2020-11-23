@@ -24,11 +24,12 @@
             android:layout_height="wrap_content"
             android:text="내정보 설정"
             android:textSize="18sp"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/noto_sans_bold"
             android:textColor="#000000"
             android:layout_weight="1"
             android:layout_margin="8dp"
-            android:padding="4dp" />
+            android:padding="4dp"
+            android:layout_gravity="center_vertical"/>
         <TextView
             android:id="@+id/test"
             android:layout_width="wrap_content"
@@ -56,7 +57,8 @@
                 android:textColor="#424242"
                 android:textSize="18sp"
                 android:padding="12dp"
-                android:layout_marginTop="3dp"/>
+                android:layout_marginTop="3dp"
+                android:fontFamily="@font/noto_sans_regular"/>
             <RadioGroup
                 android:id="@+id/business_type"
                 android:layout_width="match_parent"
@@ -72,7 +74,8 @@
                     android:text="예비창업자"
                     android:textColor="#000000"
                     android:theme="@style/RadioButton"
-                    android:padding="12dp"/>
+                    android:padding="12dp"
+                    android:fontFamily="@font/noto_sans_regular"/>
                 <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/private_business"
                     android:layout_width="wrap_content"
@@ -81,7 +84,8 @@
                     android:text="개인사업자"
                     android:textColor="#000000"
                     android:theme="@style/RadioButton"
-                    android:padding="12dp"/>
+                    android:padding="12dp"
+                    android:fontFamily="@font/noto_sans_regular"/>
                 <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/corporation_business"
                     android:layout_width="wrap_content"
@@ -90,7 +94,8 @@
                     android:text="법인사업자"
                     android:textColor="#000000"
                     android:theme="@style/RadioButton"
-                    android:padding="12dp"/>
+                    android:padding="12dp"
+                    android:fontFamily="@font/noto_sans_regular"/>
             </RadioGroup>
 
             <TextView
@@ -99,7 +104,8 @@
                 android:text="사업체명"
                 android:textColor="#424242"
                 android:textSize="18sp"
-                android:padding="12dp"/>
+                android:padding="12dp"
+                android:fontFamily="@font/noto_sans_regular"/>
 
             <EditText
                 android:id="@+id/business_name_et"
@@ -112,39 +118,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="창립일(또는 창립예정일)"
-                android:textColor="#424242"
-                android:textSize="18sp"
-                android:padding="12dp"/>
-            <LinearLayout
-                android:id="@+id/establishment_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="22dp"
-                android:paddingRight="22dp">
-                <TextView
-                    android:id="@+id/establishment_tv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="2020.11.11"
-                    android:textColor="#505050"
-                    android:textSize="14sp"
-                    android:padding="12dp"/>
-                <ImageView
-                    android:layout_width="43dp"
-                    android:layout_height="43dp"
-                    android:src="@drawable/down_arrow"
-                    android:layout_gravity="center_vertical"
-                    android:padding="12dp"/>
-            </LinearLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="대표자"
                 android:textColor="#424242"
                 android:textSize="18sp"
-                android:padding="12dp"/>
+                android:padding="12dp"
+                android:fontFamily="@font/noto_sans_regular"/>
 
             <EditText
                 android:id="@+id/ceo_name_et"
@@ -161,7 +139,8 @@
                 android:text="성별"
                 android:textColor="#424242"
                 android:textSize="18sp"
-                android:padding="12dp"/>
+                android:padding="12dp"
+                android:fontFamily="@font/noto_sans_regular"/>
             <RadioGroup
                 android:id="@+id/gender_type"
                 android:layout_width="match_parent"
@@ -177,7 +156,8 @@
                     android:text="남"
                     android:textColor="#000000"
                     android:theme="@style/RadioButton"
-                    android:padding="12dp"/>
+                    android:padding="12dp"
+                    android:fontFamily="@font/noto_sans_regular"/>
                 <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/female"
                     android:layout_width="wrap_content"
@@ -186,7 +166,8 @@
                     android:text="여"
                     android:textColor="#000000"
                     android:theme="@style/RadioButton"
-                    android:padding="12dp"/>
+                    android:padding="12dp"
+                    android:fontFamily="@font/noto_sans_regular"/>
             </RadioGroup>
 
             <TextView
@@ -195,7 +176,8 @@
                 android:text="생년월일"
                 android:textColor="#424242"
                 android:textSize="18sp"
-                android:padding="12dp"/>
+                android:padding="12dp"
+                android:fontFamily="@font/noto_sans_regular"/>
             <LinearLayout
                 android:id="@+id/birth_layout"
                 android:layout_width="match_parent"
@@ -210,7 +192,8 @@
                     android:text="2020.11.11"
                     android:textColor="#505050"
                     android:textSize="14sp"
-                    android:padding="12dp"/>
+                    android:padding="12dp"
+                    android:fontFamily="@font/noto_sans_regular"/>
                 <ImageView
                     android:layout_width="43dp"
                     android:layout_height="43dp"
@@ -224,7 +207,8 @@
                 android:text="업종"
                 android:textColor="#424242"
                 android:textSize="18sp"
-                android:padding="12dp"/>
+                android:padding="12dp"
+                android:fontFamily="@font/noto_sans_regular"/>
             <LinearLayout
                 android:id="@+id/category_of_business"
                 android:layout_width="match_parent"
@@ -245,26 +229,29 @@
                 android:text="사업소재지"
                 android:textColor="#424242"
                 android:textSize="18sp"
-                android:padding="12dp"/>
+                android:padding="12dp"
+                android:fontFamily="@font/noto_sans_regular"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:paddingLeft="22dp"
-                android:paddingRight="22dp"
-                android:layout_marginBottom="8dp">
+                android:paddingRight="22dp">
+
                 <Spinner
                     android:id="@+id/area_spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:spinnerMode="dropdown"/>
+                    android:spinnerMode="dropdown" />
+
                 <Spinner
                     android:id="@+id/city_spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:spinnerMode="dropdown"/>
+                    android:spinnerMode="dropdown" />
             </LinearLayout>
 
         </LinearLayout>
@@ -291,7 +278,8 @@
             android:textColor="#000000"
             android:textSize="22dp"
             android:padding="12dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:fontFamily="@font/noto_sans_bold"/>
     </LinearLayout>
 
 

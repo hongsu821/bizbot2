@@ -42,7 +42,8 @@
                 android:textColorHint="#B5B5B5"
                 android:theme="@style/EditTextTheme"
                 android:textColor="#000000"
-                android:padding="3dp"/>
+                android:padding="3dp"
+                android:fontFamily="@font/noto_sans_regular"/>
 
             <ImageView
                 android:id="@+id/search_clear"
@@ -80,7 +81,8 @@
                 android:text="검색 내용 : "
                 android:textColor="#000000"
                 android:textSize="20dp"
-                android:layout_margin="4dp"/>
+                android:layout_margin="4dp"
+                android:fontFamily="@font/noto_sans_regular"/>
             <TextView
                 android:id="@+id/search_analysis_word"
                 android:layout_width="wrap_content"
@@ -88,7 +90,8 @@
                 android:textColor="#000000"
                 android:textSize="18dp"
                 android:layout_margin="4dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:fontFamily="@font/noto_sans_regular"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -106,7 +109,8 @@
                 android:textSize="22dp"
                 android:padding="4dp"
                 android:gravity="center_horizontal"
-                android:background="@drawable/button_style"/>
+                android:background="@drawable/button_style"
+                android:fontFamily="@font/noto_sans_regular"/>
             <TextView
                 android:id="@+id/search_content_btn"
                 android:layout_width="wrap_content"
@@ -117,7 +121,8 @@
                 android:textSize="22dp"
                 android:padding="4dp"
                 android:gravity="center_horizontal"
-                android:background="@drawable/button_style"/>
+                android:background="@drawable/button_style"
+                android:fontFamily="@font/noto_sans_regular"/>
             <TextView
                 android:id="@+id/search_agency_btn"
                 android:layout_width="wrap_content"
@@ -128,7 +133,8 @@
                 android:textSize="22dp"
                 android:padding="4dp"
                 android:gravity="center_horizontal"
-                android:background="@drawable/button_style"/>
+                android:background="@drawable/button_style"
+                android:fontFamily="@font/noto_sans_regular"/>
 
         </LinearLayout>
         <TextView
@@ -140,7 +146,8 @@
             android:textColor="#424242"
             android:gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:padding="22dp"/>
+            android:padding="22dp"
+            android:fontFamily="@font/noto_sans_regular"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_result_rv"
             android:layout_width="match_parent"
@@ -160,7 +167,8 @@
             android:text="최근 검색어"
             android:textSize="22dp"
             android:textColor="#000000"
-            android:layout_margin="3dp"/>
+            android:layout_margin="3dp"
+            android:fontFamily="@font/noto_sans_regular"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/last_search_word"
             android:layout_width="match_parent"
@@ -178,7 +186,8 @@
                 android:textColor="#000000"
                 android:textSize="12dp"
                 android:gravity="right"
-                android:padding="12dp"/>
+                android:padding="12dp"
+                android:fontFamily="@font/noto_sans_regular"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -195,13 +204,12 @@
             android:text="인기 검색어"
             android:textSize="22dp"
             android:textColor="#000000"
-            android:padding="3dp"/>
-
+            android:padding="3dp"
+            android:fontFamily="@font/noto_sans_regular"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/base_search_word"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
     </LinearLayout>
 
 

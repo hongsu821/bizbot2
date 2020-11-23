@@ -25,7 +25,8 @@
             android:text="서울"
             android:textColor="#000000"
             android:background="@drawable/button_style"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/noto_sans_regular"/>
     </LinearLayout>
 
 

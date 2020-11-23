@@ -14,7 +14,8 @@
         android:text="최근 검색어"
         android:textColor="#686868"
         android:textSize="16dp"
-        android:padding="3dp"/>
+        android:padding="3dp"
+        android:fontFamily="@font/noto_sans_regular"/>
     <ImageView
         android:id="@+id/search_last_word_clear"
         android:layout_width="28dp"
