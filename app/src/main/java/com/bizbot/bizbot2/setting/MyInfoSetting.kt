@@ -30,7 +30,6 @@ class MyInfoSetting:AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.setting_myinfo)
 
-        var foundingDay:List<String>
         var birthDay:List<String>
         val cal = Calendar.getInstance()
         var year = cal.get(Calendar.YEAR)
@@ -41,9 +40,6 @@ class MyInfoSetting:AppCompatActivity() {
         val viewModel = ViewModelProviders.of(this).get(AppViewModel::class.java)
         viewModel.getAllUser().observe(this, Observer { userModel ->
             this.userInfo = userModel
-
-            //Log.d(TAG, "observe userInfo = ${userInfo?.id}, ${userInfo?.businessType}, ${userInfo?.businessName}, ${userInfo?.establishment}, " +
-            //        "${userInfo?.name}, ${userInfo?.gender}, ${userInfo?.birth}, ${userInfo?.businessCategory}, ${userInfo?.city}, ${userInfo?.area}")
 
             //사업자 유형 출력
             userInfo?.businessType?.let { business_type.check(it) }
@@ -71,22 +67,15 @@ class MyInfoSetting:AppCompatActivity() {
                 arrayID = setArray(it)
                 setSpinner(arrayID)
             }
-            userInfo?.city?.let {
-                Log.d(TAG, "onCreate: city=${userInfo?.city}")
-                city_spinner.setSelection(it)
-            }
+            userInfo?.city?.let {city->
+                city_spinner.setSelection(city) }
 
         })
 
 
-        test.setOnClickListener {
-            Log.d(TAG, "onCreate userInfo = ${userInfo?.id}, ${userInfo?.businessType}, ${userInfo?.businessName}, " +
-                    "${userInfo?.name}, ${userInfo?.gender}, ${userInfo?.birth}, ${userInfo?.businessCategory}, ${userInfo?.area}, ${userInfo?.city}")
-        }
 
         //사업자 유형
         business_type.setOnCheckedChangeListener { radioGroup, i -> userInfo?.businessType = i }
-
 
         //성별
         gender_type.setOnCheckedChangeListener { radioGroup, i -> userInfo?.gender = i }
@@ -124,9 +113,9 @@ class MyInfoSetting:AppCompatActivity() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 userInfo?.area = p2
                 arrayID = setArray(p2)
-                setSpinner(arrayID)
             }
         }
+        setSpinner(arrayID)
         city_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {}
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
@@ -140,7 +129,7 @@ class MyInfoSetting:AppCompatActivity() {
             userInfo?.businessName = business_name_et.text.toString()
             viewModel.insertUser(userInfo!!)
             val toast = Toast.makeText(this,"수정이 완료되었습니다.",Toast.LENGTH_SHORT)
-            toast.setGravity(Gravity.CENTER_HORIZONTAL,Gravity.CENTER,0)
+            toast.setGravity(Gravity.CENTER,0,0)
             toast.show()
         }
         //나가기 버튼

@@ -29,6 +29,7 @@ import com.bizbot.bizbot2.room.AppViewModel
 import com.bizbot.bizbot2.room.model.PermitModel
 import com.bizbot.bizbot2.room.model.UserModel
 import kotlinx.android.synthetic.main.intro.*
+import kotlinx.android.synthetic.main.support_activity.*
 import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -66,12 +67,18 @@ class IntroActivity : AppCompatActivity() {
             })
         }
 
+
+        //handler
         introHandler = Handler(Looper.myLooper()!!){
-            if(it.what == 1){
-                nextActivity()
-            }else{
-                Toast.makeText(this,"에러 발생! 네트워크 설정을 확인해 주세요.",Toast.LENGTH_SHORT).show()
-                exitProcess(0)
+            //arg1 = custom dialog 에서 받아온 값
+            //agr2 = data init 에서 받아온 값
+            if(it.arg1 == it.arg2){
+                intro_loading_layout.visibility = View.GONE
+                first_greetings.visibility = View.VISIBLE
+                Handler(Looper.myLooper()!!).postDelayed({
+                    startActivity(Intent(baseContext, MainActivity::class.java))
+                    finish()
+                },1500L)
             }
             true
         }
@@ -80,10 +87,23 @@ class IntroActivity : AppCompatActivity() {
 
     //초기 데이터
     private fun initData(context: Context) {
-        //기본 정보 입력하는 레이아웃
-        intro_init_layout.visibility = View.VISIBLE
-        //로딩 레이아웃
+        //서버에서 데이터 받아오기
+        GlobalScope.launch(Dispatchers.IO) {
+            val initData = InitData(baseContext)
+            msg.arg1 = initData.init()
+            introHandler.sendMessage(msg)
+        }
+
         intro_loading_layout.visibility = View.GONE
+        intro_logo_layout.visibility = View.VISIBLE
+        //1.5초후 데이터 입력받는 레이아웃 출력
+        Handler(Looper.myLooper()!!).postDelayed({
+            //로고 레이아웃
+            intro_logo_layout.visibility = View.GONE
+            //기본 정보 입력하는 레이아웃
+            intro_init_layout.visibility = View.VISIBLE
+        },1500L)
+
         //유저 정보
         val userModel = UserModel(0,null,null,null,null,null,null,null,null)
 
@@ -173,7 +193,7 @@ class IntroActivity : AppCompatActivity() {
             userModel.businessName = intro_business_name_et.text.toString()
             //대표자 이름
             userModel.name = intro_ceo_name_et.text.toString()
-
+            //db에 저장
             viewModel.insertUser(userModel)
 
             if(userModel.businessType == null ||  userModel.gender == null || userModel.birth == null)
@@ -181,13 +201,6 @@ class IntroActivity : AppCompatActivity() {
             else{
                 //알림 설정 팝업
                 customDialog(context)
-                //서버에서 데이터 받아오기
-                GlobalScope.launch(Dispatchers.IO) {
-                    intro_loading_layout.visibility = View.VISIBLE
-                    val initData = InitData(baseContext)
-                    msg.what = initData.init()
-                    introHandler.sendMessage(msg)
-                }
             }
         }
     }
@@ -203,6 +216,7 @@ class IntroActivity : AppCompatActivity() {
         val noBtn = mView.findViewById<Button>(R.id.dialog_no_btn)
 
         builder.setView(mView)
+        builder.setCancelable(false)
         val dialog = builder.create()
         dialog.show()
 
@@ -224,6 +238,8 @@ class IntroActivity : AppCompatActivity() {
                 .build()
             js.schedule(jobInfo)
 
+            msg.arg2 = 1
+            intro_loading_layout.visibility = View.VISIBLE
             dialog.dismiss()
         }
 
@@ -234,12 +250,14 @@ class IntroActivity : AppCompatActivity() {
             //jobschedule 해제
             js.cancel(JOB_ID)
 
+            msg.arg2 = 1
+            intro_loading_layout.visibility = View.VISIBLE
             dialog.dismiss()
         }
 
     }
 
-    //내정보 초기 설정
+    //스피너 설정
     private fun setSpinner(arrayID: Int){
         ArrayAdapter.createFromResource(baseContext, arrayID, R.layout.setting_spinner_item)
             .also { arrayAdapter -> arrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
