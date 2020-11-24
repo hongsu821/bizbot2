@@ -1,16 +1,24 @@
 package com.bizbot.bizbot2.background
 
 import android.app.Activity
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.content.res.AssetManager
+import android.os.Build
 import android.util.Log
+import androidx.core.app.NotificationCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
+import com.bizbot.bizbot2.R
 import com.bizbot.bizbot2.room.AppDatabase
 import com.bizbot.bizbot2.room.AppViewModel
 import com.bizbot.bizbot2.room.model.PermitModel
 import com.bizbot.bizbot2.room.model.SupportModel
+import com.bizbot.bizbot2.support.SupportActivity
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -20,7 +28,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class SynchronizationData(var context: Context) {
-    private val TAG = "SynchronizationData"
+    companion object{
+        private val TAG = "SynchronizationData"
+        val CHANNEL_ID = "101"
+    }
 
     fun SyncData(): Int{
         val supportURL = "http://www.bizinfo.go.kr/uss/rss/bizPersonaRss.do?dataType=json"
@@ -39,6 +50,7 @@ class SynchronizationData(var context: Context) {
             val db: AppDatabase = Room.databaseBuilder(context,AppDatabase::class.java,"app_db").build()
             //동기화 시간
             val permit: PermitModel = db.permitDAO().getItem()
+            val alert = db.permitDAO().getAll()
             val sync: Date = simpleDateFormat.parse(permit.syncTime)
 
             for(i in 0 until jsonArray.length()){
@@ -50,7 +62,10 @@ class SynchronizationData(var context: Context) {
                 val differentDay: Long = differentTime/(24*60*60*1000)
 
                 //시간 차이가 2 이하이면 새로 생긴 게시글
-                supportItem.checkNew = differentDay <= 2
+                if(differentDay<=2){
+                    supportItem.checkNew = true
+                    notificationNewSupport(i,supportItem.pblancId,supportItem.pblancNm!!)
+                }
 
                 //db에 insert
                 db.supportDAO().insert(supportItem)
@@ -100,4 +115,43 @@ class SynchronizationData(var context: Context) {
         return s_list
 
     }
+
+    fun notificationNewSupport(NOTIFICATION_ID:Int,id:String,title:String){
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        val notificationIntent = Intent(context,SupportActivity::class.java)
+        notificationIntent.putExtra("newPostID",id)
+        notificationIntent.putExtra("newCheck",true)
+        notificationIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        notificationIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+        val pendingIntent = PendingIntent.getActivity(context,0,notificationIntent,PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle(title)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+
+        //OREO notification 채널
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            builder.setSmallIcon(R.drawable.ic_launcher_foreground)
+            val channelName = "Notification Channel"
+            val description = "Oreo"
+            val importance = NotificationManager.IMPORTANCE_HIGH
+
+            val channel = NotificationChannel(CHANNEL_ID,channelName,importance)
+            channel.description = description
+
+            notificationManager.createNotificationChannel(channel)
+        }else
+            builder.setSmallIcon(R.mipmap.ic_launcher)
+
+        notificationManager.notify(NOTIFICATION_ID,builder.build())
+
+
+
+    }
+
 }

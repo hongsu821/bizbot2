@@ -35,7 +35,7 @@ class FavouriteActivity : AppCompatActivity(){
         })
 
         //리사이클러뷰 스크롤 위치 감지
-        favourite_rv.setOnScrollChangeListener{ view, scrollX, scrollY, oldScrollX, oldScrollY ->
+        favourite_rv.setOnScrollChangeListener{ _, _, _, _, _ ->
             if(favourite_rv.computeVerticalScrollOffset() == 0)
                 top_move_btn.visibility = View.GONE
             else

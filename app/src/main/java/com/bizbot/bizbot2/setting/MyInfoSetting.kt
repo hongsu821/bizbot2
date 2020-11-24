@@ -15,7 +15,6 @@ import com.bizbot.bizbot2.R
 import com.bizbot.bizbot2.room.AppViewModel
 import com.bizbot.bizbot2.room.model.UserModel
 import kotlinx.android.synthetic.main.setting_myinfo.*
-import kotlinx.android.synthetic.main.setting_myinfo.test
 import java.util.*
 
 class MyInfoSetting:AppCompatActivity() {
@@ -68,21 +67,20 @@ class MyInfoSetting:AppCompatActivity() {
                 setSpinner(arrayID)
             }
             userInfo?.city?.let {city->
-                city_spinner.setSelection(city) }
+                city_spinner.setSelection(city)
+            }
 
         })
 
-
-
         //사업자 유형
-        business_type.setOnCheckedChangeListener { radioGroup, i -> userInfo?.businessType = i }
+        business_type.setOnCheckedChangeListener { _, i -> userInfo?.businessType = i }
 
         //성별
-        gender_type.setOnCheckedChangeListener { radioGroup, i -> userInfo?.gender = i }
+        gender_type.setOnCheckedChangeListener { _, i -> userInfo?.gender = i }
 
         //생년월일
         birth_layout.setOnClickListener {
-            val dpd = DatePickerDialog(this,R.style.spinner_date_picker, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            val dpd = DatePickerDialog(this,R.style.spinner_date_picker, DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                 userInfo?.birth = "$year.${monthOfYear+1}.$dayOfMonth"
                 birth_tx.text = userInfo?.birth
             }, year, month, day)
@@ -113,6 +111,7 @@ class MyInfoSetting:AppCompatActivity() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 userInfo?.area = p2
                 arrayID = setArray(p2)
+                setSpinner(arrayID)
             }
         }
         setSpinner(arrayID)

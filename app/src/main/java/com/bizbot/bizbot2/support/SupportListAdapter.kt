@@ -28,6 +28,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
     }
     lateinit var filterList : ArrayList<SupportModel>
     lateinit var sList : ArrayList<SupportModel>
+    var itemSize = 20
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflatedView = LayoutInflater.from(parent.context).inflate(R.layout.item_support_list,parent,false)
@@ -35,7 +36,10 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
     }
 
     override fun getItemCount(): Int {
-        return filterList.size
+        if(filterList.size<20 || itemSize > filterList.size)
+            return filterList.size
+        else
+            return itemSize
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -47,6 +51,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
 
         holder.newIcon.visibility = View.GONE
 
+        //레이아웃 클릭시 디테일 페이지로 이동
         holder.layout.setOnClickListener {
             val intent = Intent(context,SupportDetail::class.java)
             intent.putExtra("detail",items)
@@ -236,5 +241,6 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
     fun getCount():Int{
         return filterList.size
     }
+
 
 }

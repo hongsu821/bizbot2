@@ -85,6 +85,7 @@ class AlertSetting():AppCompatActivity() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 arrayID = setArray(p2)
                 permit?.field = p2
+                setSpinner(arrayID)
             }
         }
         //소분류

@@ -27,7 +27,7 @@
             android:id="@+id/category_menu_btn"
             android:layout_width="30sp"
             android:layout_height="32sp"
-            android:background="@drawable/menu"
+            android:background="@drawable/filter"
             android:layout_marginLeft="10sp"/>
         <LinearLayout
             android:id="@+id/search_bar"
@@ -130,8 +130,58 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/support_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/support_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginBottom="9dp"/>
+                <LinearLayout
+                    android:id="@+id/support_add_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:padding="9dp"
+                    android:background="@drawable/add_button_style"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="더보기"
+                        android:textColor="#616161"
+                        android:textSize="18dp"
+                        android:fontFamily="@font/noto_sans_regular"
+                        android:padding="5dp"
+                        android:layout_gravity="center_vertical"/>
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/down_arrow"
+                        android:layout_gravity="center_vertical"
+                        android:padding="8dp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyle"
@@ -140,23 +190,14 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/support_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginBottom="9dp"/>
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/top_move_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_margin="28dp"
-            android:layout_marginRight="28dp"
+            android:layout_marginEnd="28dp"
             android:layout_marginBottom="29dp"
             android:src="@drawable/up_arrow"
             android:backgroundTint="#FFE04A"
@@ -165,4 +206,5 @@
 
 
     </RelativeLayout>
+
 </LinearLayout>

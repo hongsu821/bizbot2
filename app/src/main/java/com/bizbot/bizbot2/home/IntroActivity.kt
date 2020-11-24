@@ -119,12 +119,12 @@ class IntroActivity : AppCompatActivity() {
         val day = cal.get(Calendar.DAY_OF_MONTH)
 
         //성별
-        intro_gender_type.setOnCheckedChangeListener { radioGroup, i -> userModel.gender = i }
+        intro_gender_type.setOnCheckedChangeListener { _, i -> userModel.gender = i }
 
         //생년월일
         intro_birth_layout.setOnClickListener {
             val dpd = DatePickerDialog(this, R.style.spinner_date_picker,
-                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                     userModel.birth = "$year.${monthOfYear + 1}.$dayOfMonth"
                     intro_birth_tx.text = userModel.birth
                 }, year, month, day
