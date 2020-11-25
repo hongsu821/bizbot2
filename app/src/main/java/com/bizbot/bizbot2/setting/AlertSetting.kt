@@ -46,11 +46,11 @@ class AlertSetting():AppCompatActivity() {
             }
 
             //알림 받을 분야
-            permit?.field?.let { it ->
+            permit?.fieldNum?.let { it ->
                 large_spinner.setSelection(it)
                 arrayID = setArray(it)
             }
-            permit?.subclass?. let{city ->
+            permit?.subclassNum?. let{city ->
                 setSpinner(arrayID)
                 medium_spinner.setSelection(city)
             }
@@ -69,7 +69,7 @@ class AlertSetting():AppCompatActivity() {
         })
 
         //알림 체크
-        alert_check.setOnCheckedChangeListener { compoundButton, isChecked ->
+        alert_check.setOnCheckedChangeListener { _, isChecked ->
             permit?.alert = isChecked
         }
 
@@ -84,7 +84,7 @@ class AlertSetting():AppCompatActivity() {
             override fun onNothingSelected(p0: AdapterView<*>?) { }
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 arrayID = setArray(p2)
-                permit?.field = p2
+                permit?.fieldNum = p2
                 setSpinner(arrayID)
             }
         }
@@ -93,7 +93,7 @@ class AlertSetting():AppCompatActivity() {
         medium_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {}
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                permit?.subclass = p2
+                permit?.subclassNum = p2
             }
         }
 
@@ -102,10 +102,15 @@ class AlertSetting():AppCompatActivity() {
         alert_save.setOnClickListener {
             //알림 체크 여부
             permit?.alert = alert_check.isChecked
+
             //알림 체크한 시간(동기화 시간)
             val syncDate = Date(System.currentTimeMillis())
             val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
             permit?.syncTime = simpleDateFormat.format(syncDate)
+
+            //알림 받을 분야
+            permit?.field = large_spinner.selectedItem.toString()
+            permit?.subclass = medium_spinner.selectedItem.toString()
 
             //키워드
             var line = ""

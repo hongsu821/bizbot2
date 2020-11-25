@@ -165,7 +165,7 @@
                     android:paddingRight="22dp"
                     android:paddingLeft="22dp">
                     <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/male"
+                        android:id="@+id/intro_male"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -175,7 +175,7 @@
                         android:padding="12dp"
                         android:fontFamily="@font/noto_sans_regular"/>
                     <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/female"
+                        android:id="@+id/intro_female"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -220,7 +220,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="업종*"
+                    android:text="업종"
                     android:textColor="#424242"
                     android:textSize="18sp"
                     android:padding="12dp"
@@ -241,7 +241,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="사업소재지"
+                    android:text="사업소재지*"
                     android:textColor="#424242"
                     android:textSize="18sp"
                     android:padding="12dp"
@@ -334,11 +334,12 @@
             android:textColor="#000000"
             android:text="비즈봇"
             android:textSize="45dp"
-            android:fontFamily="@font/noto_sans_extra_bold"/>
+            android:fontFamily="@font/noto_sans_extra_bold"
+            android:layout_gravity="center_horizontal"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="지원 사업 알리미"
+            android:text="사업이 풀려갑니다."
             android:textColor="#595959"
             android:textSize="18dp"
             android:layout_gravity="center_horizontal"

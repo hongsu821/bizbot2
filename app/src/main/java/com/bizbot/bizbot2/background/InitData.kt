@@ -17,6 +17,7 @@ class InitData(var context: Context) {
 
     fun init(): Int{
         val supportURL = "http://www.bizinfo.go.kr/uss/rss/bizPersonaRss.do?dataType=json"
+        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
 
         try{
             val start = System.currentTimeMillis()
@@ -35,10 +36,18 @@ class InitData(var context: Context) {
             val jsonArray: JSONArray = json?.getJSONArray("jsonArray")!!
 
             val db: AppDatabase = Room.databaseBuilder(context,AppDatabase::class.java,"app_db").build()
+            val sync = Date(System.currentTimeMillis()) //현재시간
 
             for(i in 0 until jsonArray.length()){
                 val jsonObject: JSONObject = jsonArray.getJSONObject(i)
                 val supportItem: SupportModel = JsonParsing_support(jsonObject)
+
+                val create: Date= simpleDateFormat.parse(supportItem.creatPnttm) //게시글 생성 시간
+                val differentTime: Long = sync.time - create.time // 현재 시간 - 게시글 생성 시간
+                val differentDay: Long = differentTime/(24*60*60*1000)
+
+                supportItem.checkNew = differentDay<=2
+
                 db.supportDAO().insert(supportItem)
             }
 

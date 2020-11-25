@@ -10,6 +10,8 @@ data class PermitModel(
     var alert: Boolean?,
     var syncTime: String?,
     var keyword: String?,
-    var field: Int?,
-    var subclass: Int?
+    @ColumnInfo(name = "field_id") var fieldNum:Int?,
+    var field: String?,
+    @ColumnInfo(name = "subclass_id") var subclassNum: Int?,
+    var subclass: String?
 )

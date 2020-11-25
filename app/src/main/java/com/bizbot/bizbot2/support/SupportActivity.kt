@@ -73,7 +73,7 @@ class SupportActivity: AppCompatActivity() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 if(supportList != null){
                     supportAdapter.sort(p2)
-                    support_rv.scrollToPosition(0)
+                    support_scroll_view.smoothScrollTo(0,0)
                 }
             }
         }
@@ -89,9 +89,7 @@ class SupportActivity: AppCompatActivity() {
 
         //top 버튼 클릭시 최상단으로 이동
         top_move_btn.setOnClickListener {
-
-            support_rv.smoothScrollToPosition(0)
-            support_scroll_view.scrollTo(0,0)
+            support_scroll_view.smoothScrollTo(0,0)
         }
         //더보기 버튼 클릭시
         support_add_btn.setOnClickListener {

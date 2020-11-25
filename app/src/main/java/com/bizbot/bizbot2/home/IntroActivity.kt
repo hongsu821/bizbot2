@@ -29,6 +29,7 @@ import com.bizbot.bizbot2.room.AppViewModel
 import com.bizbot.bizbot2.room.model.PermitModel
 import com.bizbot.bizbot2.room.model.UserModel
 import kotlinx.android.synthetic.main.intro.*
+import kotlinx.android.synthetic.main.setting_myinfo.*
 import kotlinx.android.synthetic.main.support_activity.*
 import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
@@ -39,11 +40,11 @@ import kotlin.system.exitProcess
 class IntroActivity : AppCompatActivity() {
     companion object{
         private val TAG = "IntroActivity"
-        val JOB_ID = 1001
+        const val JOB_ID = 1001
     }
 
     lateinit var introHandler:Handler
-    val msg = Message()
+    private val msg = Message()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,12 +106,20 @@ class IntroActivity : AppCompatActivity() {
         },1500L)
 
         //유저 정보
-        val userModel = UserModel(0,null,null,null,null,null,null,null,null)
+        val userModel = UserModel(0,null,null,null,null,
+            null,null,null,null,null,null,null,null,null)
 
         val viewModel = ViewModelProviders.of(this).get(AppViewModel::class.java)
 
         //사업자 유형
-        intro_business_type.setOnCheckedChangeListener { radioGroup, i -> userModel.businessType = i }
+        intro_business_type.setOnCheckedChangeListener { _, i ->
+            userModel.businessTypeNum= i
+            when(i){
+                R.id.intro_corporation_business->userModel.businessType = intro_corporation_business.text.toString()
+                R.id.intro_private_business->userModel.businessType = intro_private_business.text.toString()
+                R.id.intro_reserve_business->userModel.businessType = intro_reserve_business.text.toString()
+            }
+        }
 
         //오늘날짜
         val cal = Calendar.getInstance()
@@ -119,7 +128,13 @@ class IntroActivity : AppCompatActivity() {
         val day = cal.get(Calendar.DAY_OF_MONTH)
 
         //성별
-        intro_gender_type.setOnCheckedChangeListener { _, i -> userModel.gender = i }
+        intro_gender_type.setOnCheckedChangeListener { _, i ->
+            userModel.genderNum = i
+            when(i){
+                R.id.intro_male -> userModel.gender = intro_male.text.toString()
+                R.id.intro_female->userModel.gender = intro_female.text.toString()
+            }
+        }
 
         //생년월일
         intro_birth_layout.setOnClickListener {
@@ -140,9 +155,10 @@ class IntroActivity : AppCompatActivity() {
         intro_category_of_business_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {}
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                userModel.businessCategory = p2
+                userModel.businessCategoryNum = p2
             }
         }
+
         var arrayID = R.array.select_default
         //지역
         ArrayAdapter.createFromResource(this, R.array.area_array, R.layout.setting_spinner_item)
@@ -155,7 +171,7 @@ class IntroActivity : AppCompatActivity() {
         intro_area_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {}
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                userModel.area = p2
+                userModel.areaNum = p2
                 when(p2){
                     0-> arrayID = R.array.select_default
                     1-> arrayID = R.array.Seoul
@@ -182,7 +198,7 @@ class IntroActivity : AppCompatActivity() {
         intro_city_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {}
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                userModel.city = p2
+                userModel.cityNum = p2
             }
         }
 
@@ -193,10 +209,15 @@ class IntroActivity : AppCompatActivity() {
             userModel.businessName = intro_business_name_et.text.toString()
             //대표자 이름
             userModel.name = intro_ceo_name_et.text.toString()
+            //업종
+            userModel.businessCategory = intro_category_of_business_spinner.selectedItem.toString()
+            //사업소재지
+            userModel.area = intro_area_spinner.selectedItem.toString()
+            userModel.city = intro_city_spinner.selectedItem.toString()
             //db에 저장
             viewModel.insertUser(userModel)
 
-            if(userModel.businessType == null ||  userModel.gender == null || userModel.birth == null)
+            if(userModel.businessTypeNum == null ||  userModel.genderNum == null || userModel.birth == null || userModel.areaNum == null)
                 Toast.makeText(this,"필수 항목을 작성해 주세요!",Toast.LENGTH_SHORT).show()
             else{
                 //알림 설정 팝업
@@ -208,7 +229,7 @@ class IntroActivity : AppCompatActivity() {
     //알림 설정 다이얼로그
     private fun customDialog(context: Context){
         intro_init_layout.visibility = View.GONE
-        val permitModel = PermitModel(0,false,null,"@@@",0,0)
+        val permitModel = PermitModel(0,false,null,"@@@",null,null,null,null)
 
         val builder = AlertDialog.Builder(context)
         val mView = LayoutInflater.from(context).inflate(R.layout.intro_dialog_layout,null)
@@ -220,6 +241,7 @@ class IntroActivity : AppCompatActivity() {
         val dialog = builder.create()
         dialog.show()
 
+        //동기화 시간
         val syncDate = Date(System.currentTimeMillis())
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
         permitModel.syncTime = simpleDateFormat.format(syncDate)

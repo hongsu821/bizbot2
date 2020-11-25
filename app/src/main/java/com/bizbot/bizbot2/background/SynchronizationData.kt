@@ -48,10 +48,11 @@ class SynchronizationData(var context: Context) {
             val jsonArray: JSONArray = json?.getJSONArray("jsonArray")!!
 
             val db: AppDatabase = Room.databaseBuilder(context,AppDatabase::class.java,"app_db").build()
-            //동기화 시간
+            //동기화 시간 가져오기
             val permit: PermitModel = db.permitDAO().getItem()
-            val alert = db.permitDAO().getAll()
             val sync: Date = simpleDateFormat.parse(permit.syncTime)
+            //알림 설정 가져오기
+            val alert = db.permitDAO().getAll()
 
             for(i in 0 until jsonArray.length()){
                 val jsonObject: JSONObject = jsonArray.getJSONObject(i)
@@ -62,8 +63,9 @@ class SynchronizationData(var context: Context) {
                 val differentDay: Long = differentTime/(24*60*60*1000)
 
                 //시간 차이가 2 이하이면 새로 생긴 게시글
-                if(differentDay<=2){
-                    supportItem.checkNew = true
+                supportItem.checkNew = differentDay<=2
+
+                if(sync.time < create.time){
                     notificationNewSupport(i,supportItem.pblancId,supportItem.pblancNm!!)
                 }
 
@@ -72,8 +74,11 @@ class SynchronizationData(var context: Context) {
             }
 
             val end = System.currentTimeMillis()
-
             Log.d(TAG, "data loading: "+(end-start)/1000+" s")
+
+            //동기화 시간
+            val syncDate = Date(System.currentTimeMillis())
+            db.permitDAO().setSyncTime(simpleDateFormat.format(syncDate))
 
             db.close()
 
@@ -116,6 +121,14 @@ class SynchronizationData(var context: Context) {
 
     }
 
+    fun areaFilter(){
+
+    }
+
+    fun notificationSetting(){
+
+    }
+
     fun notificationNewSupport(NOTIFICATION_ID:Int,id:String,title:String){
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -149,9 +162,6 @@ class SynchronizationData(var context: Context) {
             builder.setSmallIcon(R.mipmap.ic_launcher)
 
         notificationManager.notify(NOTIFICATION_ID,builder.build())
-
-
-
     }
 
 }
