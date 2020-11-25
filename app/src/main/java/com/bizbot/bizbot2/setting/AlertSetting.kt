@@ -45,14 +45,14 @@ class AlertSetting():AppCompatActivity() {
                 alert_check.isChecked = it
             }
 
-            //알림 받을 분야
-            permit?.fieldNum?.let { it ->
-                large_spinner.setSelection(it)
+            //사업 소재지 출력
+            permit?.areaNum?.let {
+                area_spinner.setSelection(it)
                 arrayID = setArray(it)
-            }
-            permit?.subclassNum?. let{city ->
                 setSpinner(arrayID)
-                medium_spinner.setSelection(city)
+            }
+            permit?.cityNum?.let {city->
+                city_spinner.setSelection(city)
             }
 
             //알림 받을 키워드
@@ -73,29 +73,31 @@ class AlertSetting():AppCompatActivity() {
             permit?.alert = isChecked
         }
 
-        //분야
-        ArrayAdapter.createFromResource(this,R.array.field,R.layout.setting_spinner_item)
+        //지역 스피너
+        ArrayAdapter.createFromResource(this, R.array.area_array, R.layout.setting_spinner_item)
             .also { arrayAdapter -> arrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
-                large_spinner.adapter = arrayAdapter}
-        ArrayAdapter.createFromResource(baseContext,arrayID,R.layout.setting_spinner_item)
+                area_spinner.adapter = arrayAdapter}
+        ArrayAdapter.createFromResource(baseContext, arrayID, R.layout.setting_spinner_item)
             .also { arrayAdapter -> arrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
-                medium_spinner.adapter = arrayAdapter}
-        large_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onNothingSelected(p0: AdapterView<*>?) { }
+                city_spinner.adapter = arrayAdapter
+            }
+        area_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                permit?.areaNum = p2
                 arrayID = setArray(p2)
-                permit?.fieldNum = p2
                 setSpinner(arrayID)
             }
         }
-        //소분류
         setSpinner(arrayID)
-        medium_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        city_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {}
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                permit?.subclassNum = p2
+                permit?.cityNum = p2
             }
         }
+
+
 
 
         //저장하기 버튼 클릭시
@@ -108,9 +110,9 @@ class AlertSetting():AppCompatActivity() {
             val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
             permit?.syncTime = simpleDateFormat.format(syncDate)
 
-            //알림 받을 분야
-            permit?.field = large_spinner.selectedItem.toString()
-            permit?.subclass = medium_spinner.selectedItem.toString()
+            //지역
+            permit?.area = area_spinner.selectedItem.toString()
+            permit?.city = city_spinner.selectedItem.toString()
 
             //키워드
             var line = ""
@@ -143,30 +145,36 @@ class AlertSetting():AppCompatActivity() {
         alert_close_btn.setOnClickListener { finish() }
     }
 
-    //두번째 스피너 설정
     fun setSpinner(arrayID:Int){
         ArrayAdapter.createFromResource(baseContext, arrayID, R.layout.setting_spinner_item)
             .also { arrayAdapter -> arrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
-                medium_spinner.adapter = arrayAdapter
+                city_spinner.adapter = arrayAdapter
             }
     }
 
-    //두번째 스피너 array id 설정
-    fun setArray(position: Int):Int{
-        var arrayid = 0
+    fun setArray(position : Int):Int{
+        var arrayId = 0
         when(position){
-            0->arrayid = R.array.select_default
-            1->arrayid = R.array.management
-            2->arrayid = R.array.finance
-            3->arrayid = R.array.technique
-            4->arrayid = R.array.domestic_demand
-            5->arrayid = R.array.shared_growth
-            6->arrayid = R.array.export
-            7->arrayid = R.array.employee
-            8->arrayid = R.array.system
-            9->arrayid = R.array.startup
+            0-> arrayId = R.array.select_default
+            1-> arrayId = R.array.Seoul
+            2-> arrayId = R.array.Busan
+            3-> arrayId = R.array.Dae_gu
+            4-> arrayId = R.array.Incheon
+            5-> arrayId = R.array.Gwangju
+            6-> arrayId = R.array.Daejeon
+            7-> arrayId = R.array.Ulsan
+            8-> arrayId = R.array.Sejong
+            9-> arrayId = R.array.Gangwon_do
+            10-> arrayId = R.array.Gyeonggi_do
+            11-> arrayId = R.array.Chung_cheong_bukdo
+            12-> arrayId = R.array.Chungcheongnam_do
+            13-> arrayId = R.array.Jeollabuk_do
+            14-> arrayId = R.array.Jeollanam_do
+            15-> arrayId = R.array.Gyeongsangbuk_do
+            16-> arrayId = R.array.Gyeongsangnam_do
+            17-> arrayId = R.array.Jeju
         }
-        return arrayid
+        return arrayId
     }
 
     override fun onBackPressed() {

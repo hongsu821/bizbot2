@@ -241,31 +241,31 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="사업소재지*"
+                    android:text="지원 받고 싶은 분야"
                     android:textColor="#424242"
                     android:textSize="18sp"
                     android:padding="12dp"
                     android:fontFamily="@font/noto_sans_regular"/>
-
                 <LinearLayout
+                    android:id="@+id/field_of_business"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="22dp"
-                    android:paddingRight="22dp"
-                    android:layout_marginBottom="8dp">
+                    android:paddingRight="22dp">
                     <Spinner
-                        android:id="@+id/intro_area_spinner"
+                        android:id="@+id/large_spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:spinnerMode="dropdown"/>
                     <Spinner
-                        android:id="@+id/intro_city_spinner"
+                        android:id="@+id/medium_spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:spinnerMode="dropdown"/>
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/intro_next_btn"
                     android:layout_width="match_parent"

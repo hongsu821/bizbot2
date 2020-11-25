@@ -1,28 +1,22 @@
 package com.bizbot.bizbot2.background
 
-import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.res.AssetManager
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.bizbot.bizbot2.R
 import com.bizbot.bizbot2.room.AppDatabase
-import com.bizbot.bizbot2.room.AppViewModel
 import com.bizbot.bizbot2.room.model.PermitModel
 import com.bizbot.bizbot2.room.model.SupportModel
 import com.bizbot.bizbot2.support.SupportActivity
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.io.InputStream
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -52,7 +46,7 @@ class SynchronizationData(var context: Context) {
             val permit: PermitModel = db.permitDAO().getItem()
             val sync: Date = simpleDateFormat.parse(permit.syncTime)
             //알림 설정 가져오기
-            val alert = db.permitDAO().getAll()
+            val user = db.userDAO().getItem()
 
             for(i in 0 until jsonArray.length()){
                 val jsonObject: JSONObject = jsonArray.getJSONObject(i)
@@ -65,8 +59,13 @@ class SynchronizationData(var context: Context) {
                 //시간 차이가 2 이하이면 새로 생긴 게시글
                 supportItem.checkNew = differentDay<=2
 
-                if(sync.time < create.time){
-                    notificationNewSupport(i,supportItem.pblancId,supportItem.pblancNm!!)
+                //지역 알림
+                if(sync.time < create.time ){
+                    if(permit.area != null && permit.areaNum != 0){
+                        if(supportItem.pblancNm?.contains(changeArea(permit.area!!))!!)
+                            notificationNewSupport(i,supportItem.pblancId,supportItem.pblancNm!!)
+                    }
+
                 }
 
                 //db에 insert
@@ -121,8 +120,28 @@ class SynchronizationData(var context: Context) {
 
     }
 
-    fun areaFilter(){
-
+    fun changeArea(beforeArea:String):String{
+        var afterArea = ""
+        when(beforeArea){
+            "서울특별시" -> afterArea = "서울"
+            "부산광역시" -> afterArea = "부산"
+            "대구광역시" -> afterArea = "대구"
+            "인천광역시" -> afterArea = "인천"
+            "광주광역시" -> afterArea = "광주"
+            "대전광역시" -> afterArea = "대전"
+            "울산광역시" -> afterArea = "울산"
+            "세종특별자치시" -> afterArea = "세종"
+            "강원도" -> afterArea = "강원"
+            "경기도" -> afterArea = "경기"
+            "충청북도" -> afterArea = "충북"
+            "충청남도" -> afterArea = "충남"
+            "전라북도" -> afterArea = "전북"
+            "전라남도" -> afterArea = "전남"
+            "경상남도" -> afterArea = "경남"
+            "경상북도" -> afterArea = "경북"
+            "제주특별자치도" -> afterArea = "제주"
+        }
+        return afterArea
     }
 
     fun notificationSetting(){

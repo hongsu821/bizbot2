@@ -163,23 +163,27 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
     private fun categoryFilter(area:String, field: String){
         var filtering = ArrayList<SupportModel>()
 
+        //두개다 전체인 경우
         if(area == "전체" && field == "전체")
             filtering = sList
+        //지역만 선택된 경우
         else if(area != "전체" && field == "전체"){
             for(item in sList){
-                if(item.areaNm?.contains(area)!!)
+                if(item.pblancNm?.contains(area)!!)
                     filtering.add(item)
             }
         }
+        //분야만 선택된 경우
         else if (area == "전체" && field != "전체"){
             for(item in sList){
                 if(item.pldirSportRealmLclasCodeNm?.contains(field)!!)
                     filtering.add(item)
             }
         }
+        //둘다 선택된 경우
         else if(area != "전체" && field != "전체"){
             for(item in sList){
-                if(item.areaNm?.contains(area)!!&&item.pldirSportRealmLclasCodeNm?.contains(field)!!)
+                if(item.pblancNm?.contains(area)!!&&item.pldirSportRealmLclasCodeNm?.contains(field)!!)
                     filtering.add(item)
             }
         }

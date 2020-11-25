@@ -10,8 +10,8 @@ data class PermitModel(
     var alert: Boolean?,
     var syncTime: String?,
     var keyword: String?,
-    @ColumnInfo(name = "field_id") var fieldNum:Int?,
-    var field: String?,
-    @ColumnInfo(name = "subclass_id") var subclassNum: Int?,
-    var subclass: String?
+    @ColumnInfo(name = "area_id") var areaNum: Int?, //지역 id (서울,대구,경주...)
+    var area: String?, //지역
+    @ColumnInfo(name = "city_id") var cityNum: Int?, //도시 id
+    var city: String? //도시 (서초구, 동구 ...)
 )
