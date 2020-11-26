@@ -72,7 +72,15 @@ class AppRepository(application: Application) {
     fun getAllPermit():LiveData<PermitModel>{
         return permitDAO.getAll()
     }
-
+    //지역 설정
+    fun setArea(area:String,areaID:Int,city:String,cityID:Int){
+        CoroutineScope(Dispatchers.IO).launch {
+            permitDAO.setArea(area)
+            permitDAO.setAreaID(areaID)
+            permitDAO.setCity(city)
+            permitDAO.setCityID(cityID)
+        }
+    }
 
     //관심사업 전부 출력
     fun getLikeList(): LiveData<List<SupportModel>>{

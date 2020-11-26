@@ -21,6 +21,18 @@ interface PermitDAO {
     @Query("UPDATE permit SET syncTime = :time")
     fun setSyncTime(time: String)
 
+    @Query("UPDATE permit SET area=:area")
+    fun setArea(area:String)
+
+    @Query("UPDATE permit SET area_id=:id")
+    fun setAreaID(id:Int)
+
+    @Query("UPDATE permit SET city=:city")
+    fun setCity(city:String)
+
+    @Query("UPDATE permit SET city_id=:id")
+    fun setCityID(id:Int)
+
     @Query("SELECT * FROM permit")
     fun getAll(): LiveData<PermitModel>
 

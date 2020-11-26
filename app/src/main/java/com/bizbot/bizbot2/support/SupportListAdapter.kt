@@ -148,11 +148,11 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
      */
     fun cutTermWords(term: String?):String{
         val word = term?.split("~")
-        var termEnd:String?
-        if(word?.size!! > 1) //기간이 있을때
-            termEnd = word[1]
+        val termEnd:String?
+        termEnd = if(word?.size!! > 1) //기간이 있을때
+            word[1]
         else //상시 모집일때
-            termEnd = word[0]
+            word[0]
 
         return termEnd
     }
@@ -197,8 +197,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
      * 형태소 분석기 사용한 검색
      */
     fun posTaggingFilter(wordList:ArrayList<String>, search_mode: SEARCH_MODE):Boolean{
-        var result = false
-        var filtering = ArrayList<SupportModel>()
+        val filtering = ArrayList<SupportModel>()
         for(item in sList){
             for(word in wordList){
                 when(search_mode){
@@ -221,9 +220,8 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
 
         filterList = filtering
         notifyDataSetChanged()
-        result = filterList.size != 0
 
-        return result
+        return filterList.size != 0
     }
 
     /**

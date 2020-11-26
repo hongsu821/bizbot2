@@ -81,4 +81,8 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     fun insertUser(users: UserModel){
         repository.insertUser(users)
     }
+
+    fun setArea(area:String,areaID:Int,city:String,cityID:Int){
+        repository.setArea(area,areaID,city,cityID)
+    }
 }
