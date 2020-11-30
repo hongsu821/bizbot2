@@ -60,7 +60,7 @@ class SynchronizationData(var context: Context) {
                 supportItem.checkNew = differentDay<=2
 
                 //지역 알림
-                if(sync.time < create.time ){
+                if(sync.time < create.time && permit.alert!!){
                     if(permit.area != null && permit.areaNum != 0){
                         if(supportItem.pblancNm?.contains(changeArea(permit.area!!))!!)
                             notificationNewSupport(i,supportItem.pblancId,supportItem.pblancNm!!)

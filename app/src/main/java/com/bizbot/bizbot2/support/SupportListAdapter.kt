@@ -3,7 +3,6 @@ package com.bizbot.bizbot2.support
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,9 +47,9 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
         val items = filterList[position]
         holder.apply {
             bind(items)
-            printDDay(items)
+            bindDday(items)
             termFormat(items)
-            field?.let { keywordRV(items,context, it) }
+            field?.let { bindKeyword(items,context, it) }
         }
 
         val viewModel = ViewModelProviders.of(activity).get(AppViewModel::class.java)
@@ -113,19 +112,23 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
 
         //d-day출력
         @SuppressLint("SetTextI18n")
-        fun printDDay(item: SupportModel){
-            if(item.reqstBeginEndDe?.contains("~")!!){
-                val word = item.reqstBeginEndDe?.split("~")
-                val dateFormat = SimpleDateFormat("yyyyMMdd", Locale.KOREA)
-                val termDate = dateFormat.parse(word?.get(1)?.substring(1, word[1].length))
-                val todayDate:String = dateFormat.format(Date(System.currentTimeMillis()))
-                val today:Date? = dateFormat.parse(todayDate)
-                val d_dayTime: Long = termDate.time - today?.time!!
-                val d_day: Long = d_dayTime/(24*60*60*1000)
-                dDay.text = ("D-${d_day}")
+        fun bindDday(item: SupportModel){
+            if(item.reqstBeginEndDe?.contains("~")!!) {
+                dDay.visibility = View.VISIBLE
+                dDay.text = "D-${calDay(item.reqstBeginEndDe)}"
             }
             else
                 dDay.visibility = View.GONE
+        }
+
+        private fun calDay(term: String?):Long? {
+            val word = term?.split("~")
+            val dateFormat = SimpleDateFormat("yyyyMMdd", Locale.KOREA)
+            val termDate = dateFormat.parse(word?.get(1)?.substring(1, word[1].length))
+            val todayDate: String = dateFormat.format(Date(System.currentTimeMillis()))
+            val today: Date? = dateFormat.parse(todayDate)
+            val d_dayTime: Long = termDate.time - today?.time!!
+            return d_dayTime / (24 * 60 * 60 * 1000)
         }
 
         //접수기간 출력
@@ -140,7 +143,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
                 term.text = item.reqstBeginEndDe
         }
 
-        fun keywordRV(item:SupportModel,context: Context,field: String){
+        fun bindKeyword(item:SupportModel, context: Context, field: String){
             val arr1 = item.pldirSportRealmLclasCodeNm?.split("@")
             val arr2 = item.pldirSportRealmMlsfcCodeNm?.split("@")
 
@@ -152,17 +155,9 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
             keyWord.adapter = KeywordAdapter(context,keywords,field)
         }
 
+
     }
 
-    /**
-     * 키워드에 쓰일 단어 자르는 함수
-     */
-    fun slicingKeyWord(str: SupportModel): List<String>? {
-        val arr1 = str.pldirSportRealmLclasCodeNm?.split("@")
-        val arr2 = str.pldirSportRealmMlsfcCodeNm?.split("@")
-
-        return arr1?.plus(arr2!!)
-    }
 
     /**
      * 리스트 정렬
