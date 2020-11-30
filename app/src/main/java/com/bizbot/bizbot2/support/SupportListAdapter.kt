@@ -118,9 +118,10 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
                 val word = item.reqstBeginEndDe?.split("~")
                 val dateFormat = SimpleDateFormat("yyyyMMdd", Locale.KOREA)
                 val termDate = dateFormat.parse(word?.get(1)?.substring(1, word[1].length))
-                val today = Date(System.currentTimeMillis())
-                val dDayTime: Long = termDate.time - today.time
-                val d_day: Long = dDayTime/(24*60*60*1000)
+                val todayDate:String = dateFormat.format(Date(System.currentTimeMillis()))
+                val today:Date? = dateFormat.parse(todayDate)
+                val d_dayTime: Long = termDate.time - today?.time!!
+                val d_day: Long = d_dayTime/(24*60*60*1000)
                 dDay.text = ("D-${d_day}")
             }
             else
