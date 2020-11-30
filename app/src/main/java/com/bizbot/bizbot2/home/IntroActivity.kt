@@ -148,7 +148,10 @@ class IntroActivity : AppCompatActivity() {
 
         //유저 정보
         val userModel = UserModel(0,null,null,null,null,
-            null,null,null,null,null,null,null,null,null)
+            null,null,null,null,null,null,null)
+        //필수 항목 체크 여부 확인용
+        var businessTypeNum:Int? = null
+        var genderNum:Int? = null
 
         val viewModel = ViewModelProviders.of(this).get(AppViewModel::class.java)
 
@@ -203,7 +206,7 @@ class IntroActivity : AppCompatActivity() {
 
         //사업자 유형
         intro_business_type.setOnCheckedChangeListener { _, i ->
-            userModel.businessTypeNum= i
+            businessTypeNum= i
             when(i){
                 R.id.intro_corporation_business->userModel.businessType = intro_corporation_business.text.toString()
                 R.id.intro_private_business->userModel.businessType = intro_private_business.text.toString()
@@ -219,7 +222,7 @@ class IntroActivity : AppCompatActivity() {
 
         //성별
         intro_gender_type.setOnCheckedChangeListener { _, i ->
-            userModel.genderNum = i
+            genderNum = i
             when(i){
                 R.id.intro_male -> userModel.gender = intro_male.text.toString()
                 R.id.intro_female->userModel.gender = intro_female.text.toString()
@@ -299,7 +302,7 @@ class IntroActivity : AppCompatActivity() {
             //db에 저장
             viewModel.insertUser(userModel)
 
-            if (userModel.businessTypeNum != null && userModel.genderNum != null && userModel.birth != null && areaID != 0 && areaID != null){
+            if (businessTypeNum != null && genderNum != null && userModel.birth != null && areaID != 0 && areaID != null){
                 //사업소재지
                 viewModel.setArea(area, areaID!!, city, cityID!!)
                 //로딩 레이아웃

@@ -41,13 +41,25 @@ class MyInfoSetting:AppCompatActivity() {
             this.userInfo = userModel
 
             //사업자 유형 출력
-            userInfo?.businessTypeNum?.let { business_type.check(it) }
+            userInfo?.businessType?.let {
+                when(it){
+                    "예비창업자" -> business_type.check(R.id.reserve_business)
+                    "개인사업자" -> business_type.check(R.id.private_business)
+                    "법인사업자" -> business_type.check(R.id.corporation_business)
+                }
+
+            }
             //사업체명 출력
             userInfo?.businessName?.let{ business_name_et.setText(it) }
             //대표자 출력
             userInfo?.name?.let { ceo_name_et.setText(it) }
             //성별 출력
-            userInfo?.genderNum?.let { gender_type.check(it) }
+            userInfo?.gender?.let {
+                when(it){
+                    "남" -> gender_type.check(R.id.male)
+                    "여" -> gender_type.check(R.id.female)
+                }
+            }
             //생년월일 출력
             userInfo?.birth?.let {
                 birth_tx.text = it
@@ -76,7 +88,6 @@ class MyInfoSetting:AppCompatActivity() {
 
         //사업자 유형
         business_type.setOnCheckedChangeListener { _, i ->
-            userInfo?.businessTypeNum = i
             when(i){
                 R.id.corporation_business->userInfo?.businessType = corporation_business.text.toString()
                 R.id.private_business->userInfo?.businessType = private_business.text.toString()
@@ -86,7 +97,6 @@ class MyInfoSetting:AppCompatActivity() {
 
         //성별
         gender_type.setOnCheckedChangeListener { _, i ->
-            userInfo?.genderNum = i
             when(i){
                 R.id.male -> userInfo?.gender = male.text.toString()
                 R.id.female->userInfo?.gender = female.text.toString()
