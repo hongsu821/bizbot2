@@ -47,9 +47,9 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
         val items = filterList[position]
         holder.apply {
             bind(items)
-            bindDday(items)
+            bindEndDay(items)
             termFormat(items)
-            field?.let { bindKeyword(items,context, it) }
+            bindKeyword(items,context,field)
         }
 
         val viewModel = ViewModelProviders.of(activity).get(AppViewModel::class.java)
@@ -99,10 +99,10 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
         private val agency = v.findViewById<TextView>(R.id.agency)
         private val term: TextView = v.findViewById(R.id.term)
         private val dDay: TextView = v.findViewById(R.id.D_day)
+        private val keyWord: RecyclerView = v.findViewById(R.id.keyword_rv)
         val likeBtn: ToggleButton = v.findViewById(R.id.like_btn)
         val layout: ConstraintLayout = v.findViewById(R.id.support_item_layout)
         val newIcon: TextView = v.findViewById(R.id.new_icon)
-        val keyWord: RecyclerView = v.findViewById(R.id.keyword_rv)
 
         //제목, 접수기관명 출력
         fun bind(item: SupportModel){
@@ -112,7 +112,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
 
         //d-day출력
         @SuppressLint("SetTextI18n")
-        fun bindDday(item: SupportModel){
+        fun bindEndDay(item: SupportModel){
             if(item.reqstBeginEndDe?.contains("~")!!) {
                 dDay.visibility = View.VISIBLE
                 dDay.text = "D-${calDay(item.reqstBeginEndDe)}"
@@ -143,7 +143,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
                 term.text = item.reqstBeginEndDe
         }
 
-        fun bindKeyword(item:SupportModel, context: Context, field: String){
+        fun bindKeyword(item:SupportModel, context: Context, field: String? ){
             val arr1 = item.pldirSportRealmLclasCodeNm?.split("@")
             val arr2 = item.pldirSportRealmMlsfcCodeNm?.split("@")
 

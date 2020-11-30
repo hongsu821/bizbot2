@@ -134,6 +134,14 @@
                     android:textSize="12dp"
                     android:padding="8dp"
                     android:fontFamily="@font/noto_sans_regular"/>
+                <TextView
+                    android:id="@+id/detail_d_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:textColor="#3CB371"
+                    android:text="d-0"
+                    android:fontFamily="@font/noto_sans_regular"/>
             </LinearLayout>
             <ImageView
                 android:layout_width="match_parent"

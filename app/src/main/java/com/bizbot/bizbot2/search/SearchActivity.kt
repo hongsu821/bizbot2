@@ -77,7 +77,7 @@ class SearchActivity : AppCompatActivity() {
             for(word in resultWords)
                 line += "$word, "
 
-            search_analysis_word.text = line
+            search_analysis_word.text = line.substring(0,line.length-2)
 
             PrintSearchResult(SEARCH_MODE.TITLE,searchResultAdapter,resultWords)
 

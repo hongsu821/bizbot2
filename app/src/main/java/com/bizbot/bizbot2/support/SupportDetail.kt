@@ -1,16 +1,21 @@
 package com.bizbot.bizbot2.support
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bizbot.bizbot2.R
 import com.bizbot.bizbot2.room.model.SupportModel
 import kotlinx.android.synthetic.main.support_details.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class SupportDetail:AppCompatActivity() {
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.support_details)
@@ -18,20 +23,37 @@ class SupportDetail:AppCompatActivity() {
         val supportContent = intent.getParcelableExtra<SupportModel>("detail")
         val categoryKeyword = ProcessingKeyword(supportContent)
 
+        //키워드
         val llLayoutManager = LinearLayoutManager(baseContext,LinearLayoutManager.HORIZONTAL,false)
         detail_keyword_rv.layoutManager = llLayoutManager
         detail_keyword_rv.setHasFixedSize(true)
         val keyAdapter = KeywordAdapter(baseContext,categoryKeyword as List<String>, null)
         detail_keyword_rv.adapter = keyAdapter
 
+        //제목
         detail_title.text = supportContent?.pblancNm
-        DelHTML(supportContent?.bsnsSumryCn,detail_contents)
-        DelSpecialCharacter(supportContent?.areaNm,detail_area)
-        DelSpecialCharacter(supportContent?.pldirSportRealmMlsfcCodeNm,detail_field)
-        detail_term.text = supportContent?.reqstBeginEndDe
+        //본문
+        detail_contents.text = DelHTML(supportContent?.bsnsSumryCn)
+        //지원사업 지역
+        detail_area.text = DelSpecialCharacter(supportContent?.areaNm)
+        //지원사업 지원분야
+        detail_field.text = DelSpecialCharacter(supportContent?.pldirSportRealmMlsfcCodeNm)
+        //접수기간
+        detail_term.text = transTermFormat(supportContent?.reqstBeginEndDe)
+        //d-day
+        if(supportContent?.reqstBeginEndDe?.contains("~")!!) {
+            detail_d_day.visibility = View.VISIBLE
+            detail_d_day.text = "D-${printEndDay(supportContent?.reqstBeginEndDe)}"
+        }
+        else
+            detail_d_day.visibility = View.GONE
+        //접수기관
         detail_agency.text = supportContent?.rceptEngnNm
+        //담당부서
         detail_department.text = supportContent?.jrsdInsttNm
+        //전화번호
         detail_tel.text = supportContent?.rceptInsttTelno
+        //담당자명
         detail_manager.text = supportContent?.rceptInsttChargerNm
 
         //홈페이지 버튼 클릭시
@@ -51,7 +73,7 @@ class SupportDetail:AppCompatActivity() {
     }
 
     //html 태그 제거
-    fun DelHTML(str: String?, textView: TextView){
+    fun DelHTML(str: String?):String{
         val arr1 = str?.split("<br />")
         var line1 = ""
         if (arr1 != null) {
@@ -86,20 +108,40 @@ class SupportDetail:AppCompatActivity() {
         for(word in arr6)
             line6 += "$word "
 
-        textView.text = line6
+        return line6
 
     }
 
-    // @ 제거
-    fun DelSpecialCharacter(str: String?, textView: TextView){
+    //@ 제거
+    fun DelSpecialCharacter(str: String?):String{
         val arr = str?.split("@")
         var line = ""
         if(arr != null){
             for(word in arr)
                 line += "$word, "
         }
+        return line.substring(0,line.length-2)
+    }
 
-        textView.text = line
+    //접수기간 포멧 변경
+    fun transTermFormat(term:String?):String{
+        if(term?.contains("~")!!){
+            val word = term?.split("~")
+            return word?.get(0)?.substring(2,4) + "." + word?.get(0)?.substring(4,6) + "." + word?.get(0)?.substring(6, word[0].length) +"~ " +
+                    word?.get(1)?.substring(3,5) + "." + word?.get(1)?.substring(5,7) + "." + word?.get(1)?.substring(7, word[1].length)
+        }
+        else
+            return term
+    }
+
+    fun printEndDay(term: String?):Long{
+        val word = term?.split("~")
+        val dateFormat = SimpleDateFormat("yyyyMMdd", Locale.KOREA)
+        val termDate = dateFormat.parse(word?.get(1)?.substring(1, word[1].length))
+        val todayDate: String = dateFormat.format(Date(System.currentTimeMillis()))
+        val today: Date? = dateFormat.parse(todayDate)
+        val d_dayTime: Long = termDate.time - today?.time!!
+        return d_dayTime / (24 * 60 * 60 * 1000)
     }
 
     override fun onBackPressed() {
