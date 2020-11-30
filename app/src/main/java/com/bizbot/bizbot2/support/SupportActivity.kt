@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.support_activity.*
 class SupportActivity: AppCompatActivity() {
     var supportList:ArrayList<SupportModel>? = null
 
-    @SuppressLint("RestrictedApi")
+    @SuppressLint("RestrictedApi", "SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +56,7 @@ class SupportActivity: AppCompatActivity() {
                 //더보기 버튼 보이기
                 support_add_btn.visibility = View.VISIBLE
                 //총 리스트 개수 출력
-                var count = supportAdapter.getCount()
+                val count = supportAdapter.getCount()
                 support_list_count.text = "총 $count 건"
                 if(supportAdapter.itemSize > supportAdapter.getCount())
                     support_add_btn.visibility = View.GONE

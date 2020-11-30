@@ -1,5 +1,6 @@
 package com.bizbot.bizbot2.support
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -18,6 +19,7 @@ import com.bizbot.bizbot2.R
 import com.bizbot.bizbot2.SEARCH_MODE
 import com.bizbot.bizbot2.room.AppViewModel
 import com.bizbot.bizbot2.room.model.SupportModel
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -46,7 +48,11 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
         val items = filterList[position]
         holder.apply {
             bind(items)
+            printDDay(items)
+            termFormat(items)
+            field?.let { keywordRV(items,context, it) }
         }
+
         val viewModel = ViewModelProviders.of(activity).get(AppViewModel::class.java)
 
         holder.newIcon.visibility = View.GONE
@@ -85,10 +91,6 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
         else
             holder.newIcon.visibility = View.GONE
 
-        val viewManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
-        holder.keyWord.layoutManager = viewManager
-        holder.keyWord.setHasFixedSize(true)
-        holder.keyWord.adapter = KeywordAdapter(context,slicingKeyWord(items),field)
 
     }
 
@@ -96,30 +98,69 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
 
         private val title = v.findViewById<TextView>(R.id.title)
         private val agency = v.findViewById<TextView>(R.id.agency)
-        private val term = v.findViewById<TextView>(R.id.term)
-        val likeBtn = v.findViewById<ToggleButton>(R.id.like_btn)
-        val layout = v.findViewById<ConstraintLayout>(R.id.support_item_layout)
-        val newIcon = v.findViewById<TextView>(R.id.new_icon)
-        val keyWord = v.findViewById<RecyclerView>(R.id.keyword_rv)
+        private val term: TextView = v.findViewById(R.id.term)
+        private val dDay: TextView = v.findViewById(R.id.D_day)
+        val likeBtn: ToggleButton = v.findViewById(R.id.like_btn)
+        val layout: ConstraintLayout = v.findViewById(R.id.support_item_layout)
+        val newIcon: TextView = v.findViewById(R.id.new_icon)
+        val keyWord: RecyclerView = v.findViewById(R.id.keyword_rv)
 
+        //제목, 접수기관명 출력
         fun bind(item: SupportModel){
             title.text = item.pblancNm
             agency.text = item.jrsdInsttNm
-            term.text = item.reqstBeginEndDe
         }
 
+        //d-day출력
+        @SuppressLint("SetTextI18n")
+        fun printDDay(item: SupportModel){
+            if(item.reqstBeginEndDe?.contains("~")!!){
+                val word = item.reqstBeginEndDe?.split("~")
+                val dateFormat = SimpleDateFormat("yyyyMMdd", Locale.KOREA)
+                val termDate = dateFormat.parse(word?.get(1)?.substring(1, word[1].length))
+                val today = Date(System.currentTimeMillis())
+                val dDayTime: Long = termDate.time - today.time
+                val d_day: Long = dDayTime/(24*60*60*1000)
+                dDay.text = ("D-${d_day}")
+            }
+            else
+                dDay.visibility = View.GONE
+        }
+
+        //접수기간 출력
+        @SuppressLint("SetTextI18n")
+        fun termFormat(item: SupportModel){
+            if(item.reqstBeginEndDe?.contains("~")!!){
+                val word = item.reqstBeginEndDe?.split("~")
+                term.text =  word?.get(0)?.substring(2,4) + "." + word?.get(0)?.substring(4,6) + "." + word?.get(0)?.substring(6, word[0].length) +"~ " +
+                        word?.get(1)?.substring(3,5) + "." + word?.get(1)?.substring(5,7) + "." + word?.get(1)?.substring(7, word[1].length)
+            }
+            else
+                term.text = item.reqstBeginEndDe
+        }
+
+        fun keywordRV(item:SupportModel,context: Context,field: String){
+            val arr1 = item.pldirSportRealmLclasCodeNm?.split("@")
+            val arr2 = item.pldirSportRealmMlsfcCodeNm?.split("@")
+
+            val keywords = arr1?.plus(arr2!!)
+
+            val viewManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+            keyWord.layoutManager = viewManager
+            keyWord.setHasFixedSize(true)
+            keyWord.adapter = KeywordAdapter(context,keywords,field)
+        }
 
     }
 
     /**
      * 키워드에 쓰일 단어 자르는 함수
      */
-    private fun slicingKeyWord(str: SupportModel): List<String>? {
+    fun slicingKeyWord(str: SupportModel): List<String>? {
         val arr1 = str.pldirSportRealmLclasCodeNm?.split("@")
         val arr2 = str.pldirSportRealmMlsfcCodeNm?.split("@")
-        val wordList = arr1?.plus(arr2!!)
 
-        return wordList
+        return arr1?.plus(arr2!!)
     }
 
     /**
@@ -146,7 +187,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
     /**
      * 접수기간 문자열 가공
      */
-    fun cutTermWords(term: String?):String{
+    private fun cutTermWords(term: String?):String{
         val word = term?.split("~")
         val termEnd:String?
         termEnd = if(word?.size!! > 1) //기간이 있을때
