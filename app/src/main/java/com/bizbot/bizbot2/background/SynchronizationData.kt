@@ -13,7 +13,7 @@ import com.bizbot.bizbot2.R
 import com.bizbot.bizbot2.room.AppDatabase
 import com.bizbot.bizbot2.room.model.PermitModel
 import com.bizbot.bizbot2.room.model.SupportModel
-import com.bizbot.bizbot2.support.SupportActivity
+import com.bizbot.bizbot2.support.SupportDetailActivity
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -27,7 +27,7 @@ class SynchronizationData(var context: Context) {
         val CHANNEL_ID = "101"
     }
 
-    fun SyncData(): Int{
+    fun syncData(): Int{
         val supportURL = "http://www.bizinfo.go.kr/uss/rss/bizPersonaRss.do?dataType=json"
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
 
@@ -42,11 +42,11 @@ class SynchronizationData(var context: Context) {
             val jsonArray: JSONArray = json?.getJSONArray("jsonArray")!!
 
             val db: AppDatabase = Room.databaseBuilder(context,AppDatabase::class.java,"app_db").build()
-            //동기화 시간 가져오기
+            //지난 지원사업 삭제용
+            db.supportDAO().deleteAll()
+            //알림설정 가져오기
             val permit: PermitModel = db.permitDAO().getItem()
             val sync: Date = simpleDateFormat.parse(permit.syncTime)
-            //알림 설정 가져오기
-            val user = db.userDAO().getItem()
 
             for(i in 0 until jsonArray.length()){
                 val jsonObject: JSONObject = jsonArray.getJSONObject(i)
@@ -60,13 +60,8 @@ class SynchronizationData(var context: Context) {
                 supportItem.checkNew = differentDay<=2
 
                 //지역 알림
-                if(sync.time < create.time && permit.alert!!){
-                    if(permit.area != null && permit.areaNum != 0){
-                        if(supportItem.pblancNm?.contains(changeArea(permit.area!!))!!)
-                            notificationNewSupport(i,supportItem.pblancId,supportItem.pblancNm!!)
-                    }
-
-                }
+                if(sync < create && permit.alert!!)
+                    notificationSetting(i,supportItem,permit)
 
                 //db에 insert
                 db.supportDAO().insert(supportItem)
@@ -91,7 +86,7 @@ class SynchronizationData(var context: Context) {
         }
     }
 
-    fun JsonParsing_support(jsonObject: JSONObject): SupportModel{
+    private fun JsonParsing_support(jsonObject: JSONObject): SupportModel{
         val s_list = SupportModel(
             jsonObject.getString("pblancId"),
             jsonObject.getString("industNm"),
@@ -120,40 +115,58 @@ class SynchronizationData(var context: Context) {
 
     }
 
-    fun changeArea(beforeArea:String):String{
+    //지역 알림용 단어 포맷 변경
+    private fun changeArea(beforeArea:String):String{
         var afterArea = ""
         when(beforeArea){
-            "서울특별시" -> afterArea = "서울"
-            "부산광역시" -> afterArea = "부산"
-            "대구광역시" -> afterArea = "대구"
-            "인천광역시" -> afterArea = "인천"
-            "광주광역시" -> afterArea = "광주"
-            "대전광역시" -> afterArea = "대전"
-            "울산광역시" -> afterArea = "울산"
-            "세종특별자치시" -> afterArea = "세종"
-            "강원도" -> afterArea = "강원"
-            "경기도" -> afterArea = "경기"
-            "충청북도" -> afterArea = "충북"
-            "충청남도" -> afterArea = "충남"
-            "전라북도" -> afterArea = "전북"
-            "전라남도" -> afterArea = "전남"
-            "경상남도" -> afterArea = "경남"
-            "경상북도" -> afterArea = "경북"
-            "제주특별자치도" -> afterArea = "제주"
+            "서울특별시" -> afterArea = "[서울]"
+            "부산광역시" -> afterArea = "[부산]"
+            "대구광역시" -> afterArea = "[대구]"
+            "인천광역시" -> afterArea = "[인천]"
+            "광주광역시" -> afterArea = "[광주]"
+            "대전광역시" -> afterArea = "[대전]"
+            "울산광역시" -> afterArea = "[울산]"
+            "세종특별자치시" -> afterArea = "[세종]"
+            "강원도" -> afterArea = "[강원]"
+            "경기도" -> afterArea = "[경기]"
+            "충청북도" -> afterArea = "[충북]"
+            "충청남도" -> afterArea = "[충남]"
+            "전라북도" -> afterArea = "[전북]"
+            "전라남도" -> afterArea = "[전남]"
+            "경상남도" -> afterArea = "[경남]"
+            "경상북도" -> afterArea = "[경북]"
+            "제주특별자치도" -> afterArea = "[제주]"
         }
         return afterArea
     }
 
-    fun notificationSetting(){
+    //키워드 알림, 지역 알림
+    private fun notificationSetting(num:Int,support:SupportModel,permit:PermitModel){
+        val words = permit.keyword?.split("@")
+        //사용자가 키워드 설정 x, 지역 알림만 전송
+        if(permit.keyword?.length == 3!!){
+            if(support.bsnsSumryCn?.contains(changeArea(permit.area!!))!!)
+                notificationNewSupport(num,support!!)
+        }
+        else{ //키워드 설정시 지역 상관 없이 키워드가 포함되면 전부 전송
+            for (word in words!!) {
+                if (word == "")
+                    continue
+                else {
+                    if (support.bsnsSumryCn?.contains(word)!!)
+                        notificationNewSupport(num, support!!)
+                }
+            }
+        }
 
     }
 
-    fun notificationNewSupport(NOTIFICATION_ID:Int,id:String,title:String){
+    private fun notificationNewSupport(NOTIFICATION_ID:Int, support: SupportModel){
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        val notificationIntent = Intent(context,SupportActivity::class.java)
-        notificationIntent.putExtra("newPostID",id)
-        notificationIntent.putExtra("newCheck",true)
+        //클릭시 이동할 액티비티
+        val notificationIntent = Intent(context,SupportDetailActivity::class.java)
+        //전달할 값
+        notificationIntent.putExtra("detail",support)
         notificationIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         notificationIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
 
@@ -161,7 +174,7 @@ class SynchronizationData(var context: Context) {
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle(title)
+            .setContentTitle(support.pblancNm)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)

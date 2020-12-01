@@ -58,7 +58,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
 
         //레이아웃 클릭시 디테일 페이지로 이동
         holder.layout.setOnClickListener {
-            val intent = Intent(context,SupportDetail::class.java)
+            val intent = Intent(context,SupportDetailActivity::class.java)
             intent.putExtra("detail",items)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)

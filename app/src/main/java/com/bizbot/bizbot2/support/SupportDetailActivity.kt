@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.support_details.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SupportDetail:AppCompatActivity() {
+class SupportDetailActivity:AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

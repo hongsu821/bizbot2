@@ -29,7 +29,7 @@
         <activity android:name=".support.CategoryActivity"/>
         <activity android:name=".support.FavouriteActivity"/>
         <activity android:name=".support.SupportActivity"/>
-        <activity android:name=".support.SupportDetail"/>
+        <activity android:name=".support.SupportDetailActivity"/>
         <activity android:name=".partner.PartnerActivity"/>
         <service android:name=".background.LoadDataJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"/>

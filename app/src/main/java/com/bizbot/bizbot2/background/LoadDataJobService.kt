@@ -2,7 +2,6 @@ package com.bizbot.bizbot2.background
 
 import android.app.job.JobParameters
 import android.app.job.JobService
-import android.os.Build
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -13,12 +12,12 @@ class LoadDataJobService : JobService() {
         private val TAG = "DataLoadJobService"
     }
 
-    override fun onStopJob(p0: JobParameters?): Boolean {
+    override fun onStartJob(p0: JobParameters?): Boolean {
         GlobalScope.launch(Dispatchers.IO) {
-            Log.d(TAG, "jon service start")
+            Log.d(TAG, "job service start")
             val synchronizationData = SynchronizationData(baseContext)
-            val result = synchronizationData.SyncData()
-            if(result == 0)
+            val result = synchronizationData.syncData()
+            if(result == 1)
                 Log.d(TAG, "onStopJob: 데이터 다운 완료")
             else
                 Log.d(TAG, "onStopJob: 데이터 다운 실패")
@@ -28,8 +27,9 @@ class LoadDataJobService : JobService() {
         return false
     }
 
-    override fun onStartJob(p0: JobParameters?): Boolean {
+    override fun onStopJob(p0: JobParameters?): Boolean {
         Log.d(TAG, "job service end")
+
         return false
     }
 

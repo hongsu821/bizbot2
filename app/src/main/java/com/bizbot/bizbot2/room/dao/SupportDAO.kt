@@ -12,6 +12,9 @@ interface SupportDAO {
     @Delete
     fun delete(supportModel: SupportModel)
 
+    @Query("DELETE FROM support")
+    fun deleteAll()
+
     //모든 데이터 출력
     @Query("SELECT * FROM support")
     fun getAllList(): LiveData<List<SupportModel>>

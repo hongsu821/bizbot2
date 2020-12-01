@@ -355,7 +355,7 @@ class IntroActivity : AppCompatActivity() {
     private fun sync(){
         GlobalScope.launch(Dispatchers.IO) {
             val synchronizationData = SynchronizationData(baseContext)
-            synchronizationData.SyncData()
+            synchronizationData.syncData()
         }
     }
 
