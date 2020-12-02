@@ -202,9 +202,6 @@ class IntroActivity : AppCompatActivity() {
                 cityID = p2
             }
         }
-        val area = intro_area_spinner.selectedItem.toString()
-        val city = intro_city_spinner.selectedItem.toString()
-
 
         //사업자 유형
         intro_business_type.setOnCheckedChangeListener { _, i ->
@@ -292,13 +289,16 @@ class IntroActivity : AppCompatActivity() {
 
         //다음 버튼 클릭시
         intro_next_btn.setOnClickListener {
+            //사업 소재지
+            val area = intro_area_spinner.selectedItem.toString()
+            val city = intro_city_spinner.selectedItem.toString()
             //사업체명
             userModel.businessName = intro_business_name_et.text.toString()
             //대표자 이름
             userModel.name = intro_ceo_name_et.text.toString()
             //업종
             userModel.businessCategory = intro_category_of_business_spinner.selectedItem.toString()
-            //사업소재지
+            //관심분야
             userModel.field = intro_large_spinner.selectedItem.toString()
             userModel.subclass = intro_medium_spinner.selectedItem.toString()
             //db에 저장

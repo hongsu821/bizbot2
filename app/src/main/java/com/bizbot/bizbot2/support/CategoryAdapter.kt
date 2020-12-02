@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ class CategoryAdapter(var context:Context,var activity:FragmentActivity,type:Int
     private val categoryType = type
     private var index = 0
     lateinit var arr: Array<String>
+    var check = false
 
     init{
         when(type){
@@ -41,22 +43,25 @@ class CategoryAdapter(var context:Context,var activity:FragmentActivity,type:Int
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = arr[position]
-        /*
-        val viewModel = ViewModelProviders.of(activity).get(AppViewModel::class.java)
-        viewModel.getArea().observe(activity, Observer {
-            for(i in 0..position){
-                if(it == item){
-                    index = position
-                    holder.itemName.isSelected = true
-                }
-            }
-
-        })
-
-         */
         holder.apply {
             bind(item)
         }
+
+        val viewModel = ViewModelProviders.of(activity).get(AppViewModel::class.java)
+        viewModel.getArea().observe(activity, Observer {
+            if(!check){
+                if(changeArea(it) == item){
+                    Log.d("CategoryAdapter", "onBindViewHolder: item=$item")
+                    index = position
+                    val message:Message = mCAHandler.obtainMessage()
+                    message.what = categoryType
+                    message.obj = item
+                    mCAHandler.sendMessage(message)
+                    notifyDataSetChanged()
+                    check = true
+                }
+            }
+        })
 
         //아이템 선택시
         holder.itemName.setOnClickListener {
@@ -81,7 +86,29 @@ class CategoryAdapter(var context:Context,var activity:FragmentActivity,type:Int
         }
     }
 
-
+    private fun changeArea(beforeArea:String):String{
+        var afterArea = ""
+        when(beforeArea){
+            "서울특별시" -> afterArea = "서울"
+            "부산광역시" -> afterArea = "부산"
+            "대구광역시" -> afterArea = "대구"
+            "인천광역시" -> afterArea = "인천"
+            "광주광역시" -> afterArea = "광주"
+            "대전광역시" -> afterArea = "대전"
+            "울산광역시" -> afterArea = "울산"
+            "세종특별자치시" -> afterArea = "세종"
+            "강원도" -> afterArea = "강원"
+            "경기도" -> afterArea = "경기"
+            "충청북도" -> afterArea = "충북"
+            "충청남도" -> afterArea = "충남"
+            "전라북도" -> afterArea = "전북"
+            "전라남도" -> afterArea = "전남"
+            "경상남도" -> afterArea = "경남"
+            "경상북도" -> afterArea = "경북"
+            "제주특별자치도" -> afterArea = "제주"
+        }
+        return afterArea
+    }
 
 
 }
