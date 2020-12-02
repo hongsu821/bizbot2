@@ -29,6 +29,7 @@ import com.bizbot.bizbot2.room.AppViewModel
 import com.bizbot.bizbot2.room.model.PermitModel
 import com.bizbot.bizbot2.room.model.UserModel
 import kotlinx.android.synthetic.main.intro.*
+import kotlinx.android.synthetic.main.support_activity.*
 import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -140,6 +141,7 @@ class IntroActivity : AppCompatActivity() {
             val initData = InitData(baseContext)
             msg.arg1 = initData.init()
             introHandler.sendMessage(msg)
+
         }
         //로딩 레이아웃
         intro_loading_layout.visibility = View.GONE

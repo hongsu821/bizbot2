@@ -10,6 +10,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.room.Room
 import com.bizbot.bizbot2.R
+import com.bizbot.bizbot2.home.IntroActivity
 import com.bizbot.bizbot2.room.AppDatabase
 import com.bizbot.bizbot2.room.model.PermitModel
 import com.bizbot.bizbot2.room.model.SupportModel
@@ -143,20 +144,28 @@ class SynchronizationData(var context: Context) {
     //키워드 알림, 지역 알림
     private fun notificationSetting(num:Int,support:SupportModel,permit:PermitModel){
         val words = permit.keyword?.split("@")
+        var count = 0
         //사용자가 키워드 설정 x, 지역 알림만 전송
-        if(permit.keyword?.length == 3!!){
-            if(support.bsnsSumryCn?.contains(changeArea(permit.area!!))!!)
-                notificationNewSupport(num,support!!)
-        }
-        else{ //키워드 설정시 지역 상관 없이 키워드가 포함되면 전부 전송
+
+        //if(permit.keyword?.length == 3!!){
+            //if(support.bsnsSumryCn?.contains(changeArea(permit.area!!))!!)
+             //   notificationNewSupport(num,support!!)
+       // }
+        //else{ //키워드 설정시 지역 상관 없이 키워드가 포함되면 전부 전송
             for (word in words!!) {
-                if (word == "")
+                if (word == ""){
                     continue
+                    count++
+                }
                 else {
                     if (support.bsnsSumryCn?.contains(word)!!)
                         notificationNewSupport(num, support!!)
                 }
             }
+      // }
+        if(count == 3){
+            if(support.bsnsSumryCn?.contains(changeArea(permit.area!!))!!)
+                notificationNewSupport(num,support!!)
         }
 
     }

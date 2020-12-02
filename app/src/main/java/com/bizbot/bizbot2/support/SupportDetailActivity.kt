@@ -61,7 +61,10 @@ class SupportDetailActivity:AppCompatActivity() {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(supportContent?.rceptEngnHmpgUrl)))
         }
         //닫기 버튼 클릭시
-        detail_close_btn.setOnClickListener { finish() }
+        detail_close_btn.setOnClickListener {
+            startActivity(Intent(this,SupportActivity::class.java))
+            finish()
+        }
     }
 
     //키워드 단어 가공
@@ -145,6 +148,7 @@ class SupportDetailActivity:AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        startActivity(Intent(this,SupportActivity::class.java))
         finish()
     }
 

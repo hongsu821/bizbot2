@@ -85,4 +85,8 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     fun setArea(area:String,areaID:Int,city:String,cityID:Int){
         repository.setArea(area,areaID,city,cityID)
     }
+
+    fun getArea():LiveData<String>{
+        return repository.getArea()
+    }
 }

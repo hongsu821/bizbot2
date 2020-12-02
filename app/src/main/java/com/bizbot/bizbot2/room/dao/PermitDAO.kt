@@ -24,6 +24,9 @@ interface PermitDAO {
     @Query("UPDATE permit SET area=:area")
     fun setArea(area:String)
 
+    @Query("SELECT area FROM permit WHERE id=0")
+    fun getArea(): LiveData<String>
+
     @Query("UPDATE permit SET area_id=:id")
     fun setAreaID(id:Int)
 

@@ -81,6 +81,10 @@ class AppRepository(application: Application) {
             permitDAO.setCityID(cityID)
         }
     }
+    //지역 출력
+    fun getArea():LiveData<String>{
+        return permitDAO.getArea()
+    }
 
     //관심사업 전부 출력
     fun getLikeList(): LiveData<List<SupportModel>>{
