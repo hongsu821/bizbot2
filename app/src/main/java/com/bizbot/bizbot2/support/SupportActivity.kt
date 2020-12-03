@@ -38,13 +38,13 @@ class SupportActivity: AppCompatActivity() {
         var fieldWord = intent.getStringExtra("field")
         if(fieldWord == null || fieldWord == "")
             fieldWord = "전체"
-        supportAdapter.inField(fieldWord)
+        supportAdapter.field = fieldWord
         //선택한 지역 가져오기
         var areaWord = intent.getStringExtra("area")
         if(areaWord == null || areaWord == "")
             areaWord = "전체"
         area_state.text = areaWord
-        supportAdapter.inArea(areaWord!!)
+        supportAdapter.area = areaWord
 
         //데이터 가져오기
         viewModel.getAllSupport().observe(this, Observer {
@@ -113,30 +113,6 @@ class SupportActivity: AppCompatActivity() {
             finish()
         }
 
-    }
-
-    private fun changeArea(beforeArea:String):String{
-        var afterArea = ""
-        when(beforeArea){
-            "서울특별시" -> afterArea = "서울"
-            "부산광역시" -> afterArea = "부산"
-            "대구광역시" -> afterArea = "대구"
-            "인천광역시" -> afterArea = "인천"
-            "광주광역시" -> afterArea = "광주"
-            "대전광역시" -> afterArea = "대전"
-            "울산광역시" -> afterArea = "울산"
-            "세종특별자치시" -> afterArea = "세종"
-            "강원도" -> afterArea = "강원"
-            "경기도" -> afterArea = "경기"
-            "충청북도" -> afterArea = "충북"
-            "충청남도" -> afterArea = "충남"
-            "전라북도" -> afterArea = "전북"
-            "전라남도" -> afterArea = "전남"
-            "경상남도" -> afterArea = "경남"
-            "경상북도" -> afterArea = "경북"
-            "제주특별자치도" -> afterArea = "제주"
-        }
-        return afterArea
     }
 
     override fun onBackPressed() {

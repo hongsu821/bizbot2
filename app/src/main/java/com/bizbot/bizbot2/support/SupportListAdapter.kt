@@ -265,16 +265,6 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity)
         categoryFilter(area, field)
     }
 
-    //지역 갱신
-    fun inArea(area: String){
-        this.area = area
-    }
-    //분야 갱신
-    fun inField(field: String){
-        this.field = field
-    }
-
-
     //리스트 개수 출력
     fun getCount():Int{
         return filterList.size

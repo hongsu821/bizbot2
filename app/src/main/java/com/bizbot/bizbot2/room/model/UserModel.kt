@@ -15,7 +15,7 @@ class UserModel(
     var birth: String?, //생년월일
     @ColumnInfo(name = "business_category_id") var businessCategoryNum: Int?, //업종 id
     @ColumnInfo(name = "business_category") var businessCategory: String?, //업종
-    @ColumnInfo(name = "field_id") var fieldNum:Int?, //분야 id
+    @ColumnInfo(name = "field_id") var fieldNum:Int?, //지원 받고 싶은 분야 id
     var field: String?, //분야
     @ColumnInfo(name = "subclass_id") var subclassNum: Int?, // 분야 하위 카테고리 id
     var subclass: String? //분야 하위 카테고리

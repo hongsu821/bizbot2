@@ -14,6 +14,7 @@ import com.bizbot.bizbot2.home.IntroActivity
 import com.bizbot.bizbot2.room.AppDatabase
 import com.bizbot.bizbot2.room.model.PermitModel
 import com.bizbot.bizbot2.room.model.SupportModel
+import com.bizbot.bizbot2.room.model.UserModel
 import com.bizbot.bizbot2.support.SupportDetailActivity
 import org.json.JSONArray
 import org.json.JSONException
@@ -45,8 +46,10 @@ class SynchronizationData(var context: Context) {
             val db: AppDatabase = Room.databaseBuilder(context,AppDatabase::class.java,"app_db").build()
             //지난 지원사업 삭제용
             db.supportDAO().deleteAll()
-            //알림설정 가져오기
+            //알림설정에 필요한 정보
             val permit: PermitModel = db.permitDAO().getItem()
+            val userInfo = db.userDAO().getItem()
+            //동기화 시간
             val sync: Date = simpleDateFormat.parse(permit.syncTime)
 
             for(i in 0 until jsonArray.length()){
@@ -62,7 +65,7 @@ class SynchronizationData(var context: Context) {
 
                 //지역 알림
                 if(sync < create && permit.alert!!)
-                    notificationSetting(i,supportItem,permit)
+                    notificationSetting(i,supportItem,permit,userInfo)
 
                 //db에 insert
                 db.supportDAO().insert(supportItem)
@@ -120,53 +123,52 @@ class SynchronizationData(var context: Context) {
     private fun changeArea(beforeArea:String):String{
         var afterArea = ""
         when(beforeArea){
-            "서울특별시" -> afterArea = "[서울]"
-            "부산광역시" -> afterArea = "[부산]"
-            "대구광역시" -> afterArea = "[대구]"
-            "인천광역시" -> afterArea = "[인천]"
-            "광주광역시" -> afterArea = "[광주]"
-            "대전광역시" -> afterArea = "[대전]"
-            "울산광역시" -> afterArea = "[울산]"
-            "세종특별자치시" -> afterArea = "[세종]"
-            "강원도" -> afterArea = "[강원]"
-            "경기도" -> afterArea = "[경기]"
-            "충청북도" -> afterArea = "[충북]"
-            "충청남도" -> afterArea = "[충남]"
-            "전라북도" -> afterArea = "[전북]"
-            "전라남도" -> afterArea = "[전남]"
-            "경상남도" -> afterArea = "[경남]"
-            "경상북도" -> afterArea = "[경북]"
-            "제주특별자치도" -> afterArea = "[제주]"
+            "서울특별시" -> afterArea = "서울"
+            "부산광역시" -> afterArea = "부산"
+            "대구광역시" -> afterArea = "대구"
+            "인천광역시" -> afterArea = "인천"
+            "광주광역시" -> afterArea = "광주"
+            "대전광역시" -> afterArea = "대전"
+            "울산광역시" -> afterArea = "울산"
+            "세종특별자치시" -> afterArea = "세종"
+            "강원도" -> afterArea = "강원"
+            "경기도" -> afterArea = "경기"
+            "충청북도" -> afterArea = "충북"
+            "충청남도" -> afterArea = "충남"
+            "전라북도" -> afterArea = "전북"
+            "전라남도" -> afterArea = "전남"
+            "경상남도" -> afterArea = "경남"
+            "경상북도" -> afterArea = "경북"
+            "제주특별자치도" -> afterArea = "제주"
         }
         return afterArea
     }
 
     //키워드 알림, 지역 알림
-    private fun notificationSetting(num:Int,support:SupportModel,permit:PermitModel){
+    private fun notificationSetting(num:Int,support:SupportModel,permit:PermitModel,userInfo:UserModel){
         val words = permit.keyword?.split("@")
-        var count = 0
-        //사용자가 키워드 설정 x, 지역 알림만 전송
 
-        //if(permit.keyword?.length == 3!!){
-            //if(support.bsnsSumryCn?.contains(changeArea(permit.area!!))!!)
-             //   notificationNewSupport(num,support!!)
-       // }
-        //else{ //키워드 설정시 지역 상관 없이 키워드가 포함되면 전부 전송
-            for (word in words!!) {
-                if (word == ""){
-                    continue
-                    count++
-                }
-                else {
-                    if (support.bsnsSumryCn?.contains(word)!!)
-                        notificationNewSupport(num, support!!)
-                }
+        //제목에 '지역' 단어가 들어가는지
+        if(support.pblancNm?.contains(changeArea(permit.area!!))!!)
+            notificationNewSupport(num,support)
+        //본문에 사용자설정키워드가 들어가는지
+        for(word in words!!){
+            if (word == "")
+                continue
+            if(support.bsnsSumryCn?.contains(word)!!){//본문에 키워드 포함
+                notificationNewSupport(num,support)
+                break
             }
-      // }
-        if(count == 3){ //제목에 지역이 들어가면 알림
-            if(support.pblancNm?.contains(changeArea(permit.area!!))!!)
-                notificationNewSupport(num,support!!)
         }
+        //지원 받고 싶은 분야 선택시
+        if(userInfo.fieldNum != 0 && userInfo.subclassNum == 0){
+            if(support.pldirSportRealmLclasCodeNm?.contains(userInfo.field!!)!!)
+                notificationNewSupport(num,support)
+        }
+        //분야 하위 클래스
+        if(userInfo.subclassNum != 0 && support.pldirSportRealmLclasCodeNm?.contains(userInfo.subclass!!)!!)
+            notificationNewSupport(num,support)
+
 
     }
 

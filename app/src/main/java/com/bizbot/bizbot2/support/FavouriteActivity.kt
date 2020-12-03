@@ -26,6 +26,8 @@ class FavouriteActivity : AppCompatActivity(){
         favourite_rv.layoutManager = viewManager
         favourite_rv.setHasFixedSize(true)
         val favouriteAdapter = SupportListAdapter(baseContext,this)
+        favouriteAdapter.area = "전체"
+        favouriteAdapter.field = "전체"
 
         val viewModel = ViewModelProviders.of(this).get(AppViewModel::class.java)
         viewModel.getLikeList().observe(this, Observer {

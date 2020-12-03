@@ -118,7 +118,7 @@ class AlertSetting():AppCompatActivity() {
             var line = ""
             line += "${keyword1_et.text}@"
             line += "${keyword2_et.text}@"
-            line += "${keyword3_et.text}@"
+            line += "${keyword3_et.text}"
             permit?.keyword = line
 
             //jobSchedule

@@ -84,7 +84,7 @@ class IntroActivity : AppCompatActivity() {
     private fun customDialog(context: Context){
         intro_logo_layout.visibility = View.GONE
 
-        val permitModel = PermitModel(0,false,null,"@@@",null,null,null,null)
+        val permitModel = PermitModel(0,false,null,"@@",null,null,null,null)
 
         //다이얼로그설정
         val builder = AlertDialog.Builder(context)

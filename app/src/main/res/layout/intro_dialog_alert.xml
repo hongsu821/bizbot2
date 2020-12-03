@@ -22,7 +22,7 @@
         android:textColor="#000000"
         android:textSize="22sp"
         android:gravity="center_horizontal"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/noto_sans_regular"/>
 
     <LinearLayout
@@ -57,6 +57,16 @@
             android:textColor="#000000"
             android:layout_weight="1"
             android:fontFamily="@font/noto_sans_regular"/>
-
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="알림에 광고성 정보가 포함됩니다. 알림 설정에 동의하지 않으셔도 BizBot의 기본 서비스는 이용가능합니다."
+        android:textColor="#7A7A7A"
+        android:textSize="12sp"
+        android:gravity=""
+        android:paddingLeft="14dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="9dp"
+        android:fontFamily="@font/noto_sans_regular"/>
 </LinearLayout>
