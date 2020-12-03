@@ -163,8 +163,8 @@ class SynchronizationData(var context: Context) {
                 }
             }
       // }
-        if(count == 3){
-            if(support.bsnsSumryCn?.contains(changeArea(permit.area!!))!!)
+        if(count == 3){ //제목에 지역이 들어가면 알림
+            if(support.pblancNm?.contains(changeArea(permit.area!!))!!)
                 notificationNewSupport(num,support!!)
         }
 
@@ -176,6 +176,7 @@ class SynchronizationData(var context: Context) {
         val notificationIntent = Intent(context,SupportDetailActivity::class.java)
         //전달할 값
         notificationIntent.putExtra("detail",support)
+        notificationIntent.putExtra("notiCheck",1)
         notificationIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         notificationIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
 

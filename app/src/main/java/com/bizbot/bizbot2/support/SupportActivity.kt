@@ -26,6 +26,7 @@ class SupportActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.support_activity)
+        val viewModel = ViewModelProviders.of(this).get(AppViewModel::class.java)
 
         //선택한 분야 가져오기
         var fieldWord = intent.getStringExtra("field")
@@ -33,6 +34,12 @@ class SupportActivity: AppCompatActivity() {
             fieldWord = "전체"
         //선택한 지역 출력
         var areaWord = intent.getStringExtra("area")
+        viewModel.getArea().observe(this, Observer {
+            if(it == "선택")
+                areaWord = "전체"
+            areaWord = changeArea(it)
+            area_state.text = changeArea(it)
+        })
         if(areaWord == null || areaWord == "")
             areaWord = "전체"
         area_state.text = areaWord
@@ -45,7 +52,6 @@ class SupportActivity: AppCompatActivity() {
         val supportAdapter = SupportListAdapter(baseContext,this,areaWord,fieldWord)
 
         //데이터 가져오기
-        val viewModel = ViewModelProviders.of(this).get(AppViewModel::class.java)
         viewModel.getAllSupport().observe(this, Observer {
             supportList = it as ArrayList<SupportModel>
             if(supportList != null){
@@ -112,6 +118,30 @@ class SupportActivity: AppCompatActivity() {
             finish()
         }
 
+    }
+
+    private fun changeArea(beforeArea:String):String{
+        var afterArea = ""
+        when(beforeArea){
+            "서울특별시" -> afterArea = "서울"
+            "부산광역시" -> afterArea = "부산"
+            "대구광역시" -> afterArea = "대구"
+            "인천광역시" -> afterArea = "인천"
+            "광주광역시" -> afterArea = "광주"
+            "대전광역시" -> afterArea = "대전"
+            "울산광역시" -> afterArea = "울산"
+            "세종특별자치시" -> afterArea = "세종"
+            "강원도" -> afterArea = "강원"
+            "경기도" -> afterArea = "경기"
+            "충청북도" -> afterArea = "충북"
+            "충청남도" -> afterArea = "충남"
+            "전라북도" -> afterArea = "전북"
+            "전라남도" -> afterArea = "전남"
+            "경상남도" -> afterArea = "경남"
+            "경상북도" -> afterArea = "경북"
+            "제주특별자치도" -> afterArea = "제주"
+        }
+        return afterArea
     }
 
     override fun onBackPressed() {

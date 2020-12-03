@@ -21,6 +21,7 @@ class SupportDetailActivity:AppCompatActivity() {
         setContentView(R.layout.support_details)
 
         val supportContent = intent.getParcelableExtra<SupportModel>("detail")
+        val notificationCheck = intent?.getIntExtra("notiCheck",0)
         val categoryKeyword = ProcessingKeyword(supportContent)
 
         //키워드
@@ -62,7 +63,8 @@ class SupportDetailActivity:AppCompatActivity() {
         }
         //닫기 버튼 클릭시
         detail_close_btn.setOnClickListener {
-            startActivity(Intent(this,SupportActivity::class.java))
+            if(notificationCheck == 1)
+                startActivity(Intent(this,SupportActivity::class.java))
             finish()
         }
     }
