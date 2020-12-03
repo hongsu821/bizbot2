@@ -31,7 +31,7 @@ class SearchActivity : AppCompatActivity() {
         val viewManager2 = LinearLayoutManager(this)
         search_result_rv.setHasFixedSize(true)
         search_result_rv.layoutManager = viewManager2
-        val searchResultAdapter = SupportListAdapter(baseContext,this,null,null)
+        val searchResultAdapter = SupportListAdapter(baseContext,this)
         viewModel.getAllSupport().observe(this, Observer {
             searchResultAdapter.setList(it as ArrayList<SupportModel>)
             search_result_rv.adapter = searchResultAdapter

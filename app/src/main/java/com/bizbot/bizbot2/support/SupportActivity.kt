@@ -6,7 +6,6 @@ import android.os.*
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -28,28 +27,24 @@ class SupportActivity: AppCompatActivity() {
         setContentView(R.layout.support_activity)
         val viewModel = ViewModelProviders.of(this).get(AppViewModel::class.java)
 
-        //선택한 분야 가져오기
-        var fieldWord = intent.getStringExtra("field")
-        if(fieldWord == null || fieldWord == "")
-            fieldWord = "전체"
-        //선택한 지역 출력
-        var areaWord = intent.getStringExtra("area")
-        viewModel.getArea().observe(this, Observer {
-            if(it == "선택")
-                areaWord = "전체"
-            areaWord = changeArea(it)
-            area_state.text = changeArea(it)
-        })
-        if(areaWord == null || areaWord == "")
-            areaWord = "전체"
-        area_state.text = areaWord
-
         //지원사업 리사이클러뷰
         val viewManager = LinearLayoutManager(this)
         support_rv.layoutManager = viewManager
         support_rv.isNestedScrollingEnabled = false
         support_rv.setHasFixedSize(true)
-        val supportAdapter = SupportListAdapter(baseContext,this,areaWord,fieldWord)
+        val supportAdapter = SupportListAdapter(baseContext,this)
+
+        //Category Activity 에서 선택한 분야 가져오기
+        var fieldWord = intent.getStringExtra("field")
+        if(fieldWord == null || fieldWord == "")
+            fieldWord = "전체"
+        supportAdapter.inField(fieldWord)
+        //선택한 지역 가져오기
+        var areaWord = intent.getStringExtra("area")
+        if(areaWord == null || areaWord == "")
+            areaWord = "전체"
+        area_state.text = areaWord
+        supportAdapter.inArea(areaWord!!)
 
         //데이터 가져오기
         viewModel.getAllSupport().observe(this, Observer {

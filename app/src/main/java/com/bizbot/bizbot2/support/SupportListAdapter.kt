@@ -22,13 +22,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class SupportListAdapter(var context: Context,var activity:FragmentActivity,var area: String?, var field: String?)
+class SupportListAdapter(var context: Context,var activity:FragmentActivity)
     : RecyclerView.Adapter<SupportListAdapter.ViewHolder>() {
     companion object{
         private val TAG = "SupportListAdapter"
     }
     lateinit var filterList : ArrayList<SupportModel>
     lateinit var sList : ArrayList<SupportModel>
+    lateinit var area : String
+    lateinit var field : String
     var itemSize = 20
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -159,9 +161,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
     }
 
 
-    /**
-     * 리스트 정렬
-     */
+    //리스트 정렬
     fun sort(num:Int){
         when(num){
             1->{ //최신순 정렬
@@ -180,9 +180,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
         notifyDataSetChanged()
     }
 
-    /**
-     * 접수기간 문자열 가공
-     */
+    //접수기간 문자열 가공
     private fun cutTermWords(term: String?):String{
         val word = term?.split("~")
         val termEnd:String?
@@ -194,9 +192,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
         return termEnd
     }
 
-    /**
-     * 카테고리 필터
-     */
+    //카테고리 필터
     private fun categoryFilter(area:String, field: String){
         var filtering = ArrayList<SupportModel>()
 
@@ -230,9 +226,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
 
     }
 
-    /**
-     * 형태소 분석기 사용한 검색
-     */
+    //형태소 분석기 사용한 검색
     fun posTaggingFilter(wordList:ArrayList<String>, search_mode: SEARCH_MODE):Boolean{
         val filtering = ArrayList<SupportModel>()
         for(item in sList){
@@ -261,22 +255,27 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity,var 
         return filterList.size != 0
     }
 
-    /**
-     * 리스트 갱신
-     */
+    //리스트 갱신
     fun setList(supportList: ArrayList<SupportModel>){
         this.filterList = supportList
         this.sList = supportList
 
         notifyDataSetChanged()
 
-        if(area != null && field != null)
-            categoryFilter(area!!, field!!)
+        categoryFilter(area, field)
     }
 
-    /**
-     * 리스트 개수 출력
-     */
+    //지역 갱신
+    fun inArea(area: String){
+        this.area = area
+    }
+    //분야 갱신
+    fun inField(field: String){
+        this.field = field
+    }
+
+
+    //리스트 개수 출력
     fun getCount():Int{
         return filterList.size
     }

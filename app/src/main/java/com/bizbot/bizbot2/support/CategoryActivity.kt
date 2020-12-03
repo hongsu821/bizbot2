@@ -6,14 +6,10 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.util.Log
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bizbot.bizbot2.R
 import kotlinx.android.synthetic.main.category_activity.*
-import kotlinx.android.synthetic.main.support_activity.*
 
 class CategoryActivity: AppCompatActivity() {
     var areaItem = ""
@@ -29,7 +25,7 @@ class CategoryActivity: AppCompatActivity() {
         val viewManager1 = GridLayoutManager(this,5)
         area_category_rv.layoutManager = viewManager1
         area_category_rv.setHasFixedSize(true)
-        val areaAdapter = CategoryAdapter(baseContext,this,1)
+        val areaAdapter = CategoryAdapter(baseContext,1)
         area_category_rv.adapter = areaAdapter
         areaAdapter.mCAHandler = object: Handler(Looper.myLooper()!!) {
             override fun handleMessage(msg: Message) {
@@ -43,7 +39,7 @@ class CategoryActivity: AppCompatActivity() {
         val viewManager2 = GridLayoutManager(this,3)
         field_category_rv.layoutManager = viewManager2
         field_category_rv.setHasFixedSize(true)
-        val fieldAdapter = CategoryAdapter(baseContext,this,2)
+        val fieldAdapter = CategoryAdapter(baseContext,2)
         field_category_rv.adapter = fieldAdapter
         fieldAdapter.mCAHandler = object: Handler(Looper.myLooper()!!){
             override fun handleMessage(msg: Message) {

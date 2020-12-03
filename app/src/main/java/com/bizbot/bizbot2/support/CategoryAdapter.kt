@@ -9,21 +9,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.bizbot.bizbot2.R
-import com.bizbot.bizbot2.room.AppViewModel
 
-class CategoryAdapter(var context:Context,var activity:FragmentActivity,type:Int): RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+class CategoryAdapter(var context:Context,type:Int): RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
     private val areas = arrayOf("전체","서울","부산","대구","인천","광주","대전","울산","세종","경기","강원","충북","충남","전북","전남","경북","경남","제주")
     private val field = arrayOf("전체","금융","기술","인력","수출","내수","창업","경영","제도","동반성장")
     var mCAHandler: Handler = CategoryActivity.CAHandler(Looper.myLooper()!!)
     private val categoryType = type
     private var index = 0
     lateinit var arr: Array<String>
-    var check = false
 
     init{
         when(type){
@@ -46,22 +41,6 @@ class CategoryAdapter(var context:Context,var activity:FragmentActivity,type:Int
         holder.apply {
             bind(item)
         }
-
-        val viewModel = ViewModelProviders.of(activity).get(AppViewModel::class.java)
-        viewModel.getArea().observe(activity, Observer {
-            if(!check){
-                if(changeArea(it) == item){
-                    Log.d("CategoryAdapter", "onBindViewHolder: item=$item")
-                    index = position
-                    val message:Message = mCAHandler.obtainMessage()
-                    message.what = categoryType
-                    message.obj = item
-                    mCAHandler.sendMessage(message)
-                    notifyDataSetChanged()
-                    check = true
-                }
-            }
-        })
 
         //아이템 선택시
         holder.itemName.setOnClickListener {

@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bizbot.bizbot2.R
 import com.bizbot.bizbot2.room.AppViewModel
 import com.bizbot.bizbot2.room.model.SupportModel
-import kotlinx.android.synthetic.main.support_activity.*
 import kotlinx.android.synthetic.main.support_favourite.*
 import kotlinx.android.synthetic.main.support_favourite.top_move_btn
 
@@ -26,7 +25,7 @@ class FavouriteActivity : AppCompatActivity(){
         val viewManager = LinearLayoutManager(this)
         favourite_rv.layoutManager = viewManager
         favourite_rv.setHasFixedSize(true)
-        val favouriteAdapter = SupportListAdapter(baseContext,this,null,null)
+        val favouriteAdapter = SupportListAdapter(baseContext,this)
 
         val viewModel = ViewModelProviders.of(this).get(AppViewModel::class.java)
         viewModel.getLikeList().observe(this, Observer {
