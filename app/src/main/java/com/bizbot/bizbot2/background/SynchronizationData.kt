@@ -6,6 +6,9 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.room.Room
@@ -29,10 +32,11 @@ class SynchronizationData(var context: Context) {
         val CHANNEL_ID = "101"
     }
 
+
+
     fun syncData(): Int{
         val supportURL = "http://www.bizinfo.go.kr/uss/rss/bizPersonaRss.do?dataType=json"
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
-
         try{
             val start = System.currentTimeMillis()
 
@@ -42,6 +46,7 @@ class SynchronizationData(var context: Context) {
 
             val json:JSONObject? = JSONObject(line)
             val jsonArray: JSONArray = json?.getJSONArray("jsonArray")!!
+
 
             val db: AppDatabase = Room.databaseBuilder(context,AppDatabase::class.java,"app_db").build()
             //지난 지원사업 삭제용
@@ -168,7 +173,6 @@ class SynchronizationData(var context: Context) {
         //분야 하위 클래스
         if(userInfo.subclassNum != 0 && support.pldirSportRealmLclasCodeNm?.contains(userInfo.subclass!!)!!)
             notificationNewSupport(num,support)
-
 
     }
 

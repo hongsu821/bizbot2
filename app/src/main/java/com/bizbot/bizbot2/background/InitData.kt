@@ -1,10 +1,18 @@
 package com.bizbot.bizbot2.background
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
+import com.bizbot.bizbot2.home.IntroActivity
 import com.bizbot.bizbot2.room.AppDatabase
 import com.bizbot.bizbot2.room.model.SupportModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -12,13 +20,12 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class InitData(var context: Context) {
+class InitData(var context: Context){
     private val TAG = "SynchronizationData"
 
     fun init(): Int{
         val supportURL = "http://www.bizinfo.go.kr/uss/rss/bizPersonaRss.do?dataType=json"
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
-
         try{
             val start = System.currentTimeMillis()
 
@@ -34,9 +41,9 @@ class InitData(var context: Context) {
 
             val json:JSONObject? = JSONObject(line)
             val jsonArray: JSONArray = json?.getJSONArray("jsonArray")!!
-
             val db: AppDatabase = Room.databaseBuilder(context,AppDatabase::class.java,"app_db").build()
             val sync = Date(System.currentTimeMillis()) //현재시간
+
 
             for(i in 0 until jsonArray.length()){
                 val jsonObject: JSONObject = jsonArray.getJSONObject(i)
@@ -49,6 +56,7 @@ class InitData(var context: Context) {
                 supportItem.checkNew = differentDay<=2
 
                 db.supportDAO().insert(supportItem)
+
             }
 
             val end = System.currentTimeMillis()

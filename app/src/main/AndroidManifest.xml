@@ -15,7 +15,7 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-    <activity android:name=".home.IntroActivity">
+        <activity android:name=".home.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

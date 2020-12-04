@@ -13,10 +13,7 @@ import android.os.Looper
 import android.os.Message
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.room.Room
@@ -29,7 +26,6 @@ import com.bizbot.bizbot2.room.AppViewModel
 import com.bizbot.bizbot2.room.model.PermitModel
 import com.bizbot.bizbot2.room.model.UserModel
 import kotlinx.android.synthetic.main.intro.*
-import kotlinx.android.synthetic.main.support_activity.*
 import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -40,10 +36,9 @@ class IntroActivity : AppCompatActivity() {
         private val TAG = "IntroActivity"
         const val JOB_ID = 1001
     }
-
     lateinit var introHandler:Handler
+    var initHandler = Handler(Looper.myLooper()!!)
     private val msg = Message()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.intro)
@@ -52,32 +47,51 @@ class IntroActivity : AppCompatActivity() {
         //db위치
         val dbPath = baseContext.getDatabasePath("app_db")
 
-        if(!dbPath.exists()){ //db가 없다면
+        if (!dbPath.exists()) { //db가 없다면
             //알림 설정 팝업
             customDialog(this)
-        }else{//db가 있다면
+        } else {//db가 있다면
             intro_init_layout.visibility = View.GONE
+            viewModel.getAllSupport().observe(this, androidx.lifecycle.Observer {
+                if (it == null)
+                    customDialog(this)
+            })
             viewModel.getAllPermit().observe(this, androidx.lifecycle.Observer {
-                if(it.alert!!) //알림 설정시
+                if (it.alert!!) //알림 설정시
                     nextActivity() //바로 다음 엑티비티
-                else{//알림 설정 해제시
+                else {//알림 설정 해제시
                     sync() //데이터 동기화
                     nextActivity() //다음 엑티비티
                 }
             })
         }
 
-
         //handler
-        introHandler = Handler(Looper.myLooper()!!){
+        introHandler = Handler(Looper.myLooper()!!) {
             //arg1 = initData 에서 받음
             //agr2 = initUserInfo 에서 받음
-            if(it.arg1 == it.arg2){
+            if (it.arg1 == it.arg2) {
+                //intro_progress_bar.progress = 100
                 nextActivity()
             }
+
             true
         }
+        var cnt = 0
+        initHandler = Handler(Looper.myLooper()!!){
+            if(cnt<100){
+                cnt++
+                intro_progress_bar.progress = cnt
+                this.sendMessage()
+            }else
+                initHandler.removeCallbacksAndMessages(null)
+            true
+        }
+    }
 
+    fun sendMessage(){
+        val message = Message()
+        initHandler.sendMessageDelayed(message,860)
     }
 
     //알림 설정 다이얼로그
@@ -262,7 +276,7 @@ class IntroActivity : AppCompatActivity() {
         intro_large_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) { }
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                userModel?.fieldNum = p2
+                userModel.fieldNum = p2
                 when(p2){
                     0->arrayID = R.array.select_default
                     1->arrayID = R.array.management
@@ -283,7 +297,7 @@ class IntroActivity : AppCompatActivity() {
         intro_medium_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {}
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                userModel?.subclassNum = p2
+                userModel.subclassNum = p2
             }
         }
 
@@ -311,7 +325,7 @@ class IntroActivity : AppCompatActivity() {
                 intro_loading_layout.visibility = View.VISIBLE
                 //정보 입력 레이아웃
                 intro_init_layout.visibility = View.GONE
-
+                sendMessage()
                 msg.arg2 = 1
             }
             else
@@ -360,5 +374,6 @@ class IntroActivity : AppCompatActivity() {
             synchronizationData.syncData()
         }
     }
+
 
 }
