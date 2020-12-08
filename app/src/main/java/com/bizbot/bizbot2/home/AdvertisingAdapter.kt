@@ -25,7 +25,7 @@ class AdvertisingAdapter(val context: Context,private var adList: ArrayList<Supp
 
     //아이템 레이아웃
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdvertisingAdapter.ViewHolder {
-        val inflatedView = LayoutInflater.from(parent.context).inflate(R.layout.item_support_list,parent,false)
+        val inflatedView = LayoutInflater.from(parent.context).inflate(R.layout.item_support,parent,false)
         return ViewHolder(inflatedView)
     }
 
@@ -47,7 +47,7 @@ class AdvertisingAdapter(val context: Context,private var adList: ArrayList<Supp
         private val title = v.findViewById<TextView>(R.id.title)
         private val agency = v.findViewById<TextView>(R.id.agency)
         private val likeBtn = v.findViewById<ToggleButton>(R.id.like_btn)
-        val term:TextView = v.findViewById(R.id.term)
+        private val term:TextView = v.findViewById(R.id.term)
         val dDay:TextView = v.findViewById(R.id.D_day)
         val keyWord:RecyclerView = v.findViewById(R.id.keyword_rv)
 
@@ -55,7 +55,6 @@ class AdvertisingAdapter(val context: Context,private var adList: ArrayList<Supp
             title.text = item.pblancNm
             agency.text = item.jrsdInsttNm
             likeBtn.visibility = View.INVISIBLE
-
         }
 
         //d-day 출력

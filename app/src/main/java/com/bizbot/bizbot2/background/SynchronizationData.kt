@@ -152,6 +152,7 @@ class SynchronizationData(var context: Context) {
 
     //키워드 알림, 지역 알림
     private fun notificationSetting(num:Int,support:SupportModel,permit:PermitModel,userInfo:UserModel){
+        Log.d(TAG, "notificationSetting call")
         val words = permit.keyword?.split("@")
 
         //지원 받고 싶은 분야 하위 클래스

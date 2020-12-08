@@ -202,7 +202,14 @@ class SearchActivity : AppCompatActivity() {
                 processedWord.add("R&amp;D")
             if(pWord == "R&D")
                 processedWord.add("R&amp;D")
-
+            if(pWord == "알앤비디"){
+                processedWord.add("R&amp;BD")
+                processedWord.add("r&bd")
+            }
+            if(pWord == "r&bd")
+                processedWord.add("R&amp;BD")
+            if(pWord == "R&BD")
+                processedWord.add("R&amp;BD")
         }
 
         return processedWord

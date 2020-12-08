@@ -7,7 +7,7 @@
     android:background="@drawable/item_list_style"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_marginBottom="5dp">
+    android:layout_marginBottom="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,56 +16,64 @@
         android:orientation="vertical"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="6dp">
-        <LinearLayout
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginRight="3dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="2dp"
+            android:paddingRight="18dp"
+            android:paddingLeft="22dp"
+            android:paddingBottom="6dp"
+            android:paddingTop="22dp"
             android:layout_marginBottom="2dp">
             <TextView
                 android:id="@+id/new_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="NEW"
-                android:textSize="18dp"
+                android:textSize="9dp"
                 android:textStyle="bold"
                 android:textColor="#000000"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:layout_marginLeft="4dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="4dp"
-                android:background="@drawable/item_keyword_select_style"
+                android:background="@drawable/underline"
                 android:visibility="visible"
-                android:fontFamily="@font/noto_sans_regular"/>
-            <androidx.recyclerview.widget.RecyclerView
-               android:id="@+id/keyword_rv"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:scrollbars="horizontal"/>
-        </LinearLayout>
+                android:fontFamily="@font/noto_sans_regular"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center_horizontal"
             android:orientation="vertical"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="4dp">
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="4dp"
+            android:paddingRight="22dp"
+            android:paddingLeft="22dp">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/keyword_rv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scrollbars="horizontal"
+                android:layout_marginLeft="9dp"
+                android:layout_marginRight="8dp"/>
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="제목"
+                android:text="[울산] 2020년 해외 SW화상 상담회(가칭) 참가기업 모집"
                 android:textColor="#000000"
                 android:textSize="19sp"
                 android:layout_marginLeft="9dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/noto_sans_bold"/>
@@ -76,7 +84,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="5dp">
+            android:layout_marginBottom="5dp"
+            android:paddingRight="22dp"
+            android:paddingLeft="22dp"
+            android:paddingBottom="20dp">
             <LinearLayout
                 android:id="@+id/layout1"
                 android:layout_width="wrap_content"
@@ -92,7 +103,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="접수기관명"
-                    android:textSize="15dp"
+                    android:textSize="13dp"
                     android:textColor="#616161"
                     android:layout_marginBottom="3.2dp"
                     android:fontFamily="@font/noto_sans_regular"/>
@@ -102,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:text="접수기간"
                     android:textColor="#616161"
-                    android:textSize="15dp"
+                    android:textSize="13dp"
                     android:fontFamily="@font/noto_sans_regular"/>
             </LinearLayout>
             <LinearLayout
@@ -111,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginTop="8dp"
-                android:layout_marginStart="13dp"
+                android:layout_marginStart="22dp"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintLeft_toRightOf="@+id/layout1"
                 app:layout_constraintTop_toTopOf="parent"
@@ -120,9 +131,11 @@
                     android:id="@+id/agency"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="울산정보산업진흥원"
                     android:textColor="#000000"
+                    android:textSize="13dp"
                     android:layout_marginBottom="3.2dp"
-                    android:fontFamily="@font/noto_sans_regular"/>
+                    android:fontFamily="@font/noto_sans_regular" />
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -132,7 +145,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
-                        android:textSize="15dp"
+                        android:textSize="13dp"
+                        android:text="2020.06.05~2020.06.19"
                         android:fontFamily="@font/noto_sans_regular"/>
                     <TextView
                         android:id="@+id/D_day"
@@ -140,24 +154,23 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
                         android:textColor="#3CB371"
-                        android:textSize="15dp"
+                        android:textSize="13dp"
+                        android:text="D-22"
                         android:fontFamily="@font/noto_sans_regular"/>
                 </LinearLayout>
             </LinearLayout>
-
             <ToggleButton
                 android:id="@+id/like_btn"
                 android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_height="30dp"
                 android:background="@drawable/heart_empty"
                 android:textOff=""
                 android:textOn=""
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="20dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="11dp"
+                android:layout_marginTop="12dp"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>

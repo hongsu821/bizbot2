@@ -112,6 +112,8 @@ class SupportDetailActivity:AppCompatActivity() {
         for(word in arr6)
             line6 += "$word "
 
+        line6 = line6.replace("R&amp;BD","R&BD")
+
         return line6
 
     }

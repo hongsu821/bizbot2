@@ -1,6 +1,7 @@
 package com.bizbot.bizbot2.support
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,13 +33,14 @@ class KeywordAdapter(val context:Context, val arr: List<String>?,val field: Stri
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v){
 
-        private val word = v.findViewById<TextView>(R.id.item_name)
-        private val layout = v.findViewById<LinearLayout>(R.id.keyword_layout)
+        private val word:TextView = v.findViewById(R.id.item_name)
+        private val layout:LinearLayout = v.findViewById(R.id.keyword_layout)
 
         fun bind(item: String,field: String?){
             word.text = item
             if(field != null && field == item)
                 layout.setBackgroundResource(R.drawable.item_keyword_select_style)
+
         }
 
 

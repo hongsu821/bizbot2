@@ -94,7 +94,7 @@ class SupportActivity: AppCompatActivity() {
         }
         //더보기 버튼 클릭시
         support_add_btn.setOnClickListener {
-            supportAdapter.itemSize += 20
+            supportAdapter.itemSize += 15
             if(supportAdapter.itemSize > supportAdapter.getCount())
                 support_add_btn.visibility = View.GONE
             supportAdapter.notifyDataSetChanged()

@@ -31,15 +31,15 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity)
     lateinit var sList : ArrayList<SupportModel>
     lateinit var area : String
     lateinit var field : String
-    var itemSize = 20
+    var itemSize = 15
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val inflatedView = LayoutInflater.from(parent.context).inflate(R.layout.item_support_list,parent,false)
+        val inflatedView = LayoutInflater.from(parent.context).inflate(R.layout.item_support,parent,false)
         return ViewHolder(inflatedView)
     }
 
     override fun getItemCount(): Int {
-        if(filterList.size<20 || itemSize > filterList.size)
+        if(filterList.size<15 || itemSize > filterList.size)
             return filterList.size
         else
             return itemSize
