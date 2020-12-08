@@ -14,13 +14,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class SupportDetailActivity:AppCompatActivity() {
+    private val notificationCheck = intent?.getIntExtra("notiCheck",0)
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.support_details)
 
         val supportContent = intent.getParcelableExtra<SupportModel>("detail")
-        val notificationCheck = intent?.getIntExtra("notiCheck",0)
         val categoryKeyword = ProcessingKeyword(supportContent)
 
         //키워드
@@ -149,7 +149,8 @@ class SupportDetailActivity:AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        startActivity(Intent(this,SupportActivity::class.java))
+        if(notificationCheck == 1)
+            startActivity(Intent(this,SupportActivity::class.java))
         finish()
     }
 

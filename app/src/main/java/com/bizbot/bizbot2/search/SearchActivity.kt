@@ -87,14 +87,23 @@ class SearchActivity : AppCompatActivity() {
 
         //제목 검색 버튼
         search_title_btn.setOnClickListener {
+            search_title_btn.setBackgroundResource(R.drawable.button_on)
+            search_content_btn.background = null
+            search_agency_btn.background = null
             PrintSearchResult(SEARCH_MODE.TITLE,searchResultAdapter,resultWords)
         }
         //내용 검색 버튼
         search_content_btn.setOnClickListener {
+            search_title_btn.background = null
+            search_content_btn.setBackgroundResource(R.drawable.button_on)
+            search_agency_btn.background = null
             PrintSearchResult(SEARCH_MODE.CONTENT,searchResultAdapter,resultWords)
         }
         //기관 검색 버튼
         search_agency_btn.setOnClickListener {
+            search_title_btn.background = null
+            search_content_btn.background = null
+            search_agency_btn.setBackgroundResource(R.drawable.button_on)
             PrintSearchResult(SEARCH_MODE.AGENCY,searchResultAdapter,resultWords)
         }
 

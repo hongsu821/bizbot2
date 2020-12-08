@@ -66,11 +66,12 @@ class SynchronizationData(var context: Context) {
                 val differentDay: Long = differentTime/(24*60*60*1000)
 
                 //시간 차이가 2 이하이면 새로 생긴 게시글
-                supportItem.checkNew = differentDay<=2
+                supportItem.checkNew = differentDay in 0..2
 
-                //지역 알림
+                //새 게시글 알림
                 if(sync < create && permit.alert!!)
                     notificationSetting(i,supportItem,permit,userInfo)
+
 
                 //db에 insert
                 db.supportDAO().insert(supportItem)
@@ -153,26 +154,31 @@ class SynchronizationData(var context: Context) {
     private fun notificationSetting(num:Int,support:SupportModel,permit:PermitModel,userInfo:UserModel){
         val words = permit.keyword?.split("@")
 
-        //제목에 '지역' 단어가 들어가는지
-        if(support.pblancNm?.contains(changeArea(permit.area!!))!!)
-            notificationNewSupport(num,support)
-        //본문에 사용자설정키워드가 들어가는지
-        for(word in words!!){
-            if (word == "")
-                continue
-            if(support.bsnsSumryCn?.contains(word)!!){//본문에 키워드 포함
-                notificationNewSupport(num,support)
-                break
-            }
-        }
-        //지원 받고 싶은 분야 선택시
-        if(userInfo.fieldNum != 0 && userInfo.subclassNum == 0){
-            if(support.pldirSportRealmLclasCodeNm?.contains(userInfo.field!!)!!)
-                notificationNewSupport(num,support)
-        }
-        //분야 하위 클래스
+        //지원 받고 싶은 분야 하위 클래스
         if(userInfo.subclassNum != 0 && support.pldirSportRealmLclasCodeNm?.contains(userInfo.subclass!!)!!)
             notificationNewSupport(num,support)
+        else{
+            //지원 받고 싶은 분야 상위 클래스
+            if(userInfo.fieldNum != 0 && support.pldirSportRealmLclasCodeNm?.contains(userInfo.field!!)!!)
+                notificationNewSupport(num,support)
+            else{
+                //제목에 '지역' 단어가 들어가는지
+                if(support.pblancNm?.contains(changeArea(permit.area!!))!!)
+                    notificationNewSupport(num,support)
+                else{
+                    //본문에 사용자설정키워드가 들어가는지
+                    for(word in words!!){
+                        if (word == "")
+                            continue
+                        if(support.bsnsSumryCn?.contains(word)!!){//본문에 키워드 포함
+                            notificationNewSupport(num,support)
+                            break
+                        }
+                    }
+                }
+            }
+        }
+
 
     }
 

@@ -7,8 +7,7 @@
     android:background="@drawable/item_list_style"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_marginBottom="5dp"
-    android:padding="4dp">
+    android:layout_marginBottom="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -93,6 +92,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="접수기관명"
+                    android:textSize="15dp"
                     android:textColor="#616161"
                     android:layout_marginBottom="3.2dp"
                     android:fontFamily="@font/noto_sans_regular"/>
@@ -102,6 +102,7 @@
                     android:layout_height="wrap_content"
                     android:text="접수기간"
                     android:textColor="#616161"
+                    android:textSize="15dp"
                     android:fontFamily="@font/noto_sans_regular"/>
             </LinearLayout>
             <LinearLayout
@@ -131,6 +132,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
+                        android:textSize="15dp"
                         android:fontFamily="@font/noto_sans_regular"/>
                     <TextView
                         android:id="@+id/D_day"
@@ -138,6 +140,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
                         android:textColor="#3CB371"
+                        android:textSize="15dp"
                         android:fontFamily="@font/noto_sans_regular"/>
                 </LinearLayout>
             </LinearLayout>
