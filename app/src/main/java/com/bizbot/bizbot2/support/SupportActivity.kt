@@ -44,6 +44,10 @@ class SupportActivity: AppCompatActivity() {
         if(areaWord == null || areaWord == "")
             areaWord = "전체"
         area_state.text = areaWord
+        if(area_state.text != "전체")
+            area_pin_img.setImageResource(R.drawable.location)
+        else
+            area_pin_img.setImageResource(R.drawable.location_empty)
         supportAdapter.area = areaWord
 
         //데이터 가져오기
@@ -66,7 +70,7 @@ class SupportActivity: AppCompatActivity() {
         })
 
         //spinner
-        ArrayAdapter.createFromResource(this,R.array.sort_mode,R.layout.spinner_item)
+        ArrayAdapter.createFromResource(this,R.array.sort_mode,R.layout.support_spinner_item)
             .also { arrayAdapter -> arrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
                 support_spinner.adapter = arrayAdapter}
         support_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
