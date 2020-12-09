@@ -106,7 +106,7 @@
                         android:layout_weight="1"
                         android:layout_marginTop="3dp"
                         android:layout_marginBottom="10sp"
-                        android:background="@drawable/searchbar">
+                        android:background="@drawable/search_bar">
                         <TextView
                             android:layout_width="120dp"
                             android:layout_height="match_parent"
