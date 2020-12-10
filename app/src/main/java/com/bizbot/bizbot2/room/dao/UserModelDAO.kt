@@ -15,13 +15,15 @@ interface UserModelDAO {
     @Delete
     fun delete(user: UserModel)
 
-    //모든 데이터 출력
+    //livedata로 모든 데이터 출력
     @Query("SELECT * FROM user")
     fun getAllItem(): LiveData<UserModel>
 
     @Query("SELECT * FROM user")
     fun getItem(): UserModel
 
+    @Query("SELECT name FROM user WHERE id=0")
+    fun getName(): LiveData<String>
 
 
 }

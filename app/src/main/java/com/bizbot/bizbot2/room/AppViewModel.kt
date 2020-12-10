@@ -89,4 +89,8 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     fun getArea():LiveData<String>{
         return repository.getArea()
     }
+
+    fun getUserName():LiveData<String>{
+        return repository.getUserName()
+    }
 }

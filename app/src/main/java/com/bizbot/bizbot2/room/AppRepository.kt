@@ -86,6 +86,7 @@ class AppRepository(application: Application) {
         return permitDAO.getArea()
     }
 
+
     //관심사업 전부 출력
     fun getLikeList(): LiveData<List<SupportModel>>{
         return supportDAO.getLikeList()
@@ -141,6 +142,10 @@ class AppRepository(application: Application) {
         CoroutineScope(Dispatchers.IO).launch {
             userModelDAO.insert(users)
         }
+    }
+    //유저 이름 출력
+    fun getUserName():LiveData<String>{
+        return userModelDAO.getName()
     }
 
 }
