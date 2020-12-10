@@ -1,9 +1,11 @@
 package com.bizbot.bizbot2.search
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -27,6 +29,8 @@ class SearchActivity : AppCompatActivity() {
 
         val viewModel = ViewModelProviders.of(this).get(AppViewModel::class.java)
 
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
         //검색 결과 리사이클러뷰
         val viewManager2 = LinearLayoutManager(this)
         search_result_rv.setHasFixedSize(true)
@@ -44,11 +48,12 @@ class SearchActivity : AppCompatActivity() {
         val viewManager = LinearLayoutManager(this)
         viewManager.reverseLayout = true
         viewManager.stackFromEnd = true
-        last_search_word.layoutManager = viewManager
-        last_search_word.setHasFixedSize(true)
+        search_word_rv.layoutManager = viewManager
+        search_word_rv.isNestedScrollingEnabled = false
+        search_word_rv.setHasFixedSize(true)
         viewModel.getAllSearch().observe(this, Observer {
             val searchAdapter = SearchAdapter(this,it as ArrayList<String>,search_edit_bar)
-            last_search_word.adapter = searchAdapter
+            search_word_rv.adapter = searchAdapter
 
         })
 
@@ -58,7 +63,7 @@ class SearchActivity : AppCompatActivity() {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 val input = p0.toString()
                 if(input.isEmpty()) {
-                    search_clear.visibility = View.INVISIBLE
+                    search_clear.visibility = View.GONE
                     search_result_layout.visibility = View.GONE
                 }
                 else
@@ -69,6 +74,8 @@ class SearchActivity : AppCompatActivity() {
 
         //검색 버튼 클릭
         search_button.setOnClickListener {
+            imm.hideSoftInputFromWindow(it.windowToken,0)
+
             val inStr = search_edit_bar.text.toString()
             val word = SearchWordModel(inStr)
             viewModel.insertSearch(word)
@@ -79,10 +86,9 @@ class SearchActivity : AppCompatActivity() {
             for(word in resultWords)
                 line += "$word, "
 
-            search_analysis_word.text = line.substring(0,line.length-2)
+            search_analysis_word.text = line
 
             PrintSearchResult(SEARCH_MODE.TITLE,searchResultAdapter,resultWords)
-
         }
 
         //제목 검색 버튼
@@ -114,7 +120,7 @@ class SearchActivity : AppCompatActivity() {
             search_result_layout.visibility = View.GONE
         }
         //모든 검색어 지우기
-        all_clear.setOnClickListener { viewModel.delSearchAll() }
+        search_word_clear_all.setOnClickListener { viewModel.delSearchAll() }
         //닫기 버튼 클릭시
         search_close_btn.setOnClickListener { finish() }
 

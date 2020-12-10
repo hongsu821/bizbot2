@@ -28,10 +28,10 @@ class SearchAdapter(val activity: FragmentActivity,wordList:ArrayList<String>, v
 
     override fun getItemCount(): Int {
         //최대 8개까지 출력
-        if(words.size > 8)
-            return 8
+        return if(words.size > 12)
+            12
         else
-            return words.size
+            words.size
     }
 
     class ViewHolder(v: View):RecyclerView.ViewHolder(v) {

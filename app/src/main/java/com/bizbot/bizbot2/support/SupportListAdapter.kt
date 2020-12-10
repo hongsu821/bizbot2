@@ -56,8 +56,6 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity)
 
         val viewModel = ViewModelProviders.of(activity).get(AppViewModel::class.java)
 
-        holder.newIcon.visibility = View.GONE
-
         //레이아웃 클릭시 디테일 페이지로 이동
         holder.layout.setOnClickListener {
             val intent = Intent(context,SupportDetailActivity::class.java)
@@ -66,6 +64,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity)
             context.startActivity(intent)
         }
 
+        //관심지원사업 표시
         if(filterList[position].checkLike!!){
             holder.likeBtn.isChecked = true
             holder.likeBtn.setBackgroundResource(R.drawable.heart)
@@ -75,6 +74,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity)
             holder.likeBtn.setBackgroundResource(R.drawable.heart_empty)
         }
 
+        //하트 버튼 클릭시
         holder.likeBtn.setOnClickListener {
             if(holder.likeBtn.isChecked){
                 holder.likeBtn.setBackgroundResource(R.drawable.heart)
@@ -87,6 +87,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity)
             }
         }
 
+        //new 아이콘 출력 여부
         if(filterList[position].checkNew == true)
             holder.newIcon.visibility = View.VISIBLE
         else
@@ -112,7 +113,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity)
             agency.text = item.jrsdInsttNm
         }
 
-        //d-day출력
+        //d-day 출력
         @SuppressLint("SetTextI18n")
         fun bindEndDay(item: SupportModel){
             if(item.reqstBeginEndDe?.contains("~")!!) {
@@ -123,6 +124,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity)
                 dDay.visibility = View.GONE
         }
 
+        //d-day 계산
         private fun calDay(term: String?):Long? {
             val word = term?.split("~")
             val dateFormat = SimpleDateFormat("yyyyMMdd", Locale.KOREA)
@@ -145,6 +147,7 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity)
                 term.text = item.reqstBeginEndDe
         }
 
+        //키워드 리사이클러뷰
         fun bindKeyword(item:SupportModel, context: Context, field: String? ){
             val arr1 = item.pldirSportRealmLclasCodeNm?.split("@")
             val arr2 = item.pldirSportRealmMlsfcCodeNm?.split("@")

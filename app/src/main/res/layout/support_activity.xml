@@ -40,8 +40,8 @@
             android:src="@drawable/close"
             android:layout_margin="8dp"
             android:padding="7dp"/>
-
     </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -82,14 +82,31 @@
                         android:textSize="15dp"
                         android:fontFamily="@font/noto_sans_regular"/>
                     <TextView
-                        android:id="@+id/support_list_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
                         android:textSize="15dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="4dp"
-                        android:text="총   건"
+                        android:text="총"
+                        android:fontFamily="@font/noto_sans_regular"/>
+                    <TextView
+                        android:id="@+id/support_list_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FF7C09"
+                        android:textSize="15dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="4dp"
+                        android:text="1234"
+                        android:fontFamily="@font/noto_sans_bold"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000000"
+                        android:textSize="15dp"
+                        android:layout_marginTop="4dp"
+                        android:text="건"
                         android:fontFamily="@font/noto_sans_regular"/>
                 </LinearLayout>
                 <LinearLayout
@@ -116,13 +133,13 @@
                             android:layout_marginTop="6sp"
                             android:layout_marginBottom="5sp"
                             android:fontFamily="@font/noto_sans_regular"/>
+
                         <ImageView
-                            android:layout_width="22sp"
+                            android:layout_width="17dp"
                             android:layout_height="22sp"
-                            android:src="@drawable/search_icon_black"
                             android:layout_gravity="center_vertical"
                             android:layout_marginRight="12dp"
-                            android:padding="3dp"/>
+                            android:src="@drawable/search_icon_color" />
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout

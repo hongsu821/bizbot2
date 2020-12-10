@@ -43,22 +43,22 @@ class SupportDetailActivity:AppCompatActivity() {
         //d-day
         if(supportContent?.reqstBeginEndDe?.contains("~")!!) {
             detail_d_day.visibility = View.VISIBLE
-            detail_d_day.text = "D-${printEndDay(supportContent?.reqstBeginEndDe)}"
+            detail_d_day.text = "D-${printEndDay(supportContent.reqstBeginEndDe)}"
         }
         else
             detail_d_day.visibility = View.GONE
         //접수기관
-        detail_agency.text = supportContent?.rceptEngnNm
+        detail_agency.text = supportContent.rceptEngnNm
         //담당부서
-        detail_department.text = supportContent?.jrsdInsttNm
+        detail_department.text = supportContent.jrsdInsttNm
         //전화번호
-        detail_tel.text = supportContent?.rceptInsttTelno
+        detail_tel.text = supportContent.rceptInsttTelno
         //담당자명
-        detail_manager.text = supportContent?.rceptInsttChargerNm
+        detail_manager.text = supportContent.rceptInsttChargerNm
 
         //홈페이지 버튼 클릭시
         detail_homepage.setOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(supportContent?.rceptEngnHmpgUrl)))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(supportContent.rceptEngnHmpgUrl)))
         }
         //닫기 버튼 클릭시
         detail_close_btn.setOnClickListener {
@@ -132,9 +132,9 @@ class SupportDetailActivity:AppCompatActivity() {
     //접수기간 포멧 변경
     fun transTermFormat(term:String?):String{
         if(term?.contains("~")!!){
-            val word = term?.split("~")
-            return word?.get(0)?.substring(2,4) + "." + word?.get(0)?.substring(4,6) + "." + word?.get(0)?.substring(6, word[0].length) +"~ " +
-                    word?.get(1)?.substring(3,5) + "." + word?.get(1)?.substring(5,7) + "." + word?.get(1)?.substring(7, word[1].length)
+            val word = term.split("~")
+            return word[0].substring(2,4) + "." + word[0].substring(4,6) + "." + word[0].substring(6, word[0].length) +"~ " +
+                    word[1].substring(3,5) + "." + word[1].substring(5,7) + "." + word[1].substring(7, word[1].length)
         }
         else
             return term

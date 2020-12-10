@@ -64,7 +64,7 @@
                 <ImageView
                     android:layout_width="22sp"
                     android:layout_height="22sp"
-                    android:src="@drawable/search_icon_black"
+                    android:src="@drawable/search_icon_color"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="10dp"
                     android:padding="4dp"/>
