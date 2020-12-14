@@ -66,10 +66,9 @@ class IntroActivity : AppCompatActivity() {
             })
         }
 
-        //handler
+        //다음 화면으로 넘어가는 handler
         introHandler = Handler(Looper.myLooper()!!) {
-            //arg1 = initData 에서 받음
-            //agr2 = initUserInfo 에서 받음
+            //arg1 = initData 에서 받음, agr2 = initUserInfo 에서 받음
             if (it.arg1 == it.arg2) {
                 //intro_progress_bar.progress = 100
                 nextActivity()
@@ -77,6 +76,7 @@ class IntroActivity : AppCompatActivity() {
 
             true
         }
+        //progressBar handler
         var cnt = 0
         initHandler = Handler(Looper.myLooper()!!){
             if(cnt<100){

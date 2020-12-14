@@ -15,7 +15,8 @@
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="6dp">
+        android:layout_marginBottom="6dp"
+        android:paddingBottom="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -153,7 +154,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
-                        android:textColor="#3CB371"
+                        android:textColor="#6AA31E"
                         android:textSize="13dp"
                         android:text="D-22"
                         android:fontFamily="@font/noto_sans_regular"/>
