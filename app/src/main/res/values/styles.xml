@@ -13,6 +13,10 @@
         <item name="colorControlNormal">@color/underline_normal</item>
     </style>
 
+    <style name="mySwitchTheme">
+        <item name="colorControlActivated">#FFB449</item>
+    </style>
+
     <style name="spinner_date_picker" parent="Theme.AppCompat.Light.Dialog.MinWidth">
         <item name="android:datePickerStyle">@style/date_picker_style</item>
         <item name="colorAccent">#FFB449</item>

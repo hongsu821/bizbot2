@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#F3F2F2"
     android:orientation="vertical">
 
     <LinearLayout
@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="right"
-        android:background="#FFE04A"
+        android:background="#ffffffff"
         android:orientation="horizontal">
         <ImageView
             android:id="@+id/alert_close_btn"
@@ -46,7 +46,9 @@
         android:id="@+id/layout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="#ffffff"
+        android:layout_marginTop="3dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,108 +58,103 @@
             android:textSize="18sp"
             android:padding="12dp"
             android:fontFamily="@font/noto_sans_regular"/>
+
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/alert_check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textOn=" "
-            android:textOff=" " />
+            android:layout_marginRight="18sp"
+            android:theme="@style/mySwitchTheme"/>
     </LinearLayout>
 
     <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#ffffff"
+        android:layout_marginTop="1dp">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="사업소재지"
+                android:textColor="#616161"
+                android:textSize="16sp"
+                android:paddingTop="12dp"
+                android:paddingLeft="23dp"
+                android:fontFamily="@font/noto_sans_regular"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#474747"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginTop="2dp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="사업소재지"
-                    android:textColor="#424242"
-                    android:textSize="18sp"
-                    android:padding="12dp"
-                    android:fontFamily="@font/noto_sans_regular"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:paddingLeft="22dp"
-                    android:paddingRight="22dp">
-                    <Spinner
-                        android:id="@+id/area_spinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:spinnerMode="dropdown" />
-                    <Spinner
-                        android:id="@+id/city_spinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:spinnerMode="dropdown" />
-                </LinearLayout>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="알림 받을 키워드"
-                    android:textColor="#424242"
-                    android:textSize="18sp"
-                    android:paddingTop="12dp"
-                    android:paddingLeft="12dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/noto_sans_regular"/>
-                <TextView
+                android:layout_marginBottom="8dp"
+                android:paddingLeft="23dp"
+                android:paddingRight="22dp">
+                <Spinner
+                    android:id="@+id/area_spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="지역에 상관없이 알림이 갑니다."
-                    android:textColor="#757575"
-                    android:textSize="12sp"
-                    android:paddingLeft="12dp"
-                    android:fontFamily="@font/noto_sans_regular"/>
-
-                <EditText
-                    android:id="@+id/keyword1_et"
-                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:spinnerMode="dropdown" />
+                <Spinner
+                    android:id="@+id/city_spinner"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="22dp"
-                    android:layout_marginRight="22dp"
-                    android:theme="@style/EditTextTheme"
-                    android:textColor="#000000"
-                    android:hint="1."
-                    android:fontFamily="@font/noto_sans_regular"/>
-                <EditText
-                    android:id="@+id/keyword2_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="22dp"
-                    android:layout_marginRight="22dp"
-                    android:theme="@style/EditTextTheme"
-                    android:textColor="#000000"
-                    android:hint="2."
-                    android:fontFamily="@font/noto_sans_regular"/>
-                <EditText
-                    android:id="@+id/keyword3_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="22dp"
-                    android:layout_marginRight="22dp"
-                    android:theme="@style/EditTextTheme"
-                    android:textColor="#000000"
-                    android:hint="3."
-                    android:fontFamily="@font/noto_sans_regular"/>
+                    android:layout_weight="1"
+                    android:spinnerMode="dropdown" />
             </LinearLayout>
-        </ScrollView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="알림 받을 키워드"
+                android:textColor="#616161"
+                android:textSize="16sp"
+                android:paddingTop="12dp"
+                android:paddingLeft="23dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/noto_sans_regular"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="지역에 상관없이 알림이 갑니다."
+                android:textColor="#757575"
+                android:textSize="12sp"
+                android:paddingLeft="23dp"
+                android:fontFamily="@font/noto_sans_regular"/>
 
+            <EditText
+                android:id="@+id/keyword1_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="22dp"
+                android:theme="@style/EditTextTheme"
+                android:textColor="#000000"
+                android:hint="1."
+                android:fontFamily="@font/noto_sans_regular"/>
+            <EditText
+                android:id="@+id/keyword2_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="22dp"
+                android:theme="@style/EditTextTheme"
+                android:textColor="#000000"
+                android:hint="2."
+                android:fontFamily="@font/noto_sans_regular"/>
+            <EditText
+                android:id="@+id/keyword3_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="22dp"
+                android:theme="@style/EditTextTheme"
+                android:textColor="#000000"
+                android:hint="3."
+                android:fontFamily="@font/noto_sans_regular"/>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
