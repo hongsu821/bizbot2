@@ -152,20 +152,26 @@ class SynchronizationData(var context: Context) {
 
     //키워드 알림, 지역 알림
     private fun notificationSetting(num:Int,support:SupportModel,permit:PermitModel,userInfo:UserModel){
-        Log.d(TAG, "notificationSetting call")
+        //Log.d(TAG, "notificationSetting call")
         val words = permit.keyword?.split("@")
 
         //지원 받고 싶은 분야 하위 클래스
-        if(userInfo.subclassNum != 0 && support.pldirSportRealmLclasCodeNm?.contains(userInfo.subclass!!)!!)
+        if(userInfo.subclassNum != 0 && support.pldirSportRealmLclasCodeNm?.contains(userInfo.subclass!!)!!){
             notificationNewSupport(num,support)
+            Log.d(TAG, "notificationSetting: subclass")
+        }
         else{
             //지원 받고 싶은 분야 상위 클래스
-            if(userInfo.fieldNum != 0 && support.pldirSportRealmLclasCodeNm?.contains(userInfo.field!!)!!)
+            if(userInfo.fieldNum != 0 && support.pldirSportRealmLclasCodeNm?.contains(userInfo.field!!)!!){
                 notificationNewSupport(num,support)
+                Log.d(TAG, "notificationSetting: field")
+            }
             else{
                 //제목에 '지역' 단어가 들어가는지
-                if(support.pblancNm?.contains(changeArea(permit.area!!))!!)
+                if(support.pblancNm?.contains(changeArea(permit.area!!))!!){
                     notificationNewSupport(num,support)
+                    Log.d(TAG, "notificationSetting: area")
+                } 
                 else{
                     //본문에 사용자설정키워드가 들어가는지
                     for(word in words!!){
@@ -173,6 +179,7 @@ class SynchronizationData(var context: Context) {
                             continue
                         if(support.bsnsSumryCn?.contains(word)!!){//본문에 키워드 포함
                             notificationNewSupport(num,support)
+                            Log.d(TAG, "notificationSetting: keyword")
                             break
                         }
                     }

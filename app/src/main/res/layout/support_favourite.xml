@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="관심 지원 사업"
+            android:text="관심 지원사업"
             android:textSize="18dp"
             android:fontFamily="@font/noto_sans_bold"
             android:textColor="#000000"

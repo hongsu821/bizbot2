@@ -111,7 +111,7 @@ class SupportActivity: AppCompatActivity() {
         }
         //카테고리 버튼
         category_menu_btn.setOnClickListener {
-            startActivity(Intent(baseContext,CategoryActivity::class.java))
+            startActivity(Intent(baseContext,SupportFilterActivity::class.java))
             finish()
         }
         //종료버튼

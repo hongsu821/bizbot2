@@ -116,6 +116,7 @@
                         android:layout_weight="1"
                         android:text="예비창업자"
                         android:textColor="#000000"
+                        android:textSize="13sp"
                         android:theme="@style/RadioButton"
                         android:padding="12dp"
                         android:fontFamily="@font/noto_sans_regular"/>
@@ -126,6 +127,7 @@
                         android:layout_weight="1"
                         android:text="개인사업자"
                         android:textColor="#000000"
+                        android:textSize="13sp"
                         android:theme="@style/RadioButton"
                         android:padding="12dp"
                         android:fontFamily="@font/noto_sans_regular"/>
@@ -136,6 +138,7 @@
                         android:layout_weight="1"
                         android:text="법인사업자"
                         android:textColor="#000000"
+                        android:textSize="13sp"
                         android:theme="@style/RadioButton"
                         android:padding="12dp"
                         android:fontFamily="@font/noto_sans_regular"/>
@@ -299,7 +302,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:background="#FFE04A"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginTop="15dp">
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="1dp"

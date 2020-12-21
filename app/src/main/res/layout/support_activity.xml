@@ -26,7 +26,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="지원 사업 목록"
+            android:text="지원사업 목록"
             android:textSize="18dp"
             android:fontFamily="@font/noto_sans_bold"
             android:textColor="#000000"
