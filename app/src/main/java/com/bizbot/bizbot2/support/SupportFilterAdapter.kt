@@ -2,27 +2,25 @@ package com.bizbot.bizbot2.support
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bizbot.bizbot2.R
 
-class FilterAdapter(var context:Context, type:Int): RecyclerView.Adapter<FilterAdapter.ViewHolder>() {
+class SupportFilterAdapter(var context:Context, type:Int): RecyclerView.Adapter<SupportFilterAdapter.ViewHolder>() {
     private val areas = arrayOf("전체","서울","부산","대구","인천","광주","대전","울산","세종","경기","강원","충북","충남","전북","전남","경북","경남","제주")
     private val field = arrayOf("전체","금융","기술","인력","수출","내수","창업","경영","제도","동반성장")
-    var mCAHandler: Handler = SupportFilterActivity.CAHandler(Looper.myLooper()!!)
-    private val categoryType = type
+    var mCAHandler: Handler = SupportFilterActivity.FilterHandler(Looper.myLooper()!!)
+    private val filterType = type
     private var index = 0
     lateinit var arr: Array<String>
+    var selItem = ""
 
     init{
         when(type){
@@ -50,9 +48,10 @@ class FilterAdapter(var context:Context, type:Int): RecyclerView.Adapter<FilterA
             index = position
             //handler 로 categoryActivity 에 값 전달
             val message:Message = mCAHandler.obtainMessage()
-            message.what = categoryType
+            message.what = filterType
             message.obj = item
             mCAHandler.sendMessage(message)
+            selItem = item
             notifyDataSetChanged()
         }
 

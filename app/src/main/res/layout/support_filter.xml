@@ -12,6 +12,13 @@
         android:layout_height="wrap_content"
         android:gravity="right"
         android:background="#ffffff">
+        <TextView
+            android:id="@+id/testbtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="#000000"
+            android:text="테스트 버튼"
+            android:layout_weight="1"/>
         <ImageView
             android:id="@+id/filter_close_btn"
             android:layout_width="40dp"

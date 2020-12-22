@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
@@ -72,6 +73,11 @@ class IntroActivity : AppCompatActivity() {
             if (it.arg1 == it.arg2) {
                 //intro_progress_bar.progress = 100
                 nextActivity()
+            }
+            if(it.arg1 == 0){
+                Toast.makeText(this,"데이터를 불러오는데 실패했습니다. 다운로드를 다시 시작 합니다.",Toast.LENGTH_SHORT).show()
+                intro_progress_bar.progress = 0
+                sync()
             }
 
             true
@@ -155,7 +161,6 @@ class IntroActivity : AppCompatActivity() {
             val initData = InitData(baseContext)
             msg.arg1 = initData.init()
             introHandler.sendMessage(msg)
-
         }
         //로딩 레이아웃
         intro_loading_layout.visibility = View.GONE
@@ -370,6 +375,7 @@ class IntroActivity : AppCompatActivity() {
     //백그라운드로 데이터 받기
     private fun sync(){
         GlobalScope.launch(Dispatchers.IO) {
+            Log.d(TAG, "sync: start")
             val synchronizationData = SynchronizationData(baseContext)
             synchronizationData.syncData()
         }

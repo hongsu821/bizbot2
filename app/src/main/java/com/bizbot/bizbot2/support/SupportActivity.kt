@@ -100,10 +100,17 @@ class SupportActivity: AppCompatActivity() {
         }
         //더보기 버튼 클릭시
         support_add_btn.setOnClickListener {
+            progressBar.bringToFront()
+            progressBar.visibility = View.VISIBLE
+            //클릭할때 마다 15개씩 보여주기
             supportAdapter.itemSize += 15
+
+            //모든 게시글 출력시 더보기 버튼 지우기
             if (supportAdapter.itemSize > supportAdapter.getCount())
                 support_add_btn.visibility = View.GONE
             supportAdapter.notifyDataSetChanged()
+
+            progressBar.visibility = View.GONE
         }
         //검색 버튼
         search_bar.setOnClickListener {

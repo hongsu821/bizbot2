@@ -97,7 +97,6 @@ class SupportListAdapter(var context: Context,var activity:FragmentActivity)
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v){
-
         private val title = v.findViewById<TextView>(R.id.title)
         private val agency = v.findViewById<TextView>(R.id.agency)
         private val term: TextView = v.findViewById(R.id.term)
