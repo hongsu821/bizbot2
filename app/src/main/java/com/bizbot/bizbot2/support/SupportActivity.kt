@@ -61,8 +61,8 @@ class SupportActivity: AppCompatActivity() {
                 //더보기 버튼 보이기
                 support_add_btn.visibility = View.VISIBLE
                 //총 리스트 개수 출력
-                val count = supportAdapter.getCount()
-                support_list_count.text = count.toString()
+                support_list_count.text = supportAdapter.getCount().toString()
+                //더보기 버튼 지우기
                 if (supportAdapter.itemSize > supportAdapter.getCount())
                     support_add_btn.visibility = View.GONE
             }
@@ -85,7 +85,7 @@ class SupportActivity: AppCompatActivity() {
             }
         }
 
-        //리사이클러뷰 스크롤 위치 감지
+        //스크롤뷰 위치 감지
         support_scroll_view.setOnScrollChangeListener { _, _, _, _, _ ->
             if (support_scroll_view.computeVerticalScrollOffset() == 0)
                 top_move_btn.visibility = View.GONE
