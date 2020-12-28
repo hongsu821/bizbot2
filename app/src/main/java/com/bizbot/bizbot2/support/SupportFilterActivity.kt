@@ -25,9 +25,6 @@ class SupportFilterActivity: AppCompatActivity(){
 
         val pagerAdapter = CustomAdapter(supportFragmentManager)
         view_pager.adapter = pagerAdapter
-        testbtn.setOnClickListener {
-            pagerAdapter.getItems()
-        }
         tab_layout.setupWithViewPager(view_pager)
         tab_layout.getTabAt(0)?.text = "지역"
         tab_layout.getTabAt(1)?.text = "분야"
@@ -74,7 +71,6 @@ class SupportFilterActivity: AppCompatActivity(){
 
     }
 
-    //todo: 핸들러 하나 더 만들어서 해보기
     class FilterHandler(looper: Looper):Handler(looper){
         override fun handleMessage(msg: Message) {
         }
